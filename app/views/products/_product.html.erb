@@ -1,42 +1,11 @@
-<div id="<%= dom_id product %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Sku:</strong>
-    <%= product.sku %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= product.name %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Description:</strong>
-    <%= product.description %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Colour:</strong>
-    <%= product.colour %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Pac size:</strong>
-    <%= product.pac_size %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Price:</strong>
-    <%= product.price %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Width in mm:</strong>
-    <%= product.width_in_mm %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Height in mm:</strong>
-    <%= product.height_in_mm %>
-  </p>
-
-</div>
+<tr id="<%= dom_id product %>">
+  <td class="hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= product.sku %></td>
+  <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"><%= product.name %></td>
+  <td class="hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= product.colour %></td>
+  <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"><%= product.pac_size %></td>
+  <td class="hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 lg:table-cell">
+    <%= product.width_in_mm %>mm x <%= product.height_in_mm %>mm
+  </td>
+  <td class="hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell">£<%= product.price %></td>
+  </td>
+</tr>
