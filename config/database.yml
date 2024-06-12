@@ -79,6 +79,4 @@ test:
 #
 production:
   <<: *default
-  database: afida_production
-  username: afida
-  password: <%= ENV["AFIDA_DATABASE_PASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>
