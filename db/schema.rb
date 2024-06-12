@@ -15,16 +15,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_11_213226) do
   enable_extension "plpgsql"
 
   create_table "products", force: :cascade do |t|
-    t.string "sku"
-    t.string "name"
+    t.string "sku", null: false
+    t.string "name", null: false
     t.text "description"
     t.string "colour"
     t.integer "pac_size"
-    t.decimal "price"
+    t.decimal "price", precision: 10, scale: 2, null: false
     t.integer "width_in_mm"
     t.integer "height_in_mm"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["sku"], name: "index_products_on_sku"
   end
 
 end

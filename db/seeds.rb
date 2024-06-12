@@ -7,3 +7,11 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+#
+# Load products from YAML file
+#
+products = YAML.load_file(Rails.root.join("db", "products.yml"))
+
+products.each do |product|
+  Product.find_or_create_by!(product)
+end
