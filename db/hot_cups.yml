@@ -1,0 +1,66 @@
+---
+- name: 4oz/114ml paper black single wall cup
+  colour: black
+  sku: 4bsw
+  pac_size: 1000
+  price: 27.28
+- name: 4oz/114ml paper single wall hot cup
+  colour: white
+  sku: 4wsw
+  pac_size: 1000
+  price: 27.2
+- name: 8oz/227ml paper single wall hot cup
+  colour: white
+  sku: 8wsw
+  pac_size: 1000
+  price: 31.12
+- name: 12oz/340ml paper single wall hot cup
+  colour: white
+  sku: 12wsw
+  pac_size: 1000
+  price: 38.74
+- name: 16oz/473ml paper single wall hot cup
+  colour: white
+  sku: 16wsw
+  pac_size: 1000
+  price: 45.95
+- name: 20oz/590ml paper single wall hot cup
+  colour: white
+  sku: 20wsw
+  pac_size: 500
+  price: 54.63
+- name: 4oz/114ml paper black ripple double wall cup
+  colour: black
+  sku: 4brdw
+  pac_size: 1000
+  price: 40.45
+- name: 8oz/227ml paper black ripple double wall cup
+  colour: black
+  sku: 8brdw
+  pac_size: 500
+  price: 36.2
+- name: 12oz/340ml black ripple double wall cup
+  colour: black
+  sku: 12brdw
+  pac_size: 500
+  price: 38.4
+- name: 16oz/473ml black ripple double wall cup
+  colour: black
+  sku: 16brdw
+  pac_size: 500
+  price: 46.21
+- name: 8oz/227ml kraft ripple double wall cup
+  colour: kraft
+  sku: 8krdw
+  pac_size: 500
+  price: 36.2
+- name: 12oz/340ml kraft ripple double wall cup
+  colour: kraft
+  sku: 12krdw
+  pac_size: 500
+  price: 39.4
+- name: 16oz/473ml kraft ripple double wall cup
+  colour: kraft
+  sku: 16krdw
+  pac_size: 500
+  price: 46.21
