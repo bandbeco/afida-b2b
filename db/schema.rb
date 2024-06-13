@@ -10,10 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_11_213226) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_13_211616) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
+
+  create_table "order_items", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "order_id", null: false
+    t.integer "quantity"
+    t.decimal "unit_price", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["product_id"], name: "index_order_items_on_product_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "status", default: 0, null: false
+    t.decimal "total_amount", precision: 10, scale: 2, null: false
+    t.text "shipping_address", null: false
+    t.text "billing_address", null: false
+    t.string "payment_method", null: false
+    t.string "shipping_method", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "products", force: :cascade do |t|
     t.citext "sku", null: false
@@ -32,4 +54,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_11_213226) do
     t.index ["sku"], name: "index_products_on_sku"
   end
 
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "order_items", "products"
 end

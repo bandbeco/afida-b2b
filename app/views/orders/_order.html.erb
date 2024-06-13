@@ -1,0 +1,32 @@
+<div id="<%= dom_id order %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Status:</strong>
+    <%= order.status %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Total amount:</strong>
+    <%= order.total_amount %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Shipping address:</strong>
+    <%= order.shipping_address %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Billing address:</strong>
+    <%= order.billing_address %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Payment method:</strong>
+    <%= order.payment_method %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Shipping method:</strong>
+    <%= order.shipping_method %>
+  </p>
+
+</div>
