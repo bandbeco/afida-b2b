@@ -1,5 +1,5 @@
 <tr id="<%= dom_id product %>">
-  <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= product.sku %></td>
+  <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= product.sku&.upcase %></td>
   <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"><%= product.name&.titleize %></td>
   <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 lg:table-cell"><%= product.colour&.titleize %></td>
   <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500"><%= product.pac_size %></td>
