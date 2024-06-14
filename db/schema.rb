@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_13_211616) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_14_084327) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_13_211616) do
     t.integer "volume_in_ml"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["sku"], name: "index_products_on_sku"
   end
 
