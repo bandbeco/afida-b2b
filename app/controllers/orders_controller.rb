@@ -12,7 +12,16 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    @order = Order.new
+    session[:order_params] ||= {}
+    @products = Product.first(2)
+    @order = Order.new(session[:order_params])
+
+    @products.each do |product|
+      @order.order_items.build(
+        product_id: product.id,
+        unit_price: product.price
+      )
+    end
   end
 
   # GET /orders/1/edit
@@ -21,16 +30,28 @@ class OrdersController < ApplicationController
 
   # POST /orders or /orders.json
   def create
-    @order = Order.new(order_params)
+    @order_params = order_params
+    session[:order_params].deep_merge!(order_params) if order_params
+    @order = Order.new(session[:order_params])
+    @order.current_step = session[:order_step]
+    @order.total_amount = @order.order_items.sum(&:total_price)
 
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to order_url(@order), notice: "Order was successfully created." }
-        format.json { render :show, status: :created, location: @order }
+    if @order.valid?
+      if params[:back_button]
+        @order.previous_step
+      elsif @order.last_step?
+        @order.save if @order.all_valid?
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+        @order.next_step
       end
+      session[:order_step] = @order.current_step
+    end
+
+    if @order.new_record?
+      render "new"
+    else
+      session[:order_step] = session[:order_params] = nil
+      redirect_to order_url(@order), notice: "Order successfully created."
     end
   end
 
@@ -58,13 +79,29 @@ class OrdersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_order
+    @order = Order.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def order_params
-      params.require(:order).permit(:status, :total_amount, :shipping_address, :billing_address, :payment_method, :shipping_method)
-    end
+  # Only allow a list of trusted parameters through.
+  def order_params
+    params
+      .require(:order)
+      .permit(
+        :status,
+        :total_amount,
+        :shipping_address,
+        :billing_address,
+        :back_button,
+        order_items_attributes: [
+          :id,
+          :order_id,
+          :product_id,
+          :quantity,
+          :unit_price,
+          :_destroy
+        ]
+      )
+  end
 end

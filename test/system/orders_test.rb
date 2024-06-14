@@ -15,9 +15,7 @@ class OrdersTest < ApplicationSystemTestCase
     click_on "New order"
 
     fill_in "Billing address", with: @order.billing_address
-    fill_in "Payment method", with: @order.payment_method
     fill_in "Shipping address", with: @order.shipping_address
-    fill_in "Shipping method", with: @order.shipping_method
     fill_in "Status", with: @order.status
     fill_in "Total amount", with: @order.total_amount
     click_on "Create Order"
@@ -31,9 +29,7 @@ class OrdersTest < ApplicationSystemTestCase
     click_on "Edit this order", match: :first
 
     fill_in "Billing address", with: @order.billing_address
-    fill_in "Payment method", with: @order.payment_method
     fill_in "Shipping address", with: @order.shipping_address
-    fill_in "Shipping method", with: @order.shipping_method
     fill_in "Status", with: @order.status
     fill_in "Total amount", with: @order.total_amount
     click_on "Update Order"

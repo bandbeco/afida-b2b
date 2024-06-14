@@ -31,8 +31,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_14_084327) do
     t.decimal "total_amount", precision: 10, scale: 2, null: false
     t.text "shipping_address", null: false
     t.text "billing_address", null: false
-    t.string "payment_method", null: false
-    t.string "shipping_method", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

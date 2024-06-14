@@ -1,0 +1,39 @@
+<% if @order.errors.any? %>
+  <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+    <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+    <ul>
+      <% @order.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form.fields_for :order_items do |order_item| %>
+  <h2 class="font-bold text-xl"><%= Product.find(order_item.object.product_id).name %></h2>
+  <div>
+    <p><%= Product.find(order_item.object.product_id).description %></p>
+    <p class="text-gray-500">SKU: <%= Product.find(order_item.object.product_id).sku %></p>
+    <p><%= Product.find(order_item.object.product_id).colour %></p>
+    <p>Width: <%= Product.find(order_item.object.product_id).width_in_mm %> mm</p>
+    <p>Height: <%= Product.find(order_item.object.product_id).height_in_mm %> mm</p>
+    <p>Depth: <%= Product.find(order_item.object.product_id).depth_in_mm %> mm</p>
+  </div>
+  <div>
+    <p class="text-xl">&pound;<%= Product.find(order_item.object.product_id).price %></p>
+  </div>
+
+  <div class="my-5">
+    <%= order_item.hidden_field :product_id, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= order_item.label :quantity %>
+    <%= order_item.number_field :quantity, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= order_item.hidden_field :unit_price, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+<% end %>
