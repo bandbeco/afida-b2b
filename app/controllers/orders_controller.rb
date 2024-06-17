@@ -13,7 +13,7 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     session[:order_params] ||= {}
-    @products = Product.first(2)
+    @products = Product.all
     @order = Order.new(session[:order_params])
 
     @products.each do |product|

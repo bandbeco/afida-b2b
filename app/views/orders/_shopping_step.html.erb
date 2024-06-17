@@ -1,39 +1,53 @@
-<% if @order.errors.any? %>
-  <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-    <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+<div class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8">
+  <%= form.fields_for :order_items do |order_item| %>
+    <% product = products.find { |product| product.id == order_item.object.product_id } %>
 
-    <ul>
-      <% @order.errors.each do |error| %>
-        <li><%= error.full_message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+    <div class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white">
+      <div class="aspect-h-4 aspect-w-3 bg-gray-200 sm:aspect-none group-hover:opacity-75 sm:h-96">
+        <img src="https://static.wixstatic.com/media/d3bbf0_afde93d29f4d4e34859bcca64968a18d~mv2.png/v1/fill/w_509,h_600,al_c,lg_1,q_85,enc_auto/straws_2-removebg-preview_edited.png" alt="Eight shirts arranged on table in black, olive, grey, blue, white, red, mustard, and green." class="h-full w-full object-cover object-center sm:h-full sm:w-full">
+      </div>
+      <div class="flex flex-1 flex-col space-y-2 p-4">
+        <h3 class="text-sm font-medium text-gray-900">
+            <%= product.name %>
+          <p class="text-sm text-gray-500">
+            SKU: <%= product.sku %>
+          </p>
+        </h3>
 
-<%= form.fields_for :order_items do |order_item| %>
-  <h2 class="font-bold text-xl"><%= Product.find(order_item.object.product_id).name %></h2>
-  <div>
-    <p><%= Product.find(order_item.object.product_id).description %></p>
-    <p class="text-gray-500">SKU: <%= Product.find(order_item.object.product_id).sku %></p>
-    <p><%= Product.find(order_item.object.product_id).colour %></p>
-    <p>Width: <%= Product.find(order_item.object.product_id).width_in_mm %> mm</p>
-    <p>Height: <%= Product.find(order_item.object.product_id).height_in_mm %> mm</p>
-    <p>Depth: <%= Product.find(order_item.object.product_id).depth_in_mm %> mm</p>
-  </div>
-  <div>
-    <p class="text-xl">&pound;<%= Product.find(order_item.object.product_id).price %></p>
-  </div>
+        <p class="text-sm text-gray-500"><%= product.description %></p>
+        
+        <div class="flex flex-1 flex-col justify-end text-sm">
+          <p>Colour: <%= product.colour %></p>
 
-  <div class="my-5">
-    <%= order_item.hidden_field :product_id, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+          <% if width = product.width_in_mm %>
+            <p>Volume: <%= width %> ml</p>
+          <% end %>
 
-  <div class="my-5">
-    <%= order_item.label :quantity %>
-    <%= order_item.number_field :quantity, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+          <% if height = product.height_in_mm %>
+            <p>Height: <%= height %> mm</p>
+          <% end %>
 
-  <div class="my-5">
-    <%= order_item.hidden_field :unit_price, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-<% end %>
+          <% if depth = product.depth_in_mm %>
+            <p>Depth: <%= depth %> mm</p>
+          <% end %>
+
+          <% if diameter = product.diameter_in_mm %>
+            <p>Diameter: <%= diameter %> mm</p>
+          <% end %>
+
+          <%= order_item.hidden_field :product_id %>
+          <%= order_item.hidden_field :unit_price %>
+        </div>
+
+        <p class="text-lg font-medium text-gray-900">
+          &pound;<%= product.price %>
+        </p>
+
+        <div>
+          <%= order_item.label :quantity %>
+          <%= order_item.number_field :quantity, min: 0, value: 0, class: "rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,17 +1,33 @@
-<%= form_with(model: @order, data: { turbo: false }) do |form| %>
-  <%= render "#{@order.current_step}_step", form: form %>
+<div class="bg-white">
+  <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+    <h2 class="sr-only">Products for order</h2>
+    <%= form_with(model: @order, data: { turbo: false }) do |form| %>
+      <% if @order.errors.any? %>
+        <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+          <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
 
-  <div class="my-5">
-    <p>
-      <% if @order.last_step? %>
-        <%= form.submit "Submit Order", class: "block bg-blue-500 text-white rounded-md px-3 py-2 mt-2 w-full" %>
-      <% else %>
-        <%= form.submit "Continue", class: "block bg-blue-500 text-white rounded-md px-3 py-2 mt-2 w-full" %>
+          <ul>
+            <% @order.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
       <% end %>
-    </p>
 
-    <p>
-      <%= form.submit "Back", class: "block bg-blue-500 text-white rounded-md px-3 py-2 mt-2 w-full", name: "back_button" unless @order.first_step? %>
-    </p>
+      <%= render "#{@order.current_step}_step", form: form, products: @products %>
+
+      <div class="my-5">
+        <p>
+          <% if @order.last_step? %>
+            <%= form.submit "Submit Order", class: "block bg-blue-500 text-white rounded-md px-3 py-2 mt-2 w-full" %>
+          <% else %>
+            <%= form.submit "Continue", class: "block bg-blue-500 text-white rounded-md px-3 py-2 mt-2 w-full" %>
+          <% end %>
+        </p>
+        <p>
+          <%= form.submit "Back", class: "block bg-blue-500 text-white rounded-md px-3 py-2 mt-2 w-full", name: "back_button" unless @order.first_step? %>
+        </p>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
