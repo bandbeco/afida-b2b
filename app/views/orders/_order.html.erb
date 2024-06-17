@@ -1,21 +1,11 @@
-<div id="<%= dom_id order %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Status:</strong>
+<tr id="<%= dom_id order %>" class="border-t border-gray-300">
+<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+    <%= link_to "INV000#{order.id}", order_path(order), class: "text-indigo-600 hover:text-indigo-900" %>
+  </td>
+  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
     <%= order.status %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Total amount:</strong>
-    <%= order.total_amount %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Shipping address:</strong>
-    <%= order.shipping_address %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Billing address:</strong>
-    <%= order.billing_address %>
-  </p>
-</div>
+  </td>
+  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= order.total_amount %></td>
+  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= order.shipping_address %></td>
+  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= order.billing_address %></td>
+</tr>
