@@ -24,6 +24,7 @@ registry:
 env:
   clear:
     DB_HOST: 195.201.33.130
+    APP_HOST: kiyuro.com
   secret:
     - RAILS_MASTER_KEY
     - POSTGRES_PASSWORD
