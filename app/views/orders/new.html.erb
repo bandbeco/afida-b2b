@@ -24,9 +24,6 @@
             <%= form.submit "Continue", class: "block bg-blue-500 text-white rounded-md px-3 py-2 mt-2 w-full" %>
           <% end %>
         </p>
-        <p>
-          <%= form.submit "Back", class: "block bg-blue-500 text-white rounded-md px-3 py-2 mt-2 w-full", name: "back_button" unless @order.first_step? %>
-        </p>
       </div>
     <% end %>
   </div>

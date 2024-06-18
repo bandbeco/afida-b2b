@@ -37,9 +37,7 @@ class OrdersController < ApplicationController
     @order.total_amount = @order.order_items.sum(&:total_price)
 
     if @order.valid?
-      if params[:back_button]
-        @order.previous_step
-      elsif @order.last_step?
+      if @order.last_step?
         @order.save if @order.all_valid?
       else
         @order.next_step
@@ -47,11 +45,13 @@ class OrdersController < ApplicationController
       session[:order_step] = @order.current_step
     end
 
-    if @order.new_record?
-      render "new"
-    else
-      session[:order_step] = session[:order_params] = nil
-      redirect_to order_url(@order), notice: "Order successfully created."
+    respond_to do |format|
+      if @order.new_record?
+        format.html { render :new, status: :ok }
+      else
+        session[:order_step] = session[:order_params] = nil
+        format.html { redirect_to order_url(@order), notice: "Order was successfully created." }
+      end
     end
   end
 
