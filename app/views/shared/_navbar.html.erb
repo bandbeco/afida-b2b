@@ -27,18 +27,7 @@
       <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
         <div class="flex flex-shrink-0 items-center">
         <%= link_to root_path do %>
-          <svg class="h-8 w-auto" preserveAspectRatio="xMidYMid meet" data-bbox="0 0 456.039 149.71" viewBox="0 0 456.039 149.71" xmlns="http://www.w3.org/2000/svg" data-type="color" role="presentation" aria-hidden="true" aria-label="">
-            <g>
-                <path d="M452.69 13.31C447.42 4.51 437.31.06 422.63.06h-38.64c-5.73-.35-14.64 1.5-22.65 8.72-5.76-5.8-14.66-8.74-26.57-8.74H181.6c-5.91-.36-15.19 1.62-23.38 9.39C152.5 3.2 143.4.04 131.06.04H92.42c-8.51-.51-24.01 3.79-33.18 23.33L0 149.7h174.96l34.03.01h74.28l8.32-.01 65.25.01h45.61l50.41-110.69c3.29-6.47 5.15-16.88-.14-25.71Z" fill="#000000" data-color="1"></path>
-                <path d="M130.79 14.03H91.6S79.49 12.6 71.65 29.3L21.77 135.69h34.41l24.64-51.31H91.2l-23.21 51.31h33.6l46.83-102.82s10.08-18.83-17.61-18.83Zm-29.32 47.65H91.09l13.23-27.79h10.59l-13.44 27.79Z" fill="#79ebc0" data-color="2"></path>
-                <path d="M198.89 61.68h-18.63l9.64-20.24h28.28l14.2-27.4h-51.61s-12.11-1.43-19.95 15.27L110.94 135.7h34.41l24.64-51.31h18.22l10.69-22.7Z" fill="#79ebc0" data-color="2"></path>
-                <path d="M422.35 14.05h-39.19s-12.11-1.43-19.95 15.27l-49.88 106.39h34.41l24.64-51.31h10.38l-23.2 51.29h33.6l46.82-102.81s10.08-18.83-17.61-18.83Zm-29.32 47.64h-10.38l13.23-27.79h10.59l-13.44 27.79Z" fill="#79ebc0" data-color="2"></path>
-                <path fill="#79ebc0" d="m262 37.26.67.31 3.45 1.58 11.45-25.12h-7.99l-10.08 22.1 2.5 1.13z" data-color="2"></path>
-                <path d="M254.35 50.8c-3.4-5.07-4.19-11.73-1.47-17.69l8.7-19.07h-19.72L181.8 135.7h17.63v.02h16.45v-.02l39.72-83.26c-.44-.52-.85-1.07-1.23-1.63Z" fill="#79ebc0" data-color="2"></path>
-                <path d="m314.33 115.81 37.77-82.94s10.08-18.83-17.61-18.83h-33l-15.5 34.17c-2.01 4.42-5.58 7.62-9.75 9.31-2.36.95-4.91 1.42-7.49 1.32l-36.7 76.85v.02h8.9v-.02h42.04c19.93 0 28.5-14.04 30.73-18.52l.62-1.36Zm-33.65 0h-11.26l25.51-54.13 13.1-27.79h10.59l-37.94 81.92Z" fill="#79ebc0" data-color="2"></path>
-                <path fill="#79ebc0" d="m279.37 45.19 12-26.33 2.2-4.83h-8l-12.82 28.14 6.62 3.02z" data-color="2"></path>
-            </g>
-        </svg>
+          <%= render "shared/logo" %>
         <% end %>
         </div>
         <div class="hidden sm:ml-6 sm:block">
@@ -48,15 +37,8 @@
           </div>
         </div>
       </div>
-      <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-        <button type="button" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-          <span class="absolute -inset-1.5"></span>
-          <span class="sr-only">View notifications</span>
-          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-          </svg>
-        </button>
 
+      <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
         <!-- Profile dropdown -->
         <div class="relative ml-3">
           <div>
@@ -65,6 +47,12 @@
               <span class="sr-only">Open user menu</span>
               <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
             </button>
+          </div>
+        </div>
+
+        <div class="relative ml-3">
+          <div>
+            <%= link_to "logout", destroy_user_session_path, method: :delete, class: "relative flex text-sm"  %>
           </div>
         </div>
       </div>

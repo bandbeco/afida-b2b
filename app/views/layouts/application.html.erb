@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-full bg-white">
   <head>
     <title>Afida</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,9 +11,9 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= render "shared/navbar" %>
-    <main class="container mx-auto mt-10 px-5 flex">
+  <body class="h-full">
+    <%= render "shared/navbar" if user_signed_in? %>
+    <main class="container">
       <%= yield %>
     </main>
   </body>
