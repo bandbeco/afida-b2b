@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_18_143626) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_21_094022) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "building_name"
+    t.string "street_number_and_name", null: false
+    t.string "post_town", null: false
+    t.string "postcode", null: false
+    t.text "additional_notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_addresses_on_user_id"
+  end
 
   create_table "order_items", force: :cascade do |t|
     t.bigint "product_id", null: false
@@ -76,6 +88,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_18_143626) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "addresses", "users"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
 end

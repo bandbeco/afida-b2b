@@ -1,6 +1,6 @@
 <div class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8">
   <%= form.fields_for :order_items do |order_item| %>
-    <% product = products.find { |product| product.id == order_item.object.product_id } %>
+    <% product = products.find { |p| p.id == order_item.object.product_id } %>
 
     <div class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white">
       <div class="aspect-h-4 aspect-w-3 bg-gray-200 sm:aspect-none group-hover:opacity-75 sm:h-96">

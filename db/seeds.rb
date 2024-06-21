@@ -9,7 +9,6 @@
 #   end
 #
 
-
 Product.destroy_all
 
 straws = YAML.load_file(Rails.root.join("db", "straws.yml"))
@@ -65,4 +64,3 @@ ice_cream_cups = YAML.load_file(Rails.root.join("db", "ice_cream_cups.yml"))
 ice_cream_cups.each do |product|
   Product.find_or_create_by!(product)
 end
-

@@ -1,7 +1,13 @@
-<h3 class="font-semibold text-lg">Confirm your order</h3>
+<h3 class="font-semibold text-xl">Confirm your order</h3>
 
-<%= @order.shipping_address %>
-<%= @order.billing_address %>
+<div class="my-5">
+  <h4 class="font-semibold text-md">Shipping Address</h4>
+  <%= @order.shipping_address %>
+  <%= form.hidden_field :shipping_address, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+</div>
 
+<div class="my-5">
+  <h4 class="font-semibold text-md">Billing Address</h4>
+  <%= @order.billing_address %>
   <%= form.hidden_field :billing_address, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  <%= form.hidden_field :billing_address, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+</div>
