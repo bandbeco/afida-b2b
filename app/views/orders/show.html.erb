@@ -1,49 +1,58 @@
-<div class="w-full px-4 sm:px-6 lg:px-8">
-  <div class="sm:flex sm:items-center">
-    <div class="sm:flex-auto">
-      <h1 class="text-base font-semibold leading-6 text-gray-900">Order Details</h1>
-      <p class="mt-2 text-sm text-gray-700">[Customer Details]</p>
-    </div>
-    <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-      <button type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Print</button>
-    </div>
+<div class="sm:flex sm:items-center">
+  <div class="sm:flex-auto">
+    <h1 class="text-base font-semibold leading-6 text-gray-900">Order Details</h1>
+
+    <p class="mt-2 text-sm text-gray-700">
+    Order #<%= @order.formatted_order_id %>
+    </p>
+
+    <p class="mt-2 text-sm text-gray-700">
+    Shipping Address: <%= @order.shipping_address %>
+    </p>
+
+    <p class="mt-2 text-sm text-gray-700">
+    Billing Address: <%= @order.billing_address %>
+    </p>
   </div>
-  <div class="-mx-4 mt-8 flow-root sm:mx-0">
-    <table class="min-w-full">
-      <colgroup>
-        <col class="w-full sm:w-1/2">
-        <col class="sm:w-1/6">
-        <col class="sm:w-1/6">
-        <col class="sm:w-1/6">
-      </colgroup>
-      <thead class="border-b border-gray-300 text-gray-900">
-        <tr>
-          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Description</th>
-          <th scope="col" class="hidden px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:table-cell">Quantity</th>
-          <th scope="col" class="hidden px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:table-cell">Unit Price</th>
-          <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @order.order_items.each do |order_item| %>
-          <tr class="border-b border-gray-200">
-            <td class="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
-              <div class="font-medium text-gray-900"><%= order_item.product.name %></div>
-              <div class="mt-1 truncate text-gray-500"><%= order_item.product.sku %></div>
-            </td>
-            <td class="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell"><%= quantity = order_item.quantity %></td>
-            <td class="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell">&pound;<%= unit_price = order_item.unit_price %></td>
-            <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">&pound;<%= quantity * unit_price %></td>
-          </tr>
-        <% end %>
-      </tbody>
-      <tfoot>
-        <tr>
-          <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Total</th>
-          <th scope="row" class="pl-4 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden">Total</th>
-          <td class="pl-3 pr-4 pt-6 text-right text-sm text-gray-500 sm:pr-0">&pound;<%= total_amount = @order.total_amount %></td>
-        </tr>
-      </tfoot>
-    </table>
+  <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+    <button type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Print</button>
   </div>
+</div>
+<div class="-mx-4 mt-8 flow-root sm:mx-0">
+  <table class="min-w-full">
+    <colgroup>
+      <col class="w-full sm:w-1/2">
+      <col class="sm:w-1/6">
+      <col class="sm:w-1/6">
+      <col class="sm:w-1/6">
+    </colgroup>
+    <thead class="border-b border-gray-300 text-gray-900">
+      <tr>
+        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Description</th>
+        <th scope="col" class="hidden px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:table-cell">Quantity</th>
+        <th scope="col" class="hidden px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:table-cell">Unit Price</th>
+        <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @order.order_items.each do |order_item| %>
+        <tr class="border-b border-gray-200">
+          <td class="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
+            <div class="font-medium text-gray-900"><%= order_item.product.name %></div>
+            <div class="mt-1 truncate text-gray-500"><%= order_item.product.sku %></div>
+          </td>
+          <td class="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell"><%= quantity = order_item.quantity %></td>
+          <td class="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell">&pound;<%= unit_price = order_item.unit_price %></td>
+          <td class="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">&pound;<%= quantity * unit_price %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Total</th>
+        <th scope="row" class="pl-4 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden">Total</th>
+        <td class="pl-3 pr-4 pt-6 text-right text-sm text-gray-500 sm:pr-0">&pound;<%= total_amount = @order.total_amount %></td>
+      </tr>
+    </tfoot>
+  </table>
 </div>
