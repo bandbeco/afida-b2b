@@ -5,12 +5,14 @@
 # below each fixture, per the syntax in the comments below
 #
 one:
+  user: :one
   building_name: "Downing Street"
   street_number_and_name: "10 Downing Street"
   post_town: "London"
   postcode: "SE13 7TN"
   additional_notes: "Leave in front of door"
 two:
+  user: :one
   building_name: "Barnfield"
   street_number_and_name: "13 Cedars Avenue"
   post_town: "Rickmansworth"
