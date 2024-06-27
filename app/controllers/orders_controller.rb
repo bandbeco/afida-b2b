@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
   def new
     session[:order_params] ||= {}
     @products = Product.all
-    @order = Order.new(session[:order_params])
+    @order = current_user.orders.build(session[:order_params])
 
     @products.each do |product|
       @order.order_items.build(
@@ -32,7 +32,7 @@ class OrdersController < ApplicationController
   def create
     @order_params = order_params
     session[:order_params].deep_merge!(order_params) if order_params
-    @order = Order.new(session[:order_params])
+    @order = current_user.orders.build(session[:order_params])
     @order.current_step = session[:order_step]
     @order.total_amount = @order.order_items.sum(&:total_price)
 
@@ -81,7 +81,7 @@ class OrdersController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_order
-    @order = Order.find(params[:id])
+    @order = current_user.orders.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
