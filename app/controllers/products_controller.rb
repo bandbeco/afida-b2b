@@ -29,7 +29,7 @@ class ProductsController < ApplicationController
           @product.save!
 
           User.all.each do |user|
-            user.price_list_items.create!(product: @product, price: @product.price)
+            user.price_list_items.create!(product: @product)
           end
         end
 

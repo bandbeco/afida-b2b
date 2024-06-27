@@ -52,7 +52,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_27_114918) do
   create_table "price_list_items", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "product_id", null: false
-    t.decimal "price", precision: 10, scale: 2, null: false
+    t.decimal "price", precision: 10, scale: 2
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

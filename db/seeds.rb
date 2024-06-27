@@ -74,6 +74,6 @@ end
 
 User.all.each do |user|
   Product.all.each do |product|
-user.price_list_items.create!(product: product, price: 1.00)
+    user.price_list_items.create!(product: product, price: 1.00)
   end
 end
