@@ -62,4 +62,8 @@ class Order < ApplicationRecord
       valid?
     end
   end
+
+  def formatted_order_id
+    "INV000#{id}"
+  end
 end
