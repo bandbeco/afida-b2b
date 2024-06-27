@@ -3,9 +3,11 @@
     <% price_list_item = price_list_items.find { |p| p.product_id == order_item.object.product_id } %>
     <% product = price_list_item.product %>
 
-    <div class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white">
-      <div class="aspect-h-4 aspect-w-3 bg-gray-200 sm:aspect-none group-hover:opacity-75 sm:h-96">
-        <img src="https://static.wixstatic.com/media/d3bbf0_afde93d29f4d4e34859bcca64968a18d~mv2.png/v1/fill/w_509,h_600,al_c,lg_1,q_85,enc_auto/straws_2-removebg-preview_edited.png" alt="Eight shirts arranged on table in black, olive, grey, blue, white, red, mustard, and green." class="h-full w-full object-cover object-center sm:h-full sm:w-full">
+    <div class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-800 border-4 bg-white">
+      <div class="aspect-h-4 aspect-w-3 sm:aspect-none group-hover:opacity-75 sm:h-96">
+        <% if product.picture.attached? %>
+          <%= image_tag product.picture, class: "h-full w-full object-cover object-center sm:h-full sm:w-full" %>
+        <% end %>
       </div>
       <div class="flex flex-1 flex-col space-y-2 p-4">
         <h3 class="text-sm font-medium text-gray-900">

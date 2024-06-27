@@ -83,6 +83,7 @@ class ProductsController < ApplicationController
       .permit(
         :sku,
         :name,
+        :picture,
         :description,
         :colour,
         :pac_size,

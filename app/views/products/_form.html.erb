@@ -12,13 +12,18 @@
   <% end %>
 
   <div class="my-5">
-    <%= form.label :sku %>
+    <%= form.label :sku, "SKU" %>
     <%= form.text_field :sku, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="my-5">
     <%= form.label :name %>
     <%= form.text_field :name, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :picture %>
+    <%= form.file_field :picture, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="my-5">
@@ -32,7 +37,7 @@
   </div>
 
   <div class="my-5">
-    <%= form.label :pac_size %>
+    <%= form.label :pac_size, "PAC Size" %>
     <%= form.number_field :pac_size, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
