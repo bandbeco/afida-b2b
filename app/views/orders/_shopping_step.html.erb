@@ -41,7 +41,11 @@
         </div>
 
         <p class="text-lg font-medium text-gray-900">
-          &pound;<%= price_list_item.price %>
+          <% if price_list_item.price.present? %>
+            &pound;<%= price_list_item.price %>
+          <% else %>
+            Price To Be Confirmed
+          <% end %>
         </p>
 
         <div>
