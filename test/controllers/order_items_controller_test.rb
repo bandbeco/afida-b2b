@@ -1,7 +1,10 @@
 require "test_helper"
 
 class OrderItemsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    sign_in users(:one)
     @order_item = order_items(:one)
   end
 

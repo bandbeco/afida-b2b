@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :orders
-  has_many :addresses
+  has_many :addresses, dependent: :destroy
 
   def formatted_name
     "#{first_name} #{last_name}".strip

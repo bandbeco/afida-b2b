@@ -1,7 +1,10 @@
 require "test_helper"
 
 class AddressesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    sign_in users(:one)
     @address = addresses(:one)
   end
 
