@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  resources :addresses
   devise_for :users
+
+  resources :addresses
   resources :users
   resources :order_items
   resources :orders
