@@ -11,4 +11,7 @@ class User < ApplicationRecord
   def formatted_name
     "#{first_name} #{last_name}".strip
   end
+
+  def role
+  end
 end

@@ -6,6 +6,6 @@ class OrderItem < ApplicationRecord
   validates :unit_price, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   def total_price
-    quantity * unit_price
+    quantity * unit_price.to_d.round(2)
   end
 end
