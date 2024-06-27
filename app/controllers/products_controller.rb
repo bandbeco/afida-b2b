@@ -24,7 +24,15 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params)
 
     respond_to do |format|
-      if @product.save
+      if @product.valid?
+        ActiveRecord::Base.transaction do
+          @product.save!
+
+          User.all.each do |user|
+            user.price_list_items.create!(product: @product, price: @product.price)
+          end
+        end
+
         format.html { redirect_to product_url(@product), notice: "Product was successfully created." }
         format.json { render :show, status: :created, location: @product }
       else
@@ -49,23 +57,28 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1 or /products/1.json
   def destroy
-    @product.soft_delete
+    ActiveRecord::Base.transaction do
+      @product.soft_delete!
+      @product.price_list_items.each do |price_list_item|
+        price_list_item.soft_delete!
+      end
 
-    respond_to do |format|
-      format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
+        format.json { head :no_content }
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_product
+    @product = Product.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def product_params
-      params
+  # Only allow a list of trusted parameters through.
+  def product_params
+    params
       .require(:product)
       .permit(
         :sku,
@@ -80,5 +93,5 @@ class ProductsController < ApplicationController
         :diameter_in_mm,
         :volume_in_ml
       )
-    end
+  end
 end

@@ -3,7 +3,7 @@
   colour: Clear
   sku: 8RPTRC
   pac_size: 1000
-  price: £30.80
+  price: 30.80
 - name: 12oz/355ml/ rPET Recyclable Cup
   colour: Clear
   sku: 12RPTRC
@@ -53,9 +53,9 @@
   colour: White
   sku: UKMRHFP
   pac_size: 1000
-  price: 99
+  price: 99.00
 - name: Pint to Line Home Compostable Paper Cup UKCA Marked
   colour: White
   sku: UKMRFP
   pac_size: 1000
-  price: 115
+  price: 115.00

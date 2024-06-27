@@ -13,7 +13,7 @@
     </div>
   <% end %>
 
-  <%= render "#{@order.current_step}_step", form: form, products: @products %>
+  <%= render "#{@order.current_step}_step", form: form, price_list_items: @price_list_items %>
 
   <div class="my-5">
     <% if @order.last_step? %>

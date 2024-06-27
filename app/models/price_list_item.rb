@@ -1,12 +1,10 @@
-class Product < ApplicationRecord
+class PriceListItem < ApplicationRecord
   default_scope { where(deleted_at: nil) }
   scope :with_deleted, -> { unscope(where: :deleted_at) }
 
-  has_many :orders, through: :order_items 
-  has_many :order_items, dependent: :destroy
-  has_many :price_list_items
+  belongs_to :user
+  belongs_to :product
 
-  validates :name, :price, presence: true
   validates :price, numericality: { greater_than: 0 }
 
   def soft_delete!

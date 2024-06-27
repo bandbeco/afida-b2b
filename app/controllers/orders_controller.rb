@@ -13,13 +13,15 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     session[:order_params] ||= {}
-    @products = Product.all
-    @order = current_user.orders.build(session[:order_params])
 
-    @products.each do |product|
+    @order = current_user.orders.build(session[:order_params])
+    @price_list_items = current_user.price_list_items.includes(:product)
+    @products = @price_list_items.includes(:product).map(&:product)
+
+    @price_list_items.each do |price_list_item|
       @order.order_items.build(
-        product_id: product.id,
-        unit_price: product.price
+        product_id: price_list_item.product_id,
+        unit_price: price_list_item.price
       )
     end
   end

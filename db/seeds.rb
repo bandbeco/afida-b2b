@@ -64,3 +64,16 @@ ice_cream_cups = YAML.load_file(Rails.root.join("db", "ice_cream_cups.yml"))
 ice_cream_cups.each do |product|
   Product.find_or_create_by!(product)
 end
+
+User.find_or_create_by!(email: "foo@example.com") do |user|
+  user.password = "password"
+  user.password_confirmation = "password"
+  user.first_name = "Foo"
+  user.last_name = "Bar"
+end
+
+User.all.each do |user|
+  Product.all.each do |product|
+user.price_list_items.create!(product: product, price: 1.00)
+  end
+end
