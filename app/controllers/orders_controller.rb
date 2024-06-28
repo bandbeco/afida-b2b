@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
 
   # GET /orders or /orders.json
   def index
-    @orders = Order.all
+    @orders = current_user.orders
   end
 
   # GET /orders/1 or /orders/1.json
@@ -16,6 +16,7 @@ class OrdersController < ApplicationController
 
     @order = current_user.orders.build(session[:order_params])
     @price_list_items = current_user.price_list_items.includes(:product)
+    # preload product images:
     @products = @price_list_items.includes(:product).map(&:product)
 
     @price_list_items.each do |price_list_item|
