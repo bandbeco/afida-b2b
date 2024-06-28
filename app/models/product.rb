@@ -14,4 +14,7 @@ class Product < ApplicationRecord
   def soft_delete!
     update!(deleted_at: Time.zone.now)
   end
+
+  def dimensions
+  end
 end

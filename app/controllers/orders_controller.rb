@@ -37,6 +37,8 @@ class OrdersController < ApplicationController
     @order = current_user.orders.build(session[:order_params])
     @order.current_step = session[:order_step]
     @order.total_amount = @order.order_items.sum(&:total_price)
+    @order.shipping_address = order_params[:shipping_address].values.join(", ") if order_params[:shipping_address]
+    @order.billing_address = order_params[:billing_address].values.join(", ") if order_params[:billing_address]
 
     if @order.valid?
       if @order.last_step?
@@ -95,7 +97,9 @@ class OrdersController < ApplicationController
         :total_amount,
         :shipping_address,
         :billing_address,
-        :back_button,
+        :payment_method,
+        shipping_address: %i[street_number_and_name post_town postcode additional_notes],
+        billing_address: %i[street_number_and_name post_town postcode],
         order_items_attributes: [
           :id,
           :order_id,

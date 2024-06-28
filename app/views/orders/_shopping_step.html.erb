@@ -1,9 +1,9 @@
-<div class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8">
+<div class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8 justify-end">
   <%= form.fields_for :order_items do |order_item| %>
     <% price_list_item = price_list_items.find { |p| p.product_id == order_item.object.product_id } %>
     <% product = price_list_item.product %>
 
-    <div class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-800 border-4 bg-white">
+    <div class="group relative flex flex-col rounded-lg border-gray-800 border-4 bg-white">
       <div class="aspect-h-4 aspect-w-3 sm:aspect-none group-hover:opacity-75 sm:h-96">
         <% if product.picture.attached? %>
           <%= image_tag product.picture, class: "h-full w-full object-cover object-center sm:h-full sm:w-full" %>
@@ -57,4 +57,10 @@
       </div>
     </div>
   <% end %>
+</div>
+
+<div class="mt-5 grid gril-cols-1 justify-items-end">
+  <div>
+    <%= form.submit "Proceed to checkout", class: "block bg-blue-500 text-white rounded-md px-3 py-2 mt-2" %>
+  </div>
 </div>
