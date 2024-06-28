@@ -13,7 +13,7 @@
         <h3 class="text-xl font-medium text-gray-900">
           <%= link_to product.name, product %>
           <p class="text-sm text-gray-500">
-            SKU: <%= product.sku %>
+            SKU: <%= product.sku&.upcase %>
           </p>
         </h3>
 
