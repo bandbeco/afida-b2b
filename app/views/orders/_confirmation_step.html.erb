@@ -64,7 +64,7 @@
                 <fieldset>
                   <div class="space-y-4">
                     <div class="flex items-center">
-                      <%= form.radio_button :payment_method, :invoice, class: "h-4 w-4 border-gray-300 focus:ring-indigo-600" %>
+                      <%= form.radio_button :payment_method, :invoice, checked: true, class: "h-4 w-4 border-gray-300 focus:ring-indigo-600" %>
                       <%= form.label :payment_method_invoice, "Invoice", class: "ml-3 block text-sm font-medium leading-6 text-gray-900" %>
                     </div>
 
