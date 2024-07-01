@@ -17,6 +17,8 @@ class Order < ApplicationRecord
 
   attr_writer :current_step
 
+  VAT_RATE = 0.20
+
   def current_step
     @current_step || steps.first
   end
@@ -58,5 +60,13 @@ class Order < ApplicationRecord
 
   def formatted_order_id
     "INV000#{id}"
+  end
+
+  def vat_amount
+    total_amount * VAT_RATE
+  end
+
+  def shipping_amount
+    total_amount > 100 ? 0 : 5.00
   end
 end

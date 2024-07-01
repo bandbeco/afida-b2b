@@ -18,7 +18,9 @@
 
         <dl>
           <dt class="text-sm font-medium">Amount due</dt>
-          <dd class="mt-1 text-3xl font-bold tracking-tight text-gray-900">&pound;<%= total_amount = @order.total_amount %></dd>
+          <dd class="mt-1 text-3xl font-bold tracking-tight text-gray-900">
+            <%= currency_for(@order.total_amount + @order.shipping_amount + @order.vat_amount) %>
+          </dd>
         </dl>
 
         <ul role="list" class="divide-y divide-gray-900 divide-opacity-10 text-sm font-medium">
@@ -43,9 +45,26 @@
         </ul>
 
         <dl class="space-y-6 border-t border-black pt-6 text-sm font-medium">
-          <div class="flex items-center justify-between pt-6">
+          <div class="flex items-center justify-between">
+            <dt>Subtotal</dt>
+            <dd><%= currency_for(@order.total_amount) %></dd>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <dt>Shipping</dt>
+            <dd><%= currency_for(@order.shipping_amount) %></dd>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <dt>VAT 20%</dt>
+            <dd><%= currency_for(@order.vat_amount) %></dd>
+          </div>
+
+          <div class="flex items-center justify-between border-t-2 border-black pt-6">
             <dt class="text-base">Total</dt>
-            <dd class="text-base">&pound;<%= @order.total_amount %></dd>
+            <dd class="text-base">
+              <%= currency_for(@order.total_amount + @order.shipping_amount + @order.vat_amount) %>
+            </dd>
           </div>
         </dl>
       </div>
