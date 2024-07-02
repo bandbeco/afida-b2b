@@ -9,6 +9,7 @@ class Order < ApplicationRecord
   validates :total_amount, presence: true, numericality: { greater_than: 0 }, if: :last_step?
   validates :shipping_address, presence: true, if: :last_step?
   validates :billing_address, presence: true, if: :last_step?
+  validates :payment_method, presence: true, if: :last_step?
 
   enum status: { pending: 0, processing: 1, shipped: 2, delivered: 3, canceled: 4 }
   enum payment_method: { invoice: 0, bank_transfer: 1, credit_card: 2 }
@@ -43,14 +44,6 @@ class Order < ApplicationRecord
     self.current_step = steps[steps.index(current_step) - 1]
   end
 
-  def shopping?
-    current_step == 'shopping'
-  end
-
-  def confirmation?
-    current_step == 'confirmation'
-  end
-
   def all_valid?
     steps.all? do |step|
       self.current_step = step
@@ -68,5 +61,15 @@ class Order < ApplicationRecord
 
   def shipping_amount
     total_amount > 100 ? 0 : 5.00
+  end
+
+  private
+
+  def shopping?
+    current_step == 'shopping'
+  end
+
+  def confirmation?
+    current_step == 'confirmation'
   end
 end
