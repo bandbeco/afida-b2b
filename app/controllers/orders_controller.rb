@@ -27,7 +27,12 @@ class OrdersController < ApplicationController
     session[:order_params].deep_merge!(order_params) if order_params
     @order = current_user.orders.build(session[:order_params])
     @order.current_step = session[:order_step]
-    @order.total_amount = @order.order_items.sum(&:total_price)
+    @order.subtotal_amount = @order.order_items.sum(&:total_price)
+    @order.shipping_amount = @order.subtotal_amount > 100 ? 0 : 5.00
+    @order.vat_rate = Order::VAT_RATE
+    @order.vat_amount = @order.subtotal_amount * @order.vat_rate
+    @order.total_amount = @order.subtotal_amount + @order.vat_amount + @order.shipping_amount
+
     @order.shipping_address = order_params[:shipping_address].values.join(", ") if order_params[:shipping_address]
     @order.billing_address = order_params[:billing_address].values.join(", ") if order_params[:billing_address]
 

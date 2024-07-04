@@ -5,7 +5,7 @@ class OrderTest < ActiveSupport::TestCase
     @order = Order.new(
         user: users(:one),
         status: 'pending',
-        total_amount: 100,
+        subtotal_amount: 100,
         shipping_address: '123 Main St',
         billing_address: '456, Wall St',
         payment_method: 'invoice'
@@ -37,9 +37,9 @@ class OrderTest < ActiveSupport::TestCase
     assert_not @order.valid?
   end
 
-  test "validates total_amount presence if last step" do
+  test "validates subtotal_amount presence if last step" do
     @order.next_step
-    @order.total_amount = nil
+    @order.subtotal_amount = nil
     assert_not @order.valid?
   end
 
@@ -71,12 +71,12 @@ class OrderTest < ActiveSupport::TestCase
   end
 
   test "shipping_amount returns 0 if total amount is greater than 100" do
-    @order.total_amount = 101
+    @order.subtotal_amount = 101
     assert_equal 0, @order.shipping_amount
   end
 
   test "shipping_amount returns 5 if total amount is less than or equal to 100" do
-    @order.total_amount = 100
+    @order.subtotal_amount = 100
     assert_equal 5, @order.shipping_amount
   end
 end

@@ -6,7 +6,7 @@ class Order < ApplicationRecord
 
   validates :status, presence: true
 
-  validates :total_amount, presence: true, numericality: { greater_than: 0 }, if: :last_step?
+  validates :subtotal_amount, presence: true, numericality: { greater_than: 0 }, if: :last_step?
   validates :shipping_address, presence: true, if: :last_step?
   validates :billing_address, presence: true, if: :last_step?
   validates :payment_method, presence: true, if: :last_step?
@@ -53,14 +53,6 @@ class Order < ApplicationRecord
 
   def formatted_order_id
     "INV000#{id}"
-  end
-
-  def vat_amount
-    total_amount * VAT_RATE
-  end
-
-  def shipping_amount
-    total_amount > 100 ? 0 : 5.00
   end
 
   private

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_02_094319) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_04_122525) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -81,6 +81,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_02_094319) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.integer "payment_method"
+    t.decimal "shipping_amount", precision: 10, scale: 2
+    t.decimal "vat_rate", precision: 10, scale: 2
+    t.decimal "vat_amount", precision: 10, scale: 2
+    t.decimal "subtotal_amount", precision: 10, scale: 2, null: false
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
