@@ -11,6 +11,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        impact: ['Impact'],
       },
       colors: {
         'afida-green': '#79EBC0',

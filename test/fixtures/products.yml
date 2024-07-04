@@ -9,6 +9,7 @@ one:
   price: 9.99
   width_in_mm: 1
   height_in_mm: 1
+  category: one
 
 two:
   sku: MyString
@@ -19,3 +20,4 @@ two:
   price: 9.99
   width_in_mm: 1
   height_in_mm: 1
+  category: two

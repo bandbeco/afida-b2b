@@ -13,5 +13,23 @@
     </div>
   <% end %>
 
-  <%= render "#{@order.current_step}_step", form: form, price_list_items: @price_list_items %>
+  <% if @order.current_step == "shopping" %>
+    <% @categorized_price_list_items.each do |category, price_list_items| %>
+      <%= render "#{@order.current_step}_step",
+        form: form,
+        category: category,
+        price_list_items: price_list_items
+      %>
+    <% end %>
+  <% end %>
+
+  <% if @order.current_step == "confirmation" %>
+    <%= render "confirmation_step", form: form %>
+  <% end %>
+
+  <div class="mt-5 grid gril-cols-1 justify-items-end">
+    <div>
+      <%= form.submit "Proceed to checkout", class: "block bg-blue-500 text-white rounded-md px-3 py-2 mt-2" %>
+    </div>
+  </div>
 <% end %>

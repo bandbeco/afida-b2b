@@ -13,4 +13,8 @@ class PriceListItem < ApplicationRecord
   def soft_delete!
     update!(deleted_at: Time.zone.now)
   end
+
+  def category
+    product.category
+  end
 end

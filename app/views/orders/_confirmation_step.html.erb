@@ -27,7 +27,7 @@
           <% @order.order_items.each do |order_item| %>
             <li class="flex items-start space-x-4 py-6">
               <% if order_item.product.picture.attached? %>
-                <%= image_tag order_item.product.picture.variant(:thumb), class: "h-20 w-20 flex-none rounded-md object-cover object-center" %>
+                <%= image_tag order_item.product.picture, class: "h-20 w-20 flex-none rounded-md object-cover object-center" %>
               <% end %>
 
               <div class="flex-auto space-y-1">
