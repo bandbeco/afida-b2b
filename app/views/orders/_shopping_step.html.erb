@@ -4,61 +4,25 @@
   </h2>
 </div>
 
-<div class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8 justify-end">
+<div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
   <% price_list_items.each do |price_list_item| %>
     <%= form.fields_for :order_items, @order.order_items.build(product_id: price_list_item.product_id, unit_price: price_list_item.price) do |order_item| %>
-
-      <div class="group relative flex flex-col border-gray-800 border-2 bg-white rounded">
-        <div class="aspect-h-4 aspect-w-3 sm:aspect-none group-hover:opacity-75 sm:h-96">
+      <div class="group bg-white rounded">
+        <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden">
           <% if price_list_item.product.picture.attached? %>
-            <%= image_tag price_list_item.product.picture, class: "h-full w-full object-cover object-center sm:h-full sm:w-full" %>
+            <%= image_tag price_list_item.product.picture, class: "h-full w-full object-center group-hover:opacity-75" %>
           <% end %>
         </div>
 
-        <div class="flex flex-1 flex-col space-y-2 p-4">
-          <h3 class="text-xl font-medium text-gray-900">
-            <%= link_to price_list_item.product.name, price_list_item.product %>
-            <p class="text-sm text-gray-500">
-            SKU: <%= price_list_item.product.sku&.upcase %>
-            </p>
-          </h3>
-
-          <p class="text-sm text-gray-500"><%= price_list_item.product.description %></p>
-          <div class="flex flex-1 flex-col justify-end text-sm">
-            <p>Colour: <%= price_list_item.product.colour %></p>
-
-            <% if width = price_list_item.product.width_in_mm %>
-              <p>Volume: <%= width %> ml</p>
-            <% end %>
-
-            <% if height = price_list_item.product.height_in_mm %>
-              <p>Height: <%= height %> mm</p>
-            <% end %>
-
-            <% if depth = price_list_item.product.depth_in_mm %>
-              <p>Depth: <%= depth %> mm</p>
-            <% end %>
-
-            <% if diameter = price_list_item.product.diameter_in_mm %>
-              <p>Diameter: <%= diameter %> mm</p>
-            <% end %>
-
-            <%= order_item.hidden_field :product_id %>
-            <%= order_item.hidden_field :unit_price %>
+        <div class="p-3 text-gray-700">
+          <h3 class="mt-2 font-medium"><%= price_list_item.product.name %></h3>
+          <div class="text-sm flex justify-between">
+            <p class="mt-1"><%= price_list_item.product.pac_size %> pcs</p>
+            <p class="mt-1"><%= currency_for(price_list_item.price) %></p>
           </div>
-
-          <p class="text-lg font-medium text-gray-900">
-            <% if price_list_item.price.present? %>
-              &pound;<%= price_list_item.price %>
-            <% else %>
-              Price To Be Confirmed
-            <% end %>
-          </p>
-
-          <div>
-            <%= order_item.label :quantity %>
-            <%= order_item.number_field :quantity, min: 0, value: 0, class: "rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-          </div>
+          <%= order_item.hidden_field :product_id %>
+          <%= order_item.hidden_field :unit_price %>
+          <%= order_item.number_field :quantity, min: 0, value: 0, class: "rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
         </div>
       </div>
     <% end %>
