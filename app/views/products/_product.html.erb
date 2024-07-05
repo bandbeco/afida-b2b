@@ -1,7 +1,7 @@
 <tr id="<%= dom_id product %>" class="border-t border-gray-300">
   <td class="whitespace-nowrap px-3 py-4">
     <% if product.picture.attached? %>
-      <%= image_tag product.picture.variant(resize_to_limit: [150, nil]), class: "h-full w-full object-cover object-center sm:h-full sm:w-full" %>
+      <%= image_tag product.picture, class: "h-14 w-14" %>
     <% end %>
   </td>
   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= product.sku&.upcase %></td>
