@@ -62,13 +62,13 @@
    pac_size: 300
    price: 41.52
 -
-   name: Kraft Lids For 500/750/Round Bowl
+   name: Kraft Lid For 500/750ml Round Bowl
    sku: 575LRND
    colour: Kraft
    pac_size: 300
    price: 59.24
 -
-   name: Kraft Lids For 500/750/ Rectangular Bowl
+   name: Kraft Lid For 500/750ml Rectangular Bowl
    sku: 575LREC
    colour: Kraft
    pac_size: 300
@@ -81,7 +81,7 @@
    pac_size: 500
    price: 35.62
 -
-   name: 8oz Kraft Vented Lid For Soup Container
+   name: Kraft Vented Lid For 8oz Soup Container
    sku: 8SOUPLD
    colour: Kraft
    pac_size: 500
