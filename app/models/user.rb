@@ -10,6 +10,8 @@ class User < ApplicationRecord
 
   enum role: { customer: 0, admin: 1 }
 
+  delegate :can?, :cannot?, to: :ability
+
   def formatted_name
     "#{first_name} #{last_name}".strip
   end

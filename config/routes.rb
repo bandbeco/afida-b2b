@@ -5,12 +5,15 @@ Rails.application.routes.draw do
       registrations: "users/registrations"
     }
 
+  scope module: "admin" do
+    resources :users
+  end
+
   resources :addresses
   resources :orders
   resources :order_items
   resources :products
   resources :price_list_items, except: [:create, :destroy], path: "price-list"
-  resources :users
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

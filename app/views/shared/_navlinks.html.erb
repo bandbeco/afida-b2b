@@ -1,0 +1,10 @@
+<% if current_user.admin? %>
+  <%= link_to "Products", products_path, class: "rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white" %>
+  <%= link_to "Users", users_path, class: "rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white" %>
+<% end %>
+
+<% if current_user.customer? %>
+  <%= link_to "Address Book", addresses_path, class: "rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white" %>
+<% end %>
+
+<%= link_to "Orders", orders_path, class: "rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white" %>

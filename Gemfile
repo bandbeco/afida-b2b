@@ -33,6 +33,8 @@ gem "jbuilder"
 
 gem "devise", "~> 4.9"
 
+gem "cancancan", "~> 3.6"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
