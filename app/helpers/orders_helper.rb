@@ -7,8 +7,4 @@ module OrdersHelper
       ]
     end
   end
-
-  def currency_for(amount)
-    number_to_currency(amount, locale: :gb)
-  end
 end

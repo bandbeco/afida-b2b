@@ -51,6 +51,9 @@
         </div>
 
         <div class="relative ml-3">
+          <div class="relative flex text-sm">
+            Logged in as <%= current_user.email %>
+          </div>
           <div>
             <%= link_to "logout", destroy_user_session_path, data: {
               turbo_method: :delete
