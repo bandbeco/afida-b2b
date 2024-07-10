@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   resources :categories
   devise_for :users,
     controllers: {
-      registrations: "users/registrations"
+      registrations: "users/registrations",
+      invitations: "users/invitations"
     }
 
   scope module: "admin" do

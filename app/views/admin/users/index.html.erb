@@ -1,14 +1,12 @@
 <% content_for :title, "Users" %>
 
-<div class="sm:flex sm:items-center">
-  <div class="sm:flex-auto">
-    <h1 class="text-base font-semibold leading-6 text-gray-900">Users</h1>
-  </div>
-
-  <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-    <%= link_to "New user", new_user_path, class: "block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
-  </div>
+<div class="bg-black text-white italic font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
+  <h1>
+    USERS
+  </h1>
 </div>
+
+<%= link_to "Create User", new_user_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
 
 <div class="mt-8 flow-root">
   <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -20,7 +18,7 @@
             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Role</th>
             <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-3">
-              <span class="sr-only">Edit</span>
+              <span class="sr-only">Invite</span>
             </th>
           </tr>
         </thead>

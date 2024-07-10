@@ -1,0 +1,30 @@
+<div class="mx-auto md:w-2/3 w-full">
+  <div class="bg-black text-white italic font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
+    <h1>
+      CREATE CUSTOMER ACCOUNT
+    </h1>
+  </div>
+
+  <%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :post }) do |f| %>
+    <% resource.class.invite_key_fields.each do |field| -%>
+      <div class="field">
+        <%= f.label field %><br />
+        <%= f.text_field field %>
+      </div>
+    <% end -%>
+
+    <div class="my-5">
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div class="my-5">
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div class="inline">
+      <%= f.submit "Submit",  class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    </div>
+  <% end %>
+</div>

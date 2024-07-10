@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  devise :invitable, :database_authenticatable,
+         :recoverable, :rememberable, :validatable, :invitable
 
   has_many :orders
   has_many :addresses, dependent: :destroy
@@ -22,5 +22,11 @@ class User < ApplicationRecord
 
   def customer?
     role == 'customer'
+  end
+
+  protected
+
+  def password_required? 
+    false 
   end
 end

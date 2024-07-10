@@ -1,8 +1,19 @@
 <div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editing user</h1>
+  <div class="bg-black text-white italic font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
+    <h1>
+      CUSTOMER ACCOUNT DETAILS
+    </h1>
+  </div>
 
   <%= render "form", user: @user %>
 
-  <%= link_to "Show this user", @user, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   <%= link_to "Back to users", users_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+
+  <%= form_for(@user, url: invitation_path(@user), html: { method: :post }) do |f| %>
+    <%= f.hidden_field :user_id, value: @user.id %>
+    <%= f.submit "Send Invitation Email",  class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  <% end %>
+
+</div>
+
 </div>
