@@ -29,6 +29,7 @@ env:
     - RAILS_MASTER_KEY
     - POSTGRES_PASSWORD
     - DATABASE_URL
+    - MAILGUN_API_KEY
 
 # Use a different ssh user than root
 # ssh:
@@ -56,10 +57,10 @@ accessories:
         POSTGRES_USER: afida
       secret:
         - POSTGRES_PASSWORD
-      files:
-        - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
-      directories:
-        - data:/var/lib/postgresql/data
+    files:
+      - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
+    directories:
+      - data:/var/lib/postgresql/data
 #   redis:
 #     image: redis:7.0
 #     host: 192.168.0.2

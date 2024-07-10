@@ -77,3 +77,5 @@ group :test do
 end
 
 gem "devise_invitable", "~> 2.0"
+
+gem "mailgun-ruby", "~> 1.2"
