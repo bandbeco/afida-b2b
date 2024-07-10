@@ -8,10 +8,17 @@ class User < ApplicationRecord
   has_many :addresses, dependent: :destroy
   has_many :price_list_items, dependent: :destroy
 
+  enum role: { customer: 0, admin: 1 }
+
   def formatted_name
     "#{first_name} #{last_name}".strip
   end
 
-  def role
+  def admin?
+    role == 'admin'
+  end
+
+  def customer?
+    role == 'customer'
   end
 end

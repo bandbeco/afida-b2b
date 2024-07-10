@@ -4,6 +4,9 @@ one:
   user: :one
   status: 1
   subtotal_amount: 9.99
+  shipping_amount: 2.0
+  vat_amount: 1.0
+  total_amount: 12.99
   shipping_address: MyText
   billing_address: MyText
 
@@ -11,5 +14,8 @@ two:
   user: :one
   status: 1
   subtotal_amount: 9.99
+  shipping_amount: 3.0
+  vat_amount: 2.0
+  total_amount: 15.99
   shipping_address: MyText
   billing_address: MyText
