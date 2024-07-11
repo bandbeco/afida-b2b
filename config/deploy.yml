@@ -29,7 +29,6 @@ env:
     - RAILS_MASTER_KEY
     - POSTGRES_PASSWORD
     - DATABASE_URL
-    - MAILGUN_API_KEY
 
 # Use a different ssh user than root
 # ssh:
