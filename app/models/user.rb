@@ -24,6 +24,14 @@ class User < ApplicationRecord
     role == 'customer'
   end
 
+  def invited?
+    invitation_sent_at.present?
+  end
+
+  def accepted_invitation?
+    invitation_accepted_at.present?
+  end
+
   protected
 
   def password_required? 
