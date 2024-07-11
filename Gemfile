@@ -32,6 +32,7 @@ gem "tailwindcss-rails"
 gem "jbuilder"
 
 gem "devise", "~> 4.9"
+gem "devise_invitable", "~> 2.0"
 
 gem "cancancan", "~> 3.6"
 
@@ -52,7 +53,12 @@ gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
+
 gem "aws-sdk-s3", require: false
+
+gem "mailgun-ruby", "~> 1.2"
+
+gem "local_time", "~> 3.0"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -76,6 +82,3 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "devise_invitable", "~> 2.0"
-
-gem "mailgun-ruby", "~> 1.2"
