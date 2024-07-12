@@ -1,4 +1,5 @@
 class OrderMailer < ApplicationMailer
+  default bcc: -> { User.admin.pluck(:email) }
 
   def new_order_email
     @order = params[:order]
