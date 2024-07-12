@@ -79,8 +79,8 @@ Rails.application.configure do
 
   config.action_mailer.mailgun_settings = {
     api_key: Rails.application.credentials.dig(:mailgun_api_key),
-    domain: "sandbox34cd7f1f09aa4d35b4ae010018a3560c.mailgun.org",
-    # api_host: "api.eu.mailgun.net"  # Uncomment this line for EU region domains
+    domain: "mg.afida.com",
+    api_host: "api.eu.mailgun.net"  # Uncomment this line for EU region domains
     # timeout: 20 # Default depends on rest-client, whose default is 60s. Added in 1.2.3.
   }
 
