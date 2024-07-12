@@ -40,7 +40,14 @@ class OrdersController < ApplicationController
 
     if @order.valid?
       if @order.last_step?
-        @order.save if @order.all_valid?
+        if @order.all_valid?
+          @order.save
+
+          OrderMailer
+            .with(order: @order, user: current_user)
+            .new_order_email
+            .deliver_now
+        end
       else
         @order.next_step
       end

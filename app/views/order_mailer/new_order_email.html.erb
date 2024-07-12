@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+
+  <body>
+    <p>
+      Hi <%= @user.first_name %>,
+    </p>
+
+    <p>Thank you for shopping with us! We're excited to let you know that we've received your order.</p>
+
+    <p>Here are the details:</p>
+
+    <p>
+      <strong>Order Number:</strong> <%= @order.formatted_order_id %>
+    </p>
+
+    <p>
+      <strong>Shipping Address:</strong><br />
+      <%= @user.formatted_name %><br />
+      <%= @order.shipping_address %>
+    </p>
+
+    <p>
+      <strong>Billing Address:</strong><br />
+      <%= @user.formatted_name %><br />
+      <%= @order.billing_address %>
+    </p>
+
+  --
+
+  <h2>Order Summary:</h2>
+
+  <% @order.order_items.each do |order_item| %>
+    <p>
+      <strong>Item:</strong> <%= link_to order_item.product.name, product_url(order_item.product) %><br>
+      <strong>Quantity:</strong> <%= order_item.quantity %><br>
+      <strong>Price:</strong> <%= number_to_currency(order_item.unit_price) %><br>
+      <strong>Total:</strong> <%= number_to_currency(order_item.unit_price * order_item.quantity) %>
+    </p>
+    --
+  <% end %>
+
+  <p>
+    <strong>Subtotal:</strong> <%= number_to_currency(@order.subtotal_amount) %><br />
+    <strong>Shipping:</strong> <%= number_to_currency(@order.shipping_amount) %><br />
+    <strong>VAT 20%:</strong> <%= number_to_currency(@order.vat_amount) %><br />
+    <strong>Total:</strong> <%= number_to_currency(@order.total_amount) %>
+  </p>
+
+  <p>
+    <strong>Payment method:</strong> <%= @order.payment_method %>
+  </p>
+
+  <p>
+    You can view your order status using the link below:
+    <%= link_to "View Order Status", order_url(@order) %>
+  </p>
+
+  <p>
+    If you have any questions or need further assistance, please do not hesitate to contact our customer service team at hello@afida.com.
+  </p>
+
+  <p>
+    Thank you for choosing Afida, we appreciate your business!
+  </p>
+  </body>
+</html>
