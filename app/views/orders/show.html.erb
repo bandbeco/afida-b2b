@@ -1,10 +1,43 @@
-<main class="bg-white px-4 pb-24 pt-16 sm:px-6 sm:pt-24 lg:px-8 lg:py-32">
+<main class="bg-white px-4 pb-24 sm:px-6 sm:pt-24 lg:px-8 lg:py-32">
   <div class="mx-auto max-w-3xl">
-    <div class="max-w-xl">
-      <h2 class="mt-2 text-4xl font-bold tracking-tight">Order Details</h2>
+    <div class="space-y-2 px-4 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 sm:px-0">
+      <div class="flex sm:items-baseline sm:space-x-4">
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-3xl">Order #<%= @order.formatted_order_id %></h1>
+      </div>
+
+      <p class="text-sm text-gray-600">Order placed <%= local_time(@order.created_at, class: "font-medium text-gray-900") %></p>
     </div>
 
-    <section aria-labelledby="order-heading" class="mt-10 border-t border-gray-200">
+    <div class="my-6">
+      <div class="overflow-hidden rounded-full bg-gray-200">
+        <div class="h-2 rounded-full bg-indigo-600" style="width: calc((<%= Order.statuses[@order.status] %> * 2 + 1) / 8 * 100%)"></div>
+      </div>
+
+      <div class="mt-6 hidden grid-cols-4 font-medium text-gray-600 sm:grid">
+        <% Order.statuses.each do |name, _number| %>
+          <% if name == "pending" %>
+            <% position = "text-left" %>
+          <% elsif name == "delivered" %>
+            <% position = "text-right" %>
+          <% else %>
+            <% position = "text-center" %>
+          <% end %>
+
+          <% colour = "text-indigo-600" if name == @order.status %>
+          <% next if name == "canceled" %>
+
+          <div class="<%= position %> <%= colour %>"><%= name %></div>
+        <% end %>
+      </div>
+    </div>
+
+    <section aria-labelledby="order-heading" class="mt-16">
+      <div class="bg-black text-white italic font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
+        <h1>
+          Order Summary
+        </h1>
+      </div>
+
       <h2 id="order-heading" class="sr-only">Your order</h2>
 
       <h3 class="sr-only">Items</h3>
@@ -42,69 +75,45 @@
         </div>
       <% end %>
 
-      <div class="sm:ml-40 sm:pl-6">
-        <h3 class="sr-only">Your information</h3>
+      <div class="mt-16">
+        <h2 class="sr-only">Billing Summary</h2>
 
-        <h4 class="sr-only">Addresses</h4>
-        <dl class="grid grid-cols-2 gap-x-6 py-10 text-sm">
-          <div>
-            <dt class="font-medium text-gray-900">Shipping address</dt>
-            <dd class="mt-2 text-gray-700">
-              <address class="not-italic">
-                <%= @order.shipping_address %>
-              </address>
-            </dd>
-          </div>
-          <div>
-            <dt class="font-medium text-gray-900">Billing address</dt>
-            <dd class="mt-2 text-gray-700">
-              <address class="not-italic">
-                <%= @order.billing_address %>
-              </address>
-            </dd>
-          </div>
-        </dl>
+        <div class="bg-gray-100 px-4 py-6 sm:rounded-lg sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-8">
+          <dl class="grid grid-cols-2 gap-6 text-sm sm:grid-cols-2 md:gap-x-8 lg:col-span-7">
+            <div>
+              <dt class="font-medium text-gray-900">Billing address</dt>
+              <dd class="mt-3 text-gray-500">
+                <span class="block"><%= @order.user.formatted_name %></span>
+                <span class="block"><%= @order.billing_address %></span>
+              </dd>
+            </div>
+            <div>
+              <dt class="font-medium text-gray-900">Payment information</dt>
+              <dd class="mt-3 text-gray-500">
+                <span class="block"><%= @order.payment_method %></span>
+              </dd>
+            </div>
+          </dl>
 
-        <h4 class="sr-only">Payment</h4>
-        <dl class="grid grid-cols-2 gap-x-6 border-t border-gray-200 py-10 text-sm">
-          <div>
-            <dt class="font-medium text-gray-900">Payment method</dt>
-            <dd class="mt-2 text-gray-700">
-              <p><%= @order.payment_method.titleize %></p>
-            </dd>
-          </div>
-
-          <div>
-            <dt class="font-medium text-gray-900">Shipping method</dt>
-            <dd class="mt-2 text-gray-700">
-              <p>DHL</p>
-            </dd>
-          </div>
-        </dl>
-
-        <h3 class="sr-only">Summary</h3>
-
-        <dl class="space-y-6 border-t border-gray-200 pt-10 text-sm">
-          <div class="flex justify-between">
-            <dt class="font-medium text-gray-900">Subtotal</dt>
-            <dd class="text-gray-700"><%= currency_for(@order.subtotal_amount) %></dd>
-          </div>
-
-          <div class="flex justify-between">
-            <dt class="font-medium text-gray-900">Shipping</dt>
-            <dd class="text-gray-700"><%= currency_for(@order.shipping_amount) %></dd>
-          </div>
-
-          <div class="flex justify-between">
-            <dt class="font-medium text-gray-900">VAT 20%</dt>
-            <dd class="text-gray-700"><%= currency_for(@order.vat_amount) %></dd>
-          </div>
-
-          <div class="flex justify-between">
-            <dt class="font-medium text-gray-900">Total</dt>
-            <dd class="text-gray-900"><%= currency_for(@order.total_amount) %></dd>
-          </div>
-        </dl>
+          <dl class="mt-8 divide-y divide-gray-200 text-sm lg:col-span-5 lg:mt-0">
+            <div class="flex items-center justify-between pb-4">
+              <dt class="text-gray-600">Subtotal</dt>
+              <dd class="font-medium text-gray-900"><%= currency_for(@order.subtotal_amount) %></dd>
+            </div>
+            <div class="flex items-center justify-between py-4">
+              <dt class="text-gray-600">Shipping</dt>
+              <dd class="font-medium text-gray-900"><%= currency_for(@order.shipping_amount) %></dd>
+            </div>
+            <div class="flex items-center justify-between py-4">
+              <dt class="text-gray-600">VAT (20%)</dt>
+              <dd class="font-medium text-gray-900"><%= currency_for(@order.vat_amount) %></dd>
+            </div>
+            <div class="flex items-center justify-between pt-4">
+              <dt class="font-medium text-gray-900">Order total</dt>
+              <dd class="font-medium text-indigo-600"><%= currency_for(@order.total_amount) %></dd>
+            </div>
+          </dl>
+        </div>
       </div>
     </section>
   </div>
