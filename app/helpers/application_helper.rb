@@ -1,5 +1,5 @@
 module ApplicationHelper
   def currency_for(amount)
-    number_to_currency(amount, locale: :gb)
+    number_to_currency(amount, locale: :en)
   end
 end
