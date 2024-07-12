@@ -73,7 +73,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "afida_production"
 
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST") }
+  config.action_mailer.default_url_options = Rails.application.credentials.dig(:app_host)
 
   config.action_mailer.delivery_method = :mailgun
 
