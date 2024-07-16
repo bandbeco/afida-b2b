@@ -1,7 +1,7 @@
 require "test_helper"
 
 class AbilityTest < ActionDispatch::IntegrationTest
-  test 'user can only see their own orders' do
+  test 'user can only see their own order' do
     user = users(:one)
     order = orders(:one)
     order.user = user
@@ -17,6 +17,22 @@ class AbilityTest < ActionDispatch::IntegrationTest
     ability = Ability.new(user)
 
     assert ability.can?(:create, Order)
+  end
+
+  test 'user can manage their own addresses' do
+    user = users(:one)
+    ability = Ability.new(user)
+
+    assert ability.can?(:manage, user.addresses.build)
+  end
+
+  test 'user cannot manage someone elses addresses' do
+    user = users(:one)
+    other_user = users(:two)
+    ability = Ability.new(user)
+
+    assert ability.can?(:manage, user.addresses.build)
+    assert ability.cannot?(:manage, other_user.addresses.build)
   end
 
   test 'user can see their own user profile' do
