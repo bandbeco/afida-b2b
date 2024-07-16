@@ -35,7 +35,7 @@
 
   <% @order.order_items.each do |order_item| %>
     <p>
-      <strong>Item:</strong> <%= link_to order_item.product.name, product_url(order_item.product) %><br>
+      <strong>Item:</strong> <%= order_item.product.name %><br>
       <strong>Quantity:</strong> <%= order_item.quantity %><br>
       <strong>Price:</strong> <%= number_to_currency(order_item.unit_price) %><br>
       <strong>Total:</strong> <%= number_to_currency(order_item.unit_price * order_item.quantity) %>
@@ -55,7 +55,7 @@
   </p>
 
   <p>
-    You can view your order status using the link below:
+    You can view your order status using the link below:<br />
     <%= link_to "View Order Status", order_url(@order) %>
   </p>
 
