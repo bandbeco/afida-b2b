@@ -6,15 +6,43 @@
   </h1>
 </div>
 
-<div class="flex justify-between items-center">
-  <%= link_to "New address", new_address_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
-</div>
+<div class="flow-root">
+  <div>
+    <div class="inline-block min-w-full align-middle border-black border-2 rounded">
+      <table class="min-w-full border-separate border-spacing-0 bg-white">
+        <thead>
+          <tr class="even:bg-gray-50">
+            <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
+              Building Name
+            </th>
 
-<div id="addresses" class="min-w-full">
-  <% @addresses.each do |address| %>
-    <%= render address %>
-    <p>
-    <%= link_to "Show this address", address, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    </p>
-  <% end %>
+            <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
+              Street Number and Name
+            </th>
+
+            <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
+              Post Town
+            </th>
+
+            <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
+              Postcode
+            </th>
+
+            <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-right text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
+              Additional Notes
+            </th>
+            <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-right text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @addresses.each do |address| %>
+            <%= render address %>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
 </div>

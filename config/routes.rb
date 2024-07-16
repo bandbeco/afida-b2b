@@ -5,11 +5,12 @@ Rails.application.routes.draw do
       invitations: "users/invitations"
     }
 
-  resources :users, only: [:show, :edit, :update]
-
   scope module: "admin" do
     resources :users, only: [:index, :new, :create, :destroy]
   end
+
+  resources :users, only: [:show, :edit, :update]
+
 
   resources :addresses
   resources :categories

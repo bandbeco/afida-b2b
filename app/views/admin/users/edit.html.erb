@@ -11,7 +11,7 @@
 
   <%= form_for(@user, url: invitation_path(@user), html: { method: :post }) do |f| %>
     <%= f.hidden_field :user_id, value: @user.id %>
-    <%= f.submit "Send Invitation Email",  class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= f.submit "Send Invitation Email",  class: "btn-primary" %>
   <% end %>
 
 </div>

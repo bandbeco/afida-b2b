@@ -1,27 +1,25 @@
-<div id="<%= dom_id address %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Building name:</strong>
+<tr id="<%= dom_id address %>" class="border-t border-gray-300">
+  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
     <%= address.building_name %>
-  </p>
+  </td>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Street number and name:</strong>
+  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
     <%= address.street_number_and_name %>
-  </p>
+  </td>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Post town:</strong>
+  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
     <%= address.post_town %>
-  </p>
+  </td>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Postcode:</strong>
+  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
     <%= address.postcode %>
-  </p>
+  </td>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Additional notes:</strong>
+  <td class="whitespace-nowrap px-3 py-4 text-right text-sm text-gray-500">
     <%= address.additional_notes %>
-  </p>
+  </td>
 
-</div>
+  <td class="whitespace-nowrap px-3 py-4 text-right text-sm text-gray-500">
+    <%= link_to "Edit", edit_address_path(address), class: "btn-primary" %>
+  </td>
+</tr>
