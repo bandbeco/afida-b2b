@@ -26,6 +26,13 @@ class AbilityTest < ActionDispatch::IntegrationTest
     assert ability.can?(:show, user)
   end
 
+  test 'user cannot see another user profile' do
+    user = users(:one)
+    ability = Ability.new(user)
+
+    assert ability.cannot?(:show, User.new)
+  end
+
   test 'user cannot see list of all users' do
     user = users(:one)
     ability = Ability.new(user)

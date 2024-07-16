@@ -1,16 +1,18 @@
 Rails.application.routes.draw do
-  resources :categories
   devise_for :users,
     controllers: {
       registrations: "users/registrations",
       invitations: "users/invitations"
     }
 
+  resources :users, only: [:show, :edit, :update]
+
   scope module: "admin" do
-    resources :users
+    resources :users, only: [:index, :new, :create, :destroy]
   end
 
   resources :addresses
+  resources :categories
   resources :orders
   resources :order_items
   resources :products

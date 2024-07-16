@@ -9,14 +9,6 @@ class Users::InvitationsController < Devise::InvitationsController
     redirect_to users_path, notice: "Invitation sent"
   end
 
-  def update
-    Product.all.each do |product|
-      user.price_list_items.create!(product: product, price: 1.00)
-    end
-
-    redirect_to users_path, notice: "You are now signed in"
-  end
-
   protected
 
   def invitation_params
