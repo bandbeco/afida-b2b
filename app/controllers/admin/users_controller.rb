@@ -23,12 +23,10 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    Product.all.each do |product|
-      @user.price_list_items.create!(product: product, price: 1.00)
-    end
-
     respond_to do |format|
       if @user.save
+        Product.all.each { |p| @user.price_list_items.create!(product: p, price: 1.00) }
+
         format.html { redirect_to users_url, notice: "User was successfully created." }
         format.json { render :show, status: :created, location: @user }
       else
