@@ -12,6 +12,16 @@ class AbilityTest < ActionDispatch::IntegrationTest
     assert ability.cannot?(:read, Order.new)
   end
 
+  test 'user can see their own price list item' do
+    user = users(:one)
+    price_list_item = price_list_items(:one)
+    price_list_item.user = user
+    price_list_item.save
+    ability = Ability.new(user)
+
+    assert ability.can?(:read, price_list_item)
+  end
+
   test 'user can create orders' do
     user = users(:one)
     ability = Ability.new(user)
