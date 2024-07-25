@@ -1,9 +1,13 @@
-class PriceListItemsController < ApplicationController
+class Admin::PriceListItemsController < ApplicationController
   before_action :set_price_list_item, only: %i[ show edit update ]
 
   # GET /price_list_items or /price_list_items.json
   def index
-    @price_list_items = current_user.price_list_items
+    @user = User.find(params[:user_id])
+    @categorized_price_list_items = @user
+      .price_list_items
+      .includes(:product)
+      . group_by(&:category)
   end
 
   # GET /price_list_items/1 or /price_list_items/1.json
@@ -30,7 +34,7 @@ class PriceListItemsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_price_list_item
-      @price_list_item = current_user.price_list_items.find(params[:id])
+      @price_list_item = User.find(price_list_item_params[:user_id]).price_list_items
     end
 
     # Only allow a list of trusted parameters through.

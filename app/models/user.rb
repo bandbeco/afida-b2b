@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :addresses, dependent: :destroy
   has_many :price_list_items, dependent: :destroy
 
+  accepts_nested_attributes_for :price_list_items, allow_destroy: true
+
   enum role: { customer: 0, admin: 1 }
 
   delegate :can?, :cannot?, to: :ability

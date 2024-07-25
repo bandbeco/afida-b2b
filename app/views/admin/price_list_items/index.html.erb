@@ -1,0 +1,51 @@
+<%= form_with(model: @user, data: { turbo: false }) do |form| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2>
+        <%= pluralize(@user.errors.count, "error") %> prohibited this price list from being saved:
+      </h2>
+
+      <ul>
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% @categorized_price_list_items.each do |category, price_list_items| %>
+    <div class="bg-black text-white italic font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
+      <h2>
+        <%= category.name.upcase %>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+      <% price_list_items.each do |price_list_item| %>
+        <%= form.fields_for :price_list_items, price_list_item do |f| %>
+          <div class="group bg-white rounded border-black border-2">
+            <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden">
+              <% if f.object.product.picture.attached? %>
+                <%= image_tag f.object.product.picture, class: "h-full w-full object-center group-hover:opacity-75" %>
+              <% end %>
+            </div>
+
+            <div class="p-3 text-gray-700">
+              <h3 class="mt-2 font-medium"><%= f.object.product.name %></h3>
+              <div class="text-sm flex justify-between">
+                <p class="mt-1"><%= f.object.product.pac_size %> pcs</p>
+                <p class="mt-1"><%= currency_for(f.object.price) %></p>
+              </div>
+              <%= f.text_field :price, min: 0, class: "rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit "Save Changes", class: "btn-primary" %>
+  </div>
+<% end %>
+
