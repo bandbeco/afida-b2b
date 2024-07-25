@@ -40,11 +40,13 @@ class Admin::UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to user_url(@user), notice: "User was successfully updated." }
-        format.json { render :show, status: :ok, location: @user }
+        if user_params[:price_list_items_attributes]
+          format.html { redirect_to user_price_list_items_url(@user), notice: "Price list items were successfully updated." }
+        else
+          format.html { redirect_to edit_user_url(@user), notice: "User was successfully updated." }
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
