@@ -24,10 +24,13 @@
   </td>
 
   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-    <% unless user.invited? %>
-      <%= form_for(user, url: invitation_path(user), html: { method: :post }) do |f| %>
-        <%= f.hidden_field :user_id, value: user.id %>
-        <%= f.submit "Send Invitation Email",  class: "btn-primary" %>
+    <%= form_for(user, url: invitation_path(user), html: { method: :post }) do |f| %>
+      <%= f.hidden_field :user_id, value: user.id %>
+      <% if user.invited? && !user.invitation_accepted? %>
+        <%= f.submit "Resend Invitation",  class: "btn-primary" %>
+      <% elsif !user.invited? %>
+        <%= f.submit "Send Invitation",  class: "btn-primary" %>
+      <% else %>
       <% end %>
     <% end %>
   </td>
