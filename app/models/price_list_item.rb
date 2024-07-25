@@ -1,6 +1,6 @@
 class PriceListItem < ApplicationRecord
   default_scope do
-    where(deleted_at: nil)
+    where(deleted_at: nil).order(created_at: :asc)
   end
 
   scope :with_deleted, -> { unscope(where: :deleted_at) }
