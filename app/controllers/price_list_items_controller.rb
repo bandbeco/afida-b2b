@@ -1,4 +1,4 @@
-class Admin::PriceListItemsController < ApplicationController
+class PriceListItemsController < ApplicationController
   before_action :set_price_list_item, only: %i[ show edit update ]
 
   # GET /price_list_items or /price_list_items.json

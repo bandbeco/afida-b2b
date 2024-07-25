@@ -51,7 +51,7 @@
           <div class="flex flex-auto flex-col">
             <div>
               <h4 class="font-medium text-gray-900">
-                <%= link_to order_item.product.name, product_path(order_item.product) %>
+                <%= link_to order_item.product.name, price_list_item_path(order_item.price_list_item) %>
               </h4>
               <p class="mt-2 text-sm text-gray-600"><%= order_item.product.description %></p>
             </div>

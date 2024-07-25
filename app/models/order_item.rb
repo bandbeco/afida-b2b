@@ -8,4 +8,8 @@ class OrderItem < ApplicationRecord
   def total_price
     quantity * unit_price.to_d.round(2)
   end
+
+  def price_list_item
+    PriceListItem.find_by(user: order.user, product: product)
+  end
 end
