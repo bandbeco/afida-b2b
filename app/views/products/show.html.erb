@@ -1,9 +1,31 @@
-<div class="mx-auto">
-  <%= render @product %>
+<div class="bg-black text-white italic font-extrabold grid grid-cols-2 justify-between text-3xl font-impact rounded border-black border-2 p-4 my-4">
+  <div>
+    <h1>
+      <%= @product.name&.titleize %>
+    </h1>
+    <p class="py-2 text-base not-italic font-mono"><%= @product.sku %></p>
+  </div>
 
-  <%= link_to "Edit this product", edit_product_path(@product), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-  <%= link_to "Back to products", products_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-  <div class="inline-block ml-2">
-    <%= button_to "Destroy this product", @product, method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+  <div class="text-right">
+    <%= link_to "Edit", edit_product_path(@product), class: "btn-primary" %>
+  </div>
+</div>
+
+
+<div class="flex flex-row bg-white rounded">
+  <div class="w-1/2">
+    <% if @product.picture.attached? %>
+      <%= image_tag @product.picture, class: "h-full w-full object-center group-hover:opacity-75" %>
+    <% end %>
+  </div>
+
+  <div class="flex flex-col justify-center font-mono">
+    <div>
+      Colour: <%= @product.colour&.titleize %>
+    </div>
+
+    <div>
+      PAC Size: <%= @product.pac_size %>
+    </div>
   </div>
 </div>
