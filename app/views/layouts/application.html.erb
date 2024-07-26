@@ -11,10 +11,10 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="h-full">
+  <body class="flex flex-col h-screen">
     <%= render "shared/banner" if user_signed_in? %>
     <%= render "shared/navbar" if user_signed_in? %>
-    <main class="container mx-auto">
+    <main class="container mx-auto flex-grow">
       <div class="mx-auto max-w-2xl px-4 py-4 lg:max-w-7xl lg:px-8">
         <% if notice.present? %>
           <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice">
@@ -25,5 +25,6 @@
         <%= yield %>
       </div>
     </main>
+    <%= render "shared/footer" %>
   </body>
 </html>
