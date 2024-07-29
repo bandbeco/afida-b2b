@@ -6,12 +6,12 @@ Rails.application.routes.draw do
 
   scope module: "admin" do
     resources :users, only: [:index, :new, :create, :edit, :update, :destroy] do
-      resources :price_list_items, only: [:index]
+      resources :price_list_items, only: [:index], path: "price-list"
     end
-    resources :price_list_items, only: [:edit, :update]
+    resources :price_list_items, only: [:edit, :update], path: "price-list"
   end
 
-  resources :price_list_items, only: [:index, :show]
+  resources :price_list_items, only: [:show], path: "price-list"
   resources :users, only: [:show, :edit, :update]
 
   resources :addresses
