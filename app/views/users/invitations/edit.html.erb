@@ -1,21 +1,42 @@
-<h2><%= t "devise.invitations.edit.header" %></h2>
-
-<%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.hidden_field :invitation_token, readonly: true %>
-
-  <% if f.object.class.require_password_on_accepting %>
-    <div class="field">
-      <%= f.label :password %><br />
-      <%= f.password_field :password %>
-    </div>
-
-    <div class="field">
-      <%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation %>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit t("devise.invitations.edit.submit_button") %>
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <%= render "shared/logo" %>
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+      Choose a new password
+    </h2>
   </div>
-<% end %>
+
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put }, class: "space-y-6") do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <%= f.hidden_field :invitation_token, readonly: true %>
+
+      <div class="mt-2">
+        <%= f.label :password, "New password", class: "block text-sm font-medium leading-6 text-gray-900" %>
+
+        <% if @minimum_password_length %>
+          <p class="text-xs italic text-gray-600">(<%= @minimum_password_length %> characters minimum)</p>
+        <% end %>
+
+        <div class="mt-2">
+          <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+        </div>
+      </div>
+
+      <div class="mt-2">
+        <%= f.label :password_confirmation, "Confirm password", class: "block text-sm font-medium leading-6 text-gray-900" %>
+        <div class="mt-2">
+          <%= f.password_field :password_confirmation, autofocus: true, autocomplete: "email", class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <%= f.submit "Save my password", class: "flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+      </div>
+    <% end %>
+
+    <p class="mt-4 text-center text-sm text-gray-500">
+      <%= render "devise/shared/links" %>
+    </p>
+  </div>
+</div>
