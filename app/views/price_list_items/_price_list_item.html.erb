@@ -10,7 +10,7 @@
 <div class="flex flex-row bg-white rounded">
   <div class="w-1/2">
     <% if price_list_item.product.picture.attached? %>
-      <%= image_tag price_list_item.product.picture, class: "h-full w-full object-center group-hover:opacity-75" %>
+      <%= image_tag price_list_item.product.picture.variant(resize_and_pad: [275, 275]) %>
     <% end %>
   </div>
 
