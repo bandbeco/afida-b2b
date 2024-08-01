@@ -6,7 +6,14 @@
   </h1>
 </div>
 
-<div class="flow-root">
+<%= link_to new_address_path, class: "inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 no-underline" do %>
+  Create new address
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+<% end %>
+
+<div class="flow-root mt-8">
   <div>
     <div class="inline-block min-w-full align-middle border-black border-2 rounded">
       <table class="min-w-full border-separate border-spacing-0 bg-white">
