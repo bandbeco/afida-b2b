@@ -20,7 +20,7 @@ class OrdersController < ApplicationController
   def new
     session[:order_params] ||= {}
     @order = current_user.orders.build(session[:order_params])
-    @categorized_price_list_items = current_user.price_list_items.includes(:product).group_by(&:category)
+    @categorized_price_list_items = categorized_price_list_items
   end
 
   # GET /orders/1/edit
@@ -60,7 +60,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.new_record?
-        @categorized_price_list_items = current_user.price_list_items.includes(:product).group_by(&:category)
+        @categorized_price_list_items = categorized_price_list_items
         format.html { render :new, status: :ok }
       else
         session[:order_step] = session[:order_params] = nil
@@ -123,5 +123,12 @@ class OrdersController < ApplicationController
           :_destroy
         ]
       )
+  end
+
+  def categorized_price_list_items
+      current_user
+        .price_list_items
+        .includes(product: [:category, { picture_attachment: :blob }])
+        .group_by(&:category)
   end
 end
