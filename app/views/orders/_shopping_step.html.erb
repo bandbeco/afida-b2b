@@ -6,25 +6,11 @@
 
 <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
   <% price_list_items.each do |price_list_item| %>
-    <%= form.fields_for :order_items, @order.order_items.build(product_id: price_list_item.product_id, unit_price: price_list_item.price) do |order_item| %>
-      <div class="group bg-white rounded border-black border-2">
-        <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden">
-          <% if price_list_item.product.picture.attached? %>
-            <%= image_tag price_list_item.product.picture, class: "h-full w-full object-center group-hover:opacity-75" %>
-          <% end %>
-        </div>
-
-        <div class="p-3 text-gray-700">
-          <h3 class="mt-2 font-medium"><%= price_list_item.product.name %></h3>
-          <div class="text-sm flex justify-between">
-            <p class="mt-1"><%= price_list_item.product.pac_size %> pcs</p>
-            <p class="mt-1"><%= currency_for(price_list_item.price) %></p>
-          </div>
-          <%= order_item.hidden_field :product_id %>
-          <%= order_item.hidden_field :unit_price %>
-          <%= order_item.number_field :quantity, min: 0, value: 0, class: "rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-        </div>
-      </div>
+    <%= form.fields_for :order_items, @order.order_items.build(product_id: price_list_item.product_id, unit_price: price_list_item.price) do |f| %>
+      <%= render "order_items/order_item",
+        form: f,
+        price_list_item: price_list_item
+      %>
     <% end %>
   <% end %>
 </div>

@@ -1,22 +1,49 @@
-<div id="<%= dom_id order_item %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Order:</strong>
-    <%= order_item.order_id %>
-  </p>
+<div data-controller="order-item" class="group bg-white rounded border-black border-2 flex flex-col text-center">
+  <div class="aspect-h-1 aspect-w-1 overflow-hidden flex-grow">
+    <% if price_list_item.product.picture.attached? %>
+      <%= image_tag price_list_item.product.picture, class: "h-full w-full object-center group-hover:opacity-75" %>
+    <% end %>
+  </div>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Product:</strong>
-    <%= order_item.product_id %>
-  </p>
+  <div class="p-3 text-gray-700">
+    <h3 class="mt-2 font-medium"><%= price_list_item.product.name %></h3>
+    <div class="text-sm mb-4 flex justify-evenly">
+      <p class="mt-1">
+        <%= currency_for(price_list_item.price) %> / <%= price_list_item.product.pac_size %> pcs
+      </p>
+    </div>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Quantity:</strong>
-    <%= order_item.quantity %>
-  </p>
+    <%= form.hidden_field :product_id %>
+    <%= form.hidden_field :unit_price %>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Unit price:</strong>
-    <%= order_item.unit_price %>
-  </p>
+    <div class="flex justify-center mt-4 font-mono">
+      <%= button_tag "Decrement",
+        type: "button",
+        data: { action: "click->order-item#decrement" },
+        class: "flex-shrink-0 bg-gray-100 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-10 w-10 focus:ring-gray-100 focus:ring-2 focus:outline-none" do %>
+        <svg class="w-3.5 h-2.5 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
+        </svg>
+      <% end %>
 
+      <%= form.number_field :quantity,
+        min: 0,
+        value: 0,
+        class: "border border-gray-400 flex-shrink-0 text-gray-900 rounded-md text-xl max-w-[3.5rem] text-center mx-4 p-0",
+        data: {
+          order_item_target: "quantity"
+        }
+      %>
+
+    <%= button_tag "Increment",
+      type: "button",
+      data: { action: "click->order-item#increment" },
+      class: "flex-shrink-0 bg-gray-100 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-10 w-10 focus:ring-gray-100 focus:ring-2 focus:outline-none" do %>
+      <svg class="w-3.5 h-3.5 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+      </svg>
+    <% end %>
+    </div>
+
+  </div>
 </div>
