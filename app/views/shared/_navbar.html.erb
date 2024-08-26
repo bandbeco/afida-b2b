@@ -41,23 +41,11 @@
       <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
         <!-- Profile dropdown -->
         <div class="relative ml-3">
-          <div>
-            <button type="button" class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-              <span class="absolute -inset-1.5"></span>
-              <span class="sr-only">Open user menu</span>
-              <%= link_to current_user.email do %>
-                <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-              <% end %>
-            </button>
-          </div>
-        </div>
-
-        <div class="relative ml-3">
           <div class="relative flex text-sm">
-            Logged in as <%= current_user.email %>
+            Logged in as&nbsp;<%= link_to current_user.formatted_name, edit_user_path(current_user) %>
           </div>
+
           <div>
-            <%= link_to "Edit profile", edit_user_path(current_user), class: "relative flex text-sm" %>
             <%= link_to "logout", destroy_user_session_path, data: {
               turbo_method: :delete
               },
