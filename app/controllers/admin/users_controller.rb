@@ -77,7 +77,8 @@ class Admin::UsersController < ApplicationController
           :email,
           price_list_items_attributes: [
             :id,
-            :price
+            :price,
+            :hidden,
           ]
         )
     end

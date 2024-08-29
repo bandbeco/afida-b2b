@@ -1,9 +1,11 @@
 class PriceListItem < ApplicationRecord
   default_scope do
-    where(deleted_at: nil).order(created_at: :asc)
+    where(deleted_at: nil, hidden: false)
+      .order(created_at: :asc)
   end
 
   scope :with_deleted, -> { unscope(where: :deleted_at) }
+  scope :with_hidden, -> { unscope(where: :hidden) }
 
   belongs_to :user
   belongs_to :product

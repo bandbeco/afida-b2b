@@ -6,6 +6,7 @@ class Admin::PriceListItemsController < ApplicationController
     @user = User.find(params[:user_id])
     @categorized_price_list_items = @user
       .price_list_items
+      .with_hidden
       .includes(:product)
       . group_by(&:category)
   end
@@ -39,6 +40,6 @@ class Admin::PriceListItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def price_list_item_params
-      params.require(:price_list_item).permit(:user_id, :product_id, :price)
+      params.require(:price_list_item).permit(:user_id, :product_id, :price, :hidden)
     end
 end
