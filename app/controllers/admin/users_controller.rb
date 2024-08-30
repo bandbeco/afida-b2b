@@ -25,7 +25,7 @@ class Admin::UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        Product.all.each { |p| @user.price_list_items.create!(product: p) }
+        Product.all.each { |p| @user.price_list_items.create!(product: p, price: p.price) }
 
         format.html { redirect_to users_url, notice: "User was successfully created." }
         format.json { render :show, status: :created, location: @user }
