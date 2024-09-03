@@ -92,7 +92,8 @@ class ProductsController < ApplicationController
         :height_in_mm,
         :depth_in_mm,
         :diameter_in_mm,
-        :volume_in_ml
+        :volume_in_ml,
+        :category_id,
       )
   end
 end
