@@ -1,10 +1,10 @@
 <div class="bg-black text-white italic font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
   <h1>
-    CUSTOMER ACCOUNT DETAILS
+    ACCOUNT DETAILS
   </h1>
 </div>
 
 <div class="md:w-1/3 w-full">
   <%= render "form", user: @user %>
-  <%= render "invitation_email_button" %>
+  <%= render "invitation_email_button" if current_user.admin? %>
 </div>

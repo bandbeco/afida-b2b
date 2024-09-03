@@ -75,6 +75,7 @@ class Admin::UsersController < ApplicationController
           :first_name,
           :last_name,
           :email,
+          :role,
           price_list_items_attributes: [
             :id,
             :price,
