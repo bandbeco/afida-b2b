@@ -128,6 +128,7 @@ class OrdersController < ApplicationController
   def categorized_price_list_items
       current_user
         .price_list_items
+        .without_hidden
         .includes(product: [:category, { picture_attachment: :blob }])
         .group_by(&:category)
   end

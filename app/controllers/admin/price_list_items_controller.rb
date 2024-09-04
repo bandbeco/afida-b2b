@@ -6,9 +6,8 @@ class Admin::PriceListItemsController < ApplicationController
     @user = User.find(params[:user_id])
     @categorized_price_list_items = @user
       .price_list_items
-      .with_hidden
       .includes(:product)
-      . group_by(&:category)
+      .group_by(&:category)
   end
 
   # GET /price_list_items/1 or /price_list_items/1.json
