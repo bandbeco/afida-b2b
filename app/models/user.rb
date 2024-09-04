@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable,
          :recoverable, :rememberable, :validatable, :invitable
 
+  validates_confirmation_of :password
+
   has_many :orders
   has_many :addresses, dependent: :destroy
   has_many :price_list_items, dependent: :destroy
