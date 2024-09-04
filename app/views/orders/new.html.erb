@@ -36,7 +36,9 @@
     <%= render "confirmation_step", form: form %>
   <% end %>
 
-  <div class="bg-afida-green sticky bottom-0 grid py-8 opacity-90">
+  <% if @order.current_step == "shopping" %>
+    <div class="bg-afida-green sticky bottom-0 grid py-8 opacity-90">
       <%= form.submit "Proceed to checkout", class: "btn-primary" %>
-  </div>
+    </div>
+  <% end %>
 <% end %>
