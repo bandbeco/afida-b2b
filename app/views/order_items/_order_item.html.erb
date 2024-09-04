@@ -1,9 +1,8 @@
 <div data-controller="order-item" class="group bg-white rounded border-black border-2 flex flex-col text-center">
-  <div class="aspect-h-1 aspect-w-1 overflow-hidden flex-grow">
-    <% if price_list_item.product.picture.attached? %>
-      <%= image_tag price_list_item.product.picture.variant(resize_and_pad: [275, 275]) %>
-    <% end %>
-  </div>
+  <% if price_list_item.product.picture.attached? %>
+      <div class="aspect-h-1 aspect-w-1 overflow-hidden flex-grow bg-[url('<%= url_for(price_list_item.product.picture) %>')]">
+      </div>
+  <% end %>
 
   <div class="p-3 text-gray-700">
     <h3 class="mt-2 font-medium"><%= price_list_item.product.name %></h3>

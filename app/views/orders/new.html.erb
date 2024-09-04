@@ -14,6 +14,15 @@
   <% end %>
 
   <% if @order.current_step == "shopping" %>
+
+    <div class="font-extrabold grid grid-cols-9 gap-6 sticky top-0 mb-8 bg-afida-green py-2">
+      <% Category.all.each do |category| %>
+        <a href="#<%= category.name.downcase.gsub(" ", "_") %>" class="text-sm col-span-1 rounded text-center text-black hover:text-white hover:bg-gray-700 p-1">
+          <%= category.name.upcase %>
+        </a>
+      <% end %>
+    </div>
+
     <% @categorized_price_list_items.each do |category, price_list_items| %>
       <%= render "#{@order.current_step}_step",
         form: form,
