@@ -78,6 +78,11 @@ Rails.application.configure do
     host: Rails.application.credentials.dig(:app_host)
   }
 
+  Rails.application.routes.default_url_options = {
+    host: Rails.application.credentials.dig(:app_host),
+    protocol: "https"
+  }
+
   config.action_mailer.delivery_method = :mailgun
 
   config.action_mailer.mailgun_settings = {
