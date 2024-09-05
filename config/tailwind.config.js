@@ -15,6 +15,7 @@ module.exports = {
       },
       colors: {
         'afida-green': '#79EBC0',
+        'afida-pink': '#F4B8CC',
       }
     },
   },
