@@ -10,7 +10,7 @@ class PriceListItem < ApplicationRecord
   belongs_to :user
   belongs_to :product
 
-  validates :price, numericality: { greater_than: 0 }, allow_nil: true
+  validates :price, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
   def soft_delete!
     update!(deleted_at: Time.zone.now)
