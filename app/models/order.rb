@@ -52,7 +52,7 @@ class Order < ApplicationRecord
   end
 
   def formatted_order_id
-    "INV000#{id}"
+    "INV-000#{id}"
   end
 
   private

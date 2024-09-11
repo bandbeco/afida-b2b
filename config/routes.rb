@@ -16,7 +16,9 @@ Rails.application.routes.draw do
 
   resources :addresses
   resources :categories
-  resources :orders
+  resources :orders do
+    get "summary", on: :member
+  end
   resources :order_items
   resources :products
 

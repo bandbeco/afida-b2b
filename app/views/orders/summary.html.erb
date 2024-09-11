@@ -1,0 +1,129 @@
+<div class="max-w-3xl mx-auto p-6 bg-white rounded shadow-sm my-6 text-sm font-mono">
+  <div class="grid grid-cols-2 my-6 justify-end">
+    <div>
+      <%= render 'shared/logo' %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2">
+    <div>
+      <div class="pt-6">
+        <p>
+          <span class="font-semibold">Billing Address:</span></br>
+          <%= @order.user.formatted_name %><br />
+          <%= @order.billing_address %>
+        </p>
+      </div>
+
+      <div class="pt-6">
+        <p>
+        <span class="font-semibold">Shipping Address:</span></br>
+          <%= @order.user.formatted_name %><br />
+          <%= @order.shipping_address %>
+        </p>
+      </div>
+
+      <div class="py-6">
+        <p>
+        <span class="font-bold">Order Number:</span>
+        <%= @order.formatted_order_id %>
+        </p>
+
+        <p>
+        <span class="font-bold">Order Date:</span>
+        <%= local_time(@order.created_at) %>
+        </p>
+      </div>
+
+    </div>
+
+    <div class="text-right py-6">
+      <p>
+        B&B Eco Ltd T/A Afida<br />
+        16 Upper Woburn Place<br />
+        Office 326<br />
+        London WC1H 0AF<br />
+        VAT Number: 372516007
+      </p>
+    </div>
+  </div>
+
+  <!-- Invoice Items -->
+  <div class="-mx-4 mt-8 flow-root sm:mx-0">
+    <table class="min-w-full">
+      <colgroup>
+        <col class="w-full sm:w-1/2">
+        <col class="sm:w-1/6">
+        <col class="sm:w-1/6">
+        <col class="sm:w-1/6">
+      </colgroup>
+      <thead class="border-b border-gray-300 text-gray-900">
+        <tr>
+          <th scope="col" class="py-3.5 pl-4 pr-3 text-left font-semibold text-gray-900 sm:pl-0">Items</th>
+          <th scope="col" class="hidden px-3 py-3.5 text-right font-semibold text-gray-900 sm:table-cell">Quantity</th>
+          <th scope="col" class="hidden px-3 py-3.5 text-right font-semibold text-gray-900 sm:table-cell">Price</th>
+          <th scope="col" class="py-3.5 pl-3 pr-4 text-right font-semibold text-gray-900 sm:pr-0">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.order_items.each do |order_item| %>
+          <tr class="border-b border-gray-200">
+            <td class="max-w-0 py-5 pl-4 pr-3 sm:pl-0">
+              <div class="font-medium text-gray-900">
+                <%= order_item.product.name %>
+              </div>
+            </td>
+            <td class="hidden px-3 py-5 text-right text-gray-500 sm:table-cell">
+              <%= order_item.quantity %>
+            </td>
+            <td class="hidden px-3 py-5 text-right text-gray-500 sm:table-cell">
+              <%= currency_for(order_item.unit_price) %>
+            </td>
+            <td class="py-5 pl-3 pr-4 text-right text-gray-500 sm:pr-0">
+              <%= currency_for(order_item.total_price) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-6 text-right font-normal text-gray-500 sm:table-cell sm:pl-0">Subtotal</th>
+          <th scope="row" class="pl-6 pr-3 pt-6 text-left font-normal text-gray-500 sm:hidden">Subtotal</th>
+          <td class="pl-3 pr-6 pt-6 text-right text-gray-500 sm:pr-0">
+            <%= currency_for(@order.subtotal_amount) %>
+          </td>
+        </tr>
+
+        <tr>
+          <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right font-normal text-gray-500 sm:table-cell sm:pl-0">VAT 20%</th>
+          <th scope="row" class="pl-6 pr-3 pt-4 text-left font-normal text-gray-500 sm:hidden">VAT 20%</th>
+          <td class="pl-3 pr-6 pt-4 text-right text-gray-500 sm:pr-0">
+            <%= currency_for(@order.vat_amount) %>
+          </td>
+        </tr>
+
+        <tr>
+          <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Shipping</th>
+          <th scope="row" class="pl-6 pr-3 pt-4 text-left font-normal text-gray-500 sm:hidden">Discount</th>
+          <td class="pl-3 pr-6 pt-4 text-right text-gray-500 sm:pr-0">
+            <%= currency_for(@order.shipping_amount) %>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" colspan="3" class="hidden pl-4 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0">Total</th>
+          <th scope="row" class="pl-6 pr-3 pt-4 text-left font-semibold text-gray-900 sm:hidden">Total</th>
+          <td class="pl-3 pr-4 pt-4 text-right font-semibold text-gray-900 sm:pr-0">
+            <%= currency_for(@order.total_amount) %>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!--  Footer  -->
+  <div class="border-t-2 pt-4 text-sm text-gray-500 text-center mt-16">
+    <p class="text-xs text-gray-500">
+      orders@afida.com - 0203 302 7719
+    </p>
+  </div>
+</div>
