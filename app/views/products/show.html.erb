@@ -19,13 +19,17 @@
     <% end %>
   </div>
 
-  <div class="flex flex-col justify-center font-mono">
+  <div class="text-xl flex flex-col justify-center font-mono">
     <div>
-      Colour: <%= @product.colour&.titleize %>
+      Price: <%= currency_for(@product.price) %>
     </div>
 
     <div>
       PAC Size: <%= @product.pac_size %>
+    </div>
+
+    <div>
+      Colour: <%= @product.colour&.titleize %>
     </div>
   </div>
 </div>
