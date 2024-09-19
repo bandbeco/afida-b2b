@@ -5,7 +5,7 @@
 </div>
 
 <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-  <% price_list_items.each do |price_list_item| %>
+  <% price_list_items.sort_by { |item| item.product.sku }.each do |price_list_item| %>
     <%= form.fields_for :order_items, @order.order_items.build(product_id: price_list_item.product_id, unit_price: price_list_item.price) do |f| %>
       <%= render "order_items/order_item",
         form: f,

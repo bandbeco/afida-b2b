@@ -130,7 +130,6 @@ class OrdersController < ApplicationController
         .price_list_items
         .without_hidden
         .includes(product: [:category, { picture_attachment: :blob }])
-        .order("products.sku")
         .group_by(&:category)
   end
 end
