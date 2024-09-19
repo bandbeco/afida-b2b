@@ -1,9 +1,18 @@
 <div data-controller="order-item" class="group bg-white rounded border-black border-2 flex flex-col text-center">
   <% picture = price_list_item.product.picture %>
-  <%= image_tag picture.variant(resize_and_pad: [275, 275]) if picture.attached? %>
+  <% if current_user.admin? %>
+    <%= link_to product_path(price_list_item.product) do %>
+      <%= image_tag picture.variant(resize_and_pad: [275, 275]) if picture.attached? %>
+    <% end %>
+  <% else %>
+    <%= image_tag picture.variant(resize_and_pad: [275, 275]) if picture.attached? %>
+  <% end %>
 
   <div class="p-3 text-gray-700">
-    <h3 class="mt-2 font-medium"><%= price_list_item.product.name %></h3>
+    <h3 class="mt-2 font-medium">
+      <%= price_list_item.product.name %>
+    </h3>
+
     <div class="text-sm mb-4 flex justify-evenly">
       <p class="mt-1">
         <%= currency_for(price_list_item.price) %> / <%= price_list_item.product.pac_size %> pcs
