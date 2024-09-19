@@ -9,112 +9,90 @@
     </div>
 
     <div class="my-6">
-      <div class="overflow-hidden rounded-full bg-gray-200">
-        <div class="h-2 rounded-full bg-indigo-600" style="width: calc((<%= Order.statuses[@order.status] %> * 2 + 1) / 8 * 100%)"></div>
-      </div>
+      <section aria-labelledby="order-heading" class="mt-16">
+        <div class="bg-black text-white italic font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
+          <h1>
+            Order Summary
+          </h1>
+        </div>
 
-      <div class="mt-6 hidden grid-cols-4 font-medium text-gray-600 sm:grid">
-        <% Order.statuses.each do |name, _number| %>
-          <% if name == "pending" %>
-            <% position = "text-left" %>
-          <% elsif name == "delivered" %>
-            <% position = "text-right" %>
-          <% else %>
-            <% position = "text-center" %>
-          <% end %>
+        <h2 id="order-heading" class="sr-only">Your order</h2>
 
-          <% colour = "text-indigo-600" if name == @order.status %>
-          <% next if name == "canceled" %>
+        <h3 class="sr-only">Items</h3>
 
-          <div class="<%= position %> <%= colour %>"><%= name %></div>
-        <% end %>
-      </div>
-    </div>
+        <% @order.order_items.each do |order_item| %>
+          <div class="flex space-x-6 border-b border-gray-200 py-10">
+            <% if order_item.product.picture.attached? %>
+              <%= image_tag order_item.product.picture, class: "h-20 w-20 flex-none rounded-lg bg-gray-100 object-cover object-center sm:h-40 sm:w-40" %>
+            <% end %>
 
-    <section aria-labelledby="order-heading" class="mt-16">
-      <div class="bg-black text-white italic font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
-        <h1>
-          Order Summary
-        </h1>
-      </div>
-
-      <h2 id="order-heading" class="sr-only">Your order</h2>
-
-      <h3 class="sr-only">Items</h3>
-
-      <% @order.order_items.each do |order_item| %>
-        <div class="flex space-x-6 border-b border-gray-200 py-10">
-          <% if order_item.product.picture.attached? %>
-            <%= image_tag order_item.product.picture, class: "h-20 w-20 flex-none rounded-lg bg-gray-100 object-cover object-center sm:h-40 sm:w-40" %>
-          <% end %>
-
-          <div class="flex flex-auto flex-col">
-            <div>
-              <h4 class="font-medium text-gray-900">
-                <%= link_to order_item.product.name, price_list_item_path(order_item.price_list_item) %>
-              </h4>
-              <p class="mt-2 text-sm text-gray-600"><%= order_item.product.description %></p>
-            </div>
-            <div class="mt-6 flex flex-1 items-end">
-              <dl class="flex space-x-4 divide-x divide-gray-200 text-sm sm:space-x-6">
-                <div class="flex">
-                  <dt class="font-medium text-gray-900">Quantity</dt>
-                  <dd class="ml-2 text-gray-700"><%= order_item.quantity %></dd>
-                </div>
-                <div class="flex pl-4 sm:pl-6">
-                  <dt class="font-medium text-gray-900">Price</dt>
-                  <dd class="ml-2 text-gray-700"><%= currency_for(order_item.unit_price) %></dd>
-                </div>
-                <div class="flex pl-4 sm:pl-6">
-                  <dt class="font-medium text-gray-900">Total</dt>
-                  <dd class="ml-2 text-gray-700"><%= currency_for(order_item.total_price) %></dd>
-                </div>
-              </dl>
+            <div class="flex flex-auto flex-col">
+              <div>
+                <h4 class="font-medium text-gray-900">
+                  <%= link_to order_item.product.name, price_list_item_path(order_item.price_list_item) %>
+                </h4>
+                <p class="mt-2 text-sm text-gray-600"><%= order_item.product.description %></p>
+              </div>
+              <div class="mt-6 flex flex-1 items-end">
+                <dl class="flex space-x-4 divide-x divide-gray-200 text-sm sm:space-x-6">
+                  <div class="flex">
+                    <dt class="font-medium text-gray-900">Quantity</dt>
+                    <dd class="ml-2 text-gray-700"><%= order_item.quantity %></dd>
+                  </div>
+                  <div class="flex pl-4 sm:pl-6">
+                    <dt class="font-medium text-gray-900">Price</dt>
+                    <dd class="ml-2 text-gray-700"><%= currency_for(order_item.unit_price) %></dd>
+                  </div>
+                  <div class="flex pl-4 sm:pl-6">
+                    <dt class="font-medium text-gray-900">Total</dt>
+                    <dd class="ml-2 text-gray-700"><%= currency_for(order_item.total_price) %></dd>
+                  </div>
+                </dl>
+              </div>
             </div>
           </div>
+        <% end %>
+
+        <div class="mt-16">
+          <h2 class="sr-only">Billing Summary</h2>
+
+          <div class="bg-gray-100 px-4 py-6 sm:rounded-lg sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-8">
+            <dl class="grid grid-cols-2 gap-6 text-sm sm:grid-cols-2 md:gap-x-8 lg:col-span-7">
+              <div>
+                <dt class="font-medium text-gray-900">Billing address</dt>
+                <dd class="mt-3 text-gray-500">
+                  <span class="block"><%= @order.user.formatted_name %></span>
+                  <span class="block"><%= @order.billing_address %></span>
+                </dd>
+              </div>
+              <div>
+                <dt class="font-medium text-gray-900">Payment information</dt>
+                <dd class="mt-3 text-gray-500">
+                  <span class="block"><%= @order.payment_method %></span>
+                </dd>
+              </div>
+            </dl>
+
+            <dl class="mt-8 divide-y divide-gray-200 text-sm lg:col-span-5 lg:mt-0">
+              <div class="flex items-center justify-between pb-4">
+                <dt class="text-gray-600">Subtotal</dt>
+                <dd class="font-medium text-gray-900"><%= currency_for(@order.subtotal_amount) %></dd>
+              </div>
+              <div class="flex items-center justify-between py-4">
+                <dt class="text-gray-600">Shipping</dt>
+                <dd class="font-medium text-gray-900"><%= currency_for(@order.shipping_amount) %></dd>
+              </div>
+              <div class="flex items-center justify-between py-4">
+                <dt class="text-gray-600">VAT (20%)</dt>
+                <dd class="font-medium text-gray-900"><%= currency_for(@order.vat_amount) %></dd>
+              </div>
+              <div class="flex items-center justify-between pt-4">
+                <dt class="font-medium text-gray-900">Order total</dt>
+                <dd class="font-medium text-indigo-600"><%= currency_for(@order.total_amount) %></dd>
+              </div>
+            </dl>
+          </div>
         </div>
-      <% end %>
-
-      <div class="mt-16">
-        <h2 class="sr-only">Billing Summary</h2>
-
-        <div class="bg-gray-100 px-4 py-6 sm:rounded-lg sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-8">
-          <dl class="grid grid-cols-2 gap-6 text-sm sm:grid-cols-2 md:gap-x-8 lg:col-span-7">
-            <div>
-              <dt class="font-medium text-gray-900">Billing address</dt>
-              <dd class="mt-3 text-gray-500">
-                <span class="block"><%= @order.user.formatted_name %></span>
-                <span class="block"><%= @order.billing_address %></span>
-              </dd>
-            </div>
-            <div>
-              <dt class="font-medium text-gray-900">Payment information</dt>
-              <dd class="mt-3 text-gray-500">
-                <span class="block"><%= @order.payment_method %></span>
-              </dd>
-            </div>
-          </dl>
-
-          <dl class="mt-8 divide-y divide-gray-200 text-sm lg:col-span-5 lg:mt-0">
-            <div class="flex items-center justify-between pb-4">
-              <dt class="text-gray-600">Subtotal</dt>
-              <dd class="font-medium text-gray-900"><%= currency_for(@order.subtotal_amount) %></dd>
-            </div>
-            <div class="flex items-center justify-between py-4">
-              <dt class="text-gray-600">Shipping</dt>
-              <dd class="font-medium text-gray-900"><%= currency_for(@order.shipping_amount) %></dd>
-            </div>
-            <div class="flex items-center justify-between py-4">
-              <dt class="text-gray-600">VAT (20%)</dt>
-              <dd class="font-medium text-gray-900"><%= currency_for(@order.vat_amount) %></dd>
-            </div>
-            <div class="flex items-center justify-between pt-4">
-              <dt class="font-medium text-gray-900">Order total</dt>
-              <dd class="font-medium text-indigo-600"><%= currency_for(@order.total_amount) %></dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-    </section>
-  </div>
+      </section>
+    </div>
 </main>
