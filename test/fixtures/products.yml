@@ -1,20 +1,20 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  sku: MyString
-  name: MyString
-  description: MyText
+  sku: p-one
+  name: Product One
+  description: Product One Description
   colour: MyString
-  pac_size: 1
-  price: 9.99
+  pac_size: 1000
+  price: 11.99
   width_in_mm: 1
   height_in_mm: 1
   category: one
 
 two:
-  sku: MyString
-  name: MyString
-  description: MyText
+  sku: p-two
+  name: Product Two
+  description: Product Two Description
   colour: MyString
   pac_size: 1
   price: 9.99

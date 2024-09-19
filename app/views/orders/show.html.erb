@@ -5,14 +5,14 @@
         <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-3xl">Order #<%= @order.formatted_order_id %></h1>
       </div>
 
-      <p class="text-sm text-gray-600">Order placed <%= local_time(@order.created_at, class: "font-medium text-gray-900") %></p>
+      <p class="font-mono text-sm text-gray-600">placed <%= local_time(@order.created_at, class: "font-medium text-gray-900") %></p>
     </div>
 
     <div class="my-6">
       <section aria-labelledby="order-heading" class="mt-16">
         <div class="bg-black text-white italic font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
           <h1>
-            Order Summary
+            Summary
           </h1>
         </div>
 
@@ -28,11 +28,19 @@
 
             <div class="flex flex-auto flex-col">
               <div>
-                <h4 class="font-medium text-gray-900">
+                <h4>
                   <%= link_to order_item.product.name, price_list_item_path(order_item.price_list_item) %>
                 </h4>
-                <p class="mt-2 text-sm text-gray-600"><%= order_item.product.description %></p>
+
+                <p class="mt-2 text-sm text-gray-600">
+                  SKU: <%= order_item.product.sku %>
+                </p>
+
+                <p class="mt-2 text-sm text-gray-600">
+                  PAC Size: <%= order_item.product.pac_size %> pieces
+                </p>
               </div>
+
               <div class="mt-6 flex flex-1 items-end">
                 <dl class="flex space-x-4 divide-x divide-gray-200 text-sm sm:space-x-6">
                   <div class="flex">
