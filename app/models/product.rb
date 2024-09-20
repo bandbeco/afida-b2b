@@ -2,7 +2,7 @@ class Product < ApplicationRecord
   default_scope { where(deleted_at: nil) }
   scope :with_deleted, -> { unscope(where: :deleted_at) }
 
-  belongs_to :category, optional: true
+  belongs_to :category
 
   has_many :orders, through: :order_items 
   has_many :order_items, dependent: :destroy
