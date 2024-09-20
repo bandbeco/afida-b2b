@@ -14,6 +14,15 @@ class OrdersController < ApplicationController
 
   # GET /orders/1 or /orders/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        send_data order_summary_pdf.render,
+          filename: "hello.pdf",
+          type: "application/pdf",
+          disposition: "inline"
+      end
+    end
   end
 
   # GET /orders/new
@@ -131,5 +140,9 @@ class OrdersController < ApplicationController
         .without_hidden
         .includes(product: [:category, { picture_attachment: :blob }])
         .group_by(&:category)
+  end
+
+  def order_summary_pdf
+    helpers.order_summary_pdf(@order)
   end
 end
