@@ -17,8 +17,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        send_data order_summary_pdf.render,
-          filename: "hello.pdf",
+        send_data helpers.order_summary_pdf.render,
           type: "application/pdf",
           disposition: "inline"
       end
@@ -140,9 +139,5 @@ class OrdersController < ApplicationController
         .without_hidden
         .includes(product: [:category, { picture_attachment: :blob }])
         .group_by(&:category)
-  end
-
-  def order_summary_pdf
-    helpers.order_summary_pdf(@order)
   end
 end
