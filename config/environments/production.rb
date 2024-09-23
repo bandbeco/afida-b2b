@@ -54,8 +54,19 @@ Rails.application.configure do
 
   # Log to STDOUT by default
   config.logger = ActiveSupport::Logger.new(STDOUT)
+
+  # Lograge
   config.lograge.enabled = true
+
   config.lograge.formatter = Lograge::Formatters::Json.new
+  config.lograge.base_controller_class = ["ActionController::Base"]
+  config.lograge.ignore_actions = ["HealthController#show"]
+  config.lograge.custom_payload do |controller|
+    {
+      host: controller.request.host,
+      user_id: controller.current_user.try(:id)
+    }
+  end
 
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
