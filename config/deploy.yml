@@ -44,6 +44,14 @@ env:
 
 # Use accessory services (secrets come from .env).
 accessories:
+  vector:
+    image: timberio/vector:latest-alpine
+    roles:
+      - web
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    files:
+      - "./config/vector/vector.yaml:/etc/vector/vector.yaml"
   db:
     image: postgres:16
     host: 195.201.33.130

@@ -1,13 +1,13 @@
 ---
 # For more options, see https://docs.honeybadger.io/lib/ruby/gem-reference/configuration
 
-api_key: Rails.application.credentials.dig(:honeybadger_api_key),
+api_key: <%= Rails.application.credentials.dig(:honeybadger_api_key) %>
 
 # The environment your app is running in.
-env: "<%= Rails.env %>"
+env: <%= Rails.env %>
 
 # The absolute path to your project folder.
-root: "<%= Rails.root.to_s %>"
+root: <%= Rails.root.to_s %>
 
 # Honeybadger won't report errors in these environments.
 development_environments:
@@ -27,4 +27,4 @@ debug: false
 
 # Enable Honeybadger Insights
 insights:
-  enabled: false
+  enabled: true

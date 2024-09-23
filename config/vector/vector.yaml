@@ -1,0 +1,27 @@
+sources:
+  docker:
+    type: "docker_logs"
+
+transforms:
+  parse_logs:
+    type: "remap"
+    inputs: ["docker"]
+    source: |
+      payload, err = parse_json(string!(.message))
+      if err == null {
+        .payload = payload
+        del(.message)
+      }
+
+sinks:
+  honeybadger_events:
+    type: "http"
+    inputs: ["parse_logs"]
+    uri: "https://api.honeybadger.io/v1/events"
+    request:
+      headers:
+        X-API-Key: <%= Rails.application.credentials.dig(:honeybadger_api_key) %>
+    encoding:
+      codec: "json"
+    framing:
+      method: "newline_delimited"
