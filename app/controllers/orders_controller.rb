@@ -59,6 +59,12 @@ class OrdersController < ApplicationController
             .with(order: @order, user: current_user)
             .new_order_email
             .deliver_now
+
+          Honeybadger.event(
+            "Created New Order",
+            order_id: @order.id,
+            user: current_user.email,
+          )
         end
       else
         @order.next_step
