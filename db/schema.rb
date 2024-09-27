@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_29_151024) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_27_153951) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -65,7 +65,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_29_151024) do
     t.bigint "product_id", null: false
     t.bigint "order_id", null: false
     t.integer "quantity"
-    t.decimal "unit_price", precision: 10, scale: 2
+    t.decimal "unit_price", precision: 10, scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_order_items_on_order_id"
@@ -91,7 +91,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_29_151024) do
   create_table "price_list_items", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "product_id", null: false
-    t.decimal "price", precision: 10, scale: 2
+    t.decimal "price", precision: 10, scale: 2, null: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
