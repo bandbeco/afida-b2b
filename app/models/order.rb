@@ -4,12 +4,14 @@ class Order < ApplicationRecord
   has_many :order_items, dependent: :destroy
   has_many :products, through: :order_items
 
-  validates :status, presence: true
+  validates_associated :order_items
+  validates_presence_of :order_items
 
   validates :subtotal_amount, presence: true, numericality: { greater_than: 0 }, if: :last_step?
   validates :shipping_address, presence: true, if: :last_step?
   validates :billing_address, presence: true, if: :last_step?
   validates :payment_method, presence: true, if: :last_step?
+
 
   enum status: { pending: 0, processing: 1, shipped: 2, delivered: 3, canceled: 4 }
   enum payment_method: { invoice: 0, bank_transfer: 1, credit_card: 2 }

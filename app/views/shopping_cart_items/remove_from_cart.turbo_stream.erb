@@ -1,0 +1,5 @@
+<%= turbo_stream.replace @shopping_cart_item %>
+
+<%= turbo_stream.replace "shopping_cart_items_count", partial: "shopping_cart", locals: { shopping_cart: current_user.shopping_cart } %>
+
+<%= turbo_stream.replace "order_summary", partial: "order_summary", locals: { checkout: Checkout.new(current_user.shopping_cart) } %>

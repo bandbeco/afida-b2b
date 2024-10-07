@@ -1,0 +1,39 @@
+<%= turbo_frame_tag shopping_cart_item do %>
+  <div class="group bg-white rounded border-black border-2 flex flex-col text-center">
+    <% picture = shopping_cart_item.product.picture %>
+    <% if current_user.admin? %>
+      <%= link_to product_path(shopping_cart_item.product), target: "_top" do %>
+        <%= image_tag picture.variant(resize_and_pad: [275, 275]) if picture.attached? %>
+      <% end %>
+    <% else %>
+      <%= image_tag picture.variant(resize_and_pad: [275, 275]) if picture.attached? %>
+    <% end %>
+
+    <div class="p-3 text-gray-700">
+      <h3 class="mt-2 font-medium">
+        <%= shopping_cart_item.product.name %>
+      </h3>
+
+      <div class="text-sm mb-4 flex justify-evenly">
+        <p class="mt-1">
+        <%= currency_for(shopping_cart_item.unit_price) %> / <%= shopping_cart_item.product.pac_size %> pcs
+        </p>
+      </div>
+
+      <div class="flex justify-center mt-4 font-mono">
+        <%= button_to "-", remove_from_cart_path(shopping_cart_item),
+          method: :patch,
+          class: "flex-shrink-0 bg-gray-100 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-10 w-10 focus:ring-gray-100 focus:ring-2 focus:outline-none" %>
+
+        <div class="border-gray-400 flex-shrink-0 text-gray-900 rounded-md text-xl w-10 max-w-[3.5rem] text-center mx-4 p-1">
+          <%= shopping_cart_item.quantity %>
+        </div>
+
+        <%= button_to "+", add_to_cart_path(shopping_cart_item),
+          method: :patch,
+          class: "flex-shrink-0 bg-gray-100 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-10 w-10 focus:ring-gray-100 focus:ring-2 focus:outline-none"
+        %>
+      </div>
+    </div>
+  </div>
+<% end %>

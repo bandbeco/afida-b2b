@@ -1,0 +1,21 @@
+<div class="w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <% content_for :title, "Shopping carts" %>
+
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Shopping carts</h1>
+    <%= link_to "New shopping cart", new_shopping_cart_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  </div>
+
+  <div id="shopping_carts" class="min-w-full">
+    <% @shopping_carts.each do |shopping_cart| %>
+      <%= render shopping_cart %>
+      <p>
+        <%= link_to "Show this shopping cart", shopping_cart, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+      </p>
+    <% end %>
+  </div>
+</div>

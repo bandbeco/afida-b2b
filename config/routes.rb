@@ -4,6 +4,9 @@ Rails.application.routes.draw do
       invitations: "users/invitations"
     }
 
+  # Defines the root path route ("/")
+  root "orders#new"
+
   scope module: "admin" do
     resources :users, only: [:index, :new, :create, :edit, :update, :destroy] do
       resources :price_list_items, only: [:index], path: "price-list"
@@ -22,12 +25,13 @@ Rails.application.routes.draw do
   resources :order_items
   resources :products
 
+  resources :shopping_cart_items
+  patch "shopping_cart_items/:id/add_to_cart", to: "shopping_cart_items#add_to_cart", as: :add_to_cart
+  patch "shopping_cart_items/:id/remove_from_cart", to: "shopping_cart_items#remove_from_cart", as: :remove_from_cart
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
-
-  # Defines the root path route ("/")
-  root "orders#new"
 end

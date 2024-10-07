@@ -1,0 +1,18 @@
+<%= render "shopping_cart", shopping_cart: @shopping_cart %>
+
+<div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+  <%= render partial: "shopping_cart_item", collection: @shopping_cart_items %>
+</div>
+
+<div class="bg-white mt-12">
+  <div class="bg-black text-white italic font-extrabold grid text-3xl font-impact border-black border-2 p-4">
+    <h2>
+      CHECKOUT
+    </h2>
+  </div>
+
+  <div class="relative mx-auto grid max-w-7xl grid-cols-1 gap-x-16 lg:grid-cols-2 lg:pt-4 rounded-md">
+    <%= render "order_summary", checkout: Checkout.new(current_user.shopping_cart) %>
+    <%= render "order_form" %>
+  </div>
+</div>

@@ -26,9 +26,10 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    session[:order_params] ||= {}
-    @order = current_user.orders.build(session[:order_params])
-    @categorized_price_list_items = categorized_price_list_items
+    @order = current_user.orders.build
+    @shopping_cart = current_user.shopping_cart || current_user.create_shopping_cart
+    build_shopping_cart_items
+    @categorized_shopping_cart_items = categorized_shopping_cart_items
   end
 
   # GET /orders/1/edit
@@ -37,15 +38,19 @@ class OrdersController < ApplicationController
 
   # POST /orders or /orders.json
   def create
-    @order_params = order_params
-    session[:order_params].deep_merge!(order_params) if order_params
-    @order = current_user.orders.build(session[:order_params])
-    @order.current_step = session[:order_step]
-    @order.subtotal_amount = @order.order_items.sum(&:total_price)
-    @order.shipping_amount = @order.subtotal_amount > 100 ? 0 : 5.00
-    @order.vat_rate = Order::VAT_RATE
-    @order.vat_amount = @order.subtotal_amount * @order.vat_rate
-    @order.total_amount = @order.subtotal_amount + @order.vat_amount + @order.shipping_amount
+    checkout = Checkout.new(current_user.shopping_cart)
+
+    @order = current_user.orders.build(
+      checkout.attributes.merge(order_params)
+    )
+
+    current_user.shopping_cart.shopping_cart_items.added_to_cart.each do |item|
+      @order.order_items.build(
+        product_id: item.product_id,
+        quantity: item.quantity,
+        unit_price: item.unit_price
+      )
+    end
 
     if order_params[:shipping_address]
       attn = "attn: #{order_params[:shipping_address][:attn]}"
@@ -55,7 +60,7 @@ class OrdersController < ApplicationController
       postcode = order_params[:shipping_address][:postcode]
       additional_notes = order_params[:shipping_address][:additional_notes]
 
-      @order.shipping_address = [company, attn, street_number_and_name, post_town, postcode, additional_notes].join(", ")
+    @order.shipping_address = [company, attn, street_number_and_name, post_town, postcode, additional_notes].join(", ").chomp(", ")
     end
 
     if order_params[:billing_address]
@@ -67,35 +72,22 @@ class OrdersController < ApplicationController
       @order.billing_address = [company, street_number_and_name, post_town, postcode].join(", ")
     end
 
-    if @order.valid?
-      if @order.last_step?
-        if @order.all_valid?
-          @order.save
+    respond_to do |format|
+      if @order.save
+        OrderMailer
+          .with(order: @order, user: current_user)
+          .new_order_email
+          .deliver_now
 
-          OrderMailer
-            .with(order: @order, user: current_user)
-            .new_order_email
-            .deliver_now
-
-          Honeybadger.event(
-            "Created New Order",
-            order_id: @order.id,
-            user: current_user.email,
-          )
+        format.html do
+          current_user.shopping_cart.shopping_cart_items.destroy_all
+          redirect_to order_url(@order), notice: "Order was successfully created."
         end
       else
-        @order.next_step
-      end
-      session[:order_step] = @order.current_step
-    end
+        @shopping_cart = current_user.shopping_cart
+        @categorized_shopping_cart_items = categorized_shopping_cart_items
 
-    respond_to do |format|
-      if @order.new_record?
-        @categorized_price_list_items = categorized_price_list_items
-        format.html { render :new, status: :ok }
-      else
-        session[:order_step] = session[:order_params] = nil
-        format.html { redirect_to order_url(@order), notice: "Order was successfully created." }
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
@@ -156,11 +148,22 @@ class OrdersController < ApplicationController
       )
   end
 
-  def categorized_price_list_items
+  def categorized_shopping_cart_items
       current_user
-        .price_list_items
-        .without_hidden
+        .shopping_cart
+        .shopping_cart_items
         .includes(product: [:category, { picture_attachment: :blob }])
-        .group_by(&:category)
+        .group_by { |item| item.product.category }
+        .sort_by { |category, _| category.id }
+  end
+
+  def build_shopping_cart_items
+    current_user.price_list_items.without_hidden.map do |item|
+      @shopping_cart.shopping_cart_items.find_or_create_by(
+        shopping_cart_id: @shopping_cart.id,
+        product_id: item.product_id,
+        unit_price: item.price
+      )
+    end
   end
 end

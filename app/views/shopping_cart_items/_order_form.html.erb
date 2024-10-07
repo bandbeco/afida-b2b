@@ -1,0 +1,131 @@
+<section aria-labelledby="payment-and-shipping-heading" class="py-16 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:w-full lg:max-w-lg lg:pb-24 lg:pt-0">
+  <%= form_with(model: @order, data: { turbo: false }) do |form| %>
+    <div class="mx-auto max-w-2xl px-4 lg:max-w-none lg:px-0">
+      <div class="mt-10">
+        <h3 class="text-lg font-medium text-gray-900">Payment details</h3>
+
+        <% if @order.errors.any? %>
+          <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+            <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+            <ul>
+              <% @order.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="mt-6 grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4">
+          <div class="col-span-3 sm:col-span-4">
+            <div class="mt-1">
+              <fieldset>
+                <div class="space-y-4">
+                  <div class="flex items-center">
+                    <%= form.radio_button :payment_method, :invoice, checked: true, class: "h-4 w-4 border-gray-300 focus:ring-indigo-600" %>
+                    <%= form.label :payment_method_invoice, "Invoice", class: "ml-3 block text-sm font-medium leading-6 text-gray-900" %>
+                  </div>
+
+                  <div class="flex items-center">
+                    <%= form.radio_button :payment_method, :bank_transfer, class: "h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" %>
+                    <%= form.label :payment_method_bank_transfer, "Bank Transfer", class: "ml-3 block text-sm font-medium leading-6 text-gray-900" %>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-10">
+        <h3 class="text-lg font-medium text-gray-900">Shipping address</h3>
+
+        <div class="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
+          <%= form.fields_for :shipping_address do |address| %>
+            <div class="sm:col-span-3">
+              <%= address.label :company, "Company", class: "block text-sm font-medium text-gray-700" %>
+              <div class="mt-1">
+                <%= address.text_field :company, value: current_user.company, autocomplete: "organization", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+              </div>
+            </div>
+
+            <div class="sm:col-span-3">
+              <%= address.label :attn, "Attention Of", class: "block text-sm font-medium text-gray-700" %>
+              <div class="mt-1">
+                <%= address.text_field :attn, value: current_user.formatted_name, autocomplete: "organization", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+              </div>
+            </div>
+
+            <div class="sm:col-span-3">
+              <%= address.label :street_number_and_name, "Address", class: "block text-sm font-medium text-gray-700" %>
+              <div class="mt-1">
+                <%= address.text_field :street_number_and_name, autocomplete: "street-address", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+              </div>
+            </div>
+
+            <div>
+              <%= address.label :post_town, "City", class: "block text-sm font-medium text-gray-700" %>
+              <div class="mt-1">
+                <%= address.text_field :post_town, autocomplete: "address-level2", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+              </div>
+            </div>
+
+            <div>
+              <%= address.label :postcode, "Postcode", class: "block text-sm font-medium text-gray-700" %>
+              <div class="mt-1">
+                <%= address.text_field :postcode, autocomplete: "postal-code", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+              </div>
+            </div>
+
+            <div class="sm:col-span-3">
+              <%= address.label :additional_notes, "Additional Notes", class: "block text-sm font-medium text-gray-700" %>
+              <div class="mt-1">
+                <%= address.text_field :additional_notes, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="mt-10">
+        <h3 class="text-lg font-medium text-gray-900">Billing address</h3>
+
+        <div class="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
+          <%= form.fields_for :billing_address do |address| %>
+            <div class="sm:col-span-3">
+              <%= address.label :company, "Company", class: "block text-sm font-medium text-gray-700" %>
+              <div class="mt-1">
+                <%= address.text_field :company, value: current_user.company, autocomplete: "organization", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+              </div>
+            </div>
+
+            <div class="sm:col-span-3">
+              <%= address.label :street_number_and_name, "Address", class: "block text-sm font-medium text-gray-700" %>
+              <div class="mt-1">
+                <%= address.text_field :street_number_and_name, autocomplete: "street-address", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+              </div>
+            </div>
+
+            <div>
+              <%= address.label :post_town, "City", class: "block text-sm font-medium text-gray-700" %>
+              <div class="mt-1">
+                <%= address.text_field :post_town, autocomplete: "address-level2", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+              </div>
+            </div>
+
+            <div>
+              <%= address.label :postcode, "Postcode", class: "block text-sm font-medium text-gray-700" %>
+              <div class="mt-1">
+                <%= address.text_field :postcode, autocomplete: "postal-code", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="mt-10 flex justify-end border-t border-gray-200 pt-6">
+        <%= form.submit "Submit Order", class: "btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</section>

@@ -1,0 +1,59 @@
+<div id="order_summary" class="mx-auto max-w-2xl py-16 sm:py-8:px-0">
+  <section class="mt-12">
+    <ul role="list" class="divide-y divide-gray-900 divide-opacity-10 text-sm font-medium">
+      <% checkout.shopping_cart.shopping_cart_items.added_to_cart.each do |item| %>
+        <li class="flex py-6">
+          <% if item.product.picture.attached? %>
+            <div class="flex-shrink-0">
+              <%= image_tag item.product.picture.variant(resize_and_pad: [150, 150]), class: "h-20 w-20 flex-none rounded-md object-cover object-center" %>
+            </div>
+          <% end %>
+
+          <div class="ml-4 flex flex-1 flex-col sm:ml-6">
+            <div>
+              <div class="flex justify-between">
+                <h4 class="text-sm">
+                  <%= item.product.name %>
+                </h4>
+
+                <p class="ml-4 text-sm font-medium text-gray-900">
+                <%= currency_for(item.unit_price) %>
+                </p>
+              </div>
+              <p class="mt-1 text-sm text-gray-500"><%= item.product.colour %></p>
+              <p class="mt-1 text-sm text-gray-500">Quantity: <%= item.quantity %></p>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <section class="mt-4">
+    <div>
+      <dl class="space-y-4 border-t border-black pt-6 text-sm font-medium">
+        <div class="flex items-center justify-between">
+          <dt>Subtotal (<%= checkout.quantities %> items)</dt>
+          <dd><%= currency_for(checkout.subtotal_amount) %></dd>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <dt>Shipping</dt>
+          <dd><%= currency_for(checkout.shipping_amount) %></dd>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <dt>VAT 20%</dt>
+          <dd><%= currency_for(checkout.vat_amount) %></dd>
+        </div>
+
+        <div class="flex items-center justify-between border-t-2 border-black pt-6">
+          <dt class="text-base">Total</dt>
+          <dd class="text-base">
+            <%= currency_for(checkout.total_amount) %>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+</div>

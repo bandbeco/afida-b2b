@@ -88,4 +88,28 @@ class AbilityTest < ActionDispatch::IntegrationTest
     assert ability.can?(:read, order)
     assert ability.can?(:read, Order.new)
   end
+
+  test 'user can see the list of their own shopping cart items' do
+    user = users(:one)
+    cart = shopping_carts(:one)
+    cart.user = user
+    cart.save
+    item = cart.shopping_cart_items.create(product: products(:one), unit_price: 1)
+
+    ability = Ability.new(user)
+
+    assert ability.can?(:read, item)
+  end
+
+  test 'user can add item to cart' do
+    user = users(:one)
+    cart = shopping_carts(:one)
+    cart.user = user
+    cart.save
+    item = cart.shopping_cart_items.create(product: products(:one), unit_price: 1)
+
+    ability = Ability.new(user)
+
+    assert ability.can?(:add_to_cart, item)
+  end
 end

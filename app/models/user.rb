@@ -6,6 +6,9 @@ class User < ApplicationRecord
 
   validates_confirmation_of :password
 
+  has_one :shopping_cart, dependent: :destroy
+  has_many :shopping_cart_items, through: :shopping_cart
+
   has_many :orders
   has_many :addresses, dependent: :destroy
   has_many :price_list_items, dependent: :destroy

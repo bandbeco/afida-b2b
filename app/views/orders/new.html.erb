@@ -1,37 +1,28 @@
-<%= form_with(model: @order, data: { turbo: false }) do |form| %>
-  <% if @order.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2>
-        <%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:
+<div>
+  <%= render "shared/category_navbar", shopping_cart: @shopping_cart %>
+
+  <% @categorized_shopping_cart_items.each do |category, shopping_cart_items| %>
+    <div class="bg-black text-white italic font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
+      <h2 id="<%= category.name.downcase.gsub(" ", "_") %>">
+        <%= category.name.upcase %>
       </h2>
+    </div>
 
-      <ul>
-        <% @order.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+      <%= render partial: "shopping_cart_items/shopping_cart_item", collection: shopping_cart_items.sort_by { |i| i.product.sku } %>
     </div>
   <% end %>
+</div>
 
-  <% if @order.current_step == "shopping" %>
-    <%= render "shared/category_navbar" %>
+<div class="bg-white mt-12">
+  <div class="bg-black text-white italic font-extrabold grid text-3xl font-impact border-black border-2 p-4">
+    <h2 id="checkout">
+      CHECKOUT
+    </h2>
+  </div>
 
-    <% @categorized_price_list_items.each do |category, price_list_items| %>
-      <%= render "#{@order.current_step}_step",
-        form: form,
-        category: category,
-        price_list_items: price_list_items
-      %>
-    <% end %>
-  <% end %>
-
-  <% if @order.current_step == "confirmation" %>
-    <%= render "confirmation_step", form: form %>
-  <% end %>
-
-  <% if @order.current_step == "shopping" %>
-    <div class="bg-afida-green sticky bottom-0 grid py-8 opacity-90">
-      <%= form.submit "Proceed to checkout", class: "btn-primary" %>
-    </div>
-  <% end %>
-<% end %>
+  <div class="relative mx-auto grid max-w-7xl grid-cols-1 gap-x-16 lg:grid-cols-2 lg:pt-4 rounded-md">
+    <%= render "shopping_cart_items/order_summary", checkout: Checkout.new(@shopping_cart) %>
+    <%= render "shopping_cart_items/order_form" %>
+  </div>
+</div>
