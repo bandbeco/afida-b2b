@@ -103,6 +103,20 @@
           <div class="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
             <%= form.fields_for :shipping_address do |shipping_address| %>
               <div class="sm:col-span-3">
+                <%= shipping_address.label :company, "Company", class: "block text-sm font-medium text-gray-700" %>
+                <div class="mt-1">
+                  <%= shipping_address.text_field :company, value: current_user.company, autocomplete: "organization", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+                </div>
+              </div>
+
+              <div class="sm:col-span-3">
+                <%= shipping_address.label :attn, "Attention Of", class: "block text-sm font-medium text-gray-700" %>
+                <div class="mt-1">
+                  <%= shipping_address.text_field :attn, value: current_user.formatted_name, autocomplete: "organization", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+                </div>
+              </div>
+
+              <div class="sm:col-span-3">
                 <%= shipping_address.label :street_number_and_name, "Address", class: "block text-sm font-medium text-gray-700" %>
                 <div class="mt-1">
                   <%= shipping_address.text_field :street_number_and_name, autocomplete: "street-address", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
@@ -139,6 +153,13 @@
 
         <div class="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
           <%= form.fields_for :billing_address do |billing_address| %>
+            <div class="sm:col-span-3">
+              <%= billing_address.label :company, "Company", class: "block text-sm font-medium text-gray-700" %>
+              <div class="mt-1">
+                <%= billing_address.text_field :company, value: current_user.company, autocomplete: "organization", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+              </div>
+            </div>
+
             <div class="sm:col-span-3">
               <%= billing_address.label :street_number_and_name, "Address", class: "block text-sm font-medium text-gray-700" %>
               <div class="mt-1">

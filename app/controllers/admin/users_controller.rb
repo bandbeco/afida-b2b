@@ -74,6 +74,7 @@ class Admin::UsersController < ApplicationController
         .permit(
           :first_name,
           :last_name,
+          :company,
           :email,
           :role,
           price_list_items_attributes: [

@@ -69,14 +69,21 @@
               <div>
                 <dt class="font-medium text-gray-900">Billing address</dt>
                 <dd class="mt-3 text-gray-500">
-                  <span class="block"><%= @order.user.formatted_name %></span>
                   <span class="block"><%= @order.billing_address %></span>
                 </dd>
               </div>
+
               <div>
                 <dt class="font-medium text-gray-900">Payment information</dt>
                 <dd class="mt-3 text-gray-500">
                   <span class="block"><%= @order.payment_method %></span>
+                </dd>
+              </div>
+
+              <div>
+                <dt class="font-medium text-gray-900">Shipping address</dt>
+                <dd class="mt-3 text-gray-500">
+                  <span class="block"><%= @order.shipping_address %></span>
                 </dd>
               </div>
             </dl>

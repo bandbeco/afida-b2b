@@ -47,8 +47,25 @@ class OrdersController < ApplicationController
     @order.vat_amount = @order.subtotal_amount * @order.vat_rate
     @order.total_amount = @order.subtotal_amount + @order.vat_amount + @order.shipping_amount
 
-    @order.shipping_address = order_params[:shipping_address].values.join(", ") if order_params[:shipping_address]
-    @order.billing_address = order_params[:billing_address].values.join(", ") if order_params[:billing_address]
+    if order_params[:shipping_address]
+      attn = "attn: #{order_params[:shipping_address][:attn]}"
+      company = order_params[:shipping_address][:company]
+      street_number_and_name = order_params[:shipping_address][:street_number_and_name]
+      post_town = order_params[:shipping_address][:post_town]
+      postcode = order_params[:shipping_address][:postcode]
+      additional_notes = order_params[:shipping_address][:additional_notes]
+
+      @order.shipping_address = [company, attn, street_number_and_name, post_town, postcode, additional_notes].join(", ")
+    end
+
+    if order_params[:billing_address]
+      company = order_params[:shipping_address][:company]
+      street_number_and_name = order_params[:shipping_address][:street_number_and_name]
+      post_town = order_params[:shipping_address][:post_town]
+      postcode = order_params[:shipping_address][:postcode]
+
+      @order.billing_address = [company, street_number_and_name, post_town, postcode].join(", ")
+    end
 
     if @order.valid?
       if @order.last_step?
@@ -126,8 +143,8 @@ class OrdersController < ApplicationController
         :shipping_address,
         :billing_address,
         :payment_method,
-        shipping_address: %i[street_number_and_name post_town postcode additional_notes],
-        billing_address: %i[street_number_and_name post_town postcode],
+        shipping_address: %i[company attn street_number_and_name post_town postcode additional_notes],
+        billing_address: %i[company attn street_number_and_name post_town postcode],
         order_items_attributes: [
           :id,
           :order_id,

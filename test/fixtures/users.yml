@@ -3,6 +3,7 @@
 one:
   first_name: John
   last_name: Doe
+  company: 'Acme Inc.'
   email: 'john@example.com'
   encrypted_password: <%= Devise::Encryptor.digest(User, ENV['TEST_PASSWORD']) %>
 
@@ -10,11 +11,13 @@ two:
   first_name: Jane
   last_name: Smith
   email: 'jane@example.com'
+  company: 'Widgets Inc.'
   encrypted_password: <%= Devise::Encryptor.digest(User, ENV['TEST_PASSWORD']) %>
 
 admin:
   first_name: Admin
   last_name: User
+  company: 'Afida'
   email: 'admin@example.com'
   role: 'admin'
   encrypted_password: <%= Devise::Encryptor.digest(User, ENV['TEST_PASSWORD']) %>
