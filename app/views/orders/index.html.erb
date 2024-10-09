@@ -1,9 +1,23 @@
 <% content_for :title, "Orders" %>
 
-<div class="bg-black text-white italic font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
-  <h1>
-    ORDERS
-  </h1>
+<div class="bg-black text-white font-extrabold text-3xl font-impact rounded border-black border-2 p-4 my-4 grid grid-cols-2 gap-4 place-content-between">
+  <div>
+    <h1 class="italic">
+      ORDERS
+    </h1>
+  </div>
+
+  <div class="text-xs font-mono text-right">
+    <p>
+      <%= @orders.count %> orders
+    </p>
+    <p>
+      <%= currency_for(@orders.sum(&:subtotal_amount)) %> total
+    </p>
+    <p>
+      <%= @orders.average(:subtotal_amount) %> average order value
+    </p>
+  </div>
 </div>
 
 <div class="flow-root">
@@ -21,15 +35,15 @@
             </th>
 
             <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
-              On
+              For
             </th>
 
             <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
-              Status
+              On
             </th>
 
             <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-right text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
-              Total Amount
+              Total (excl. VAT / Shipping)
             </th>
           </tr>
         </thead>
