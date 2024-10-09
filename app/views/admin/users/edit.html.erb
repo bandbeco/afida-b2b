@@ -1,8 +1,15 @@
-<div class="bg-black text-white italic font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
-  <h1>
-    ACCOUNT DETAILS
+<div class="bg-black text-white font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
+  <h1 class="italic mb-2">
+    <%= @user.formatted_name %>
   </h1>
+
+  <p class="text-xs font-mono">
+    Joined on <%= local_time(@user.invitation_accepted_at) if @user.accepted_invitation? %>
+  </p>
 </div>
+
+<p>
+</p>
 
 <div class="md:w-1/3 w-full">
   <%= render "form", user: @user %>

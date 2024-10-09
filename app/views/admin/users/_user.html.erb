@@ -16,10 +16,6 @@
   </td>
 
   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-    <%= local_time(user.invitation_accepted_at) if user.accepted_invitation? %>
-  </td>
-
-  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
     <%= form_for(user, url: invitation_path(user), html: { method: :post }) do |f| %>
       <%= f.hidden_field :user_id, value: user.id %>
       <% if user.invited? && !user.invitation_accepted? %>
