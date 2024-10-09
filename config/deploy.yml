@@ -6,7 +6,7 @@ image: laurentqro/afida
 
 # Deploy to these servers.
 servers:
-  - 116.203.27.95
+  - 100.67.171.22
 
 # Credentials for your image host.
 registry:
