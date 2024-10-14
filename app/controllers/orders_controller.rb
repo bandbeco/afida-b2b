@@ -59,10 +59,10 @@ class OrdersController < ApplicationController
     end
 
     if order_params[:billing_address]
-      company = order_params[:shipping_address][:company]
-      street_number_and_name = order_params[:shipping_address][:street_number_and_name]
-      post_town = order_params[:shipping_address][:post_town]
-      postcode = order_params[:shipping_address][:postcode]
+      company = order_params[:billing_address][:company]
+      street_number_and_name = order_params[:billing_address][:street_number_and_name]
+      post_town = order_params[:billing_address][:post_town]
+      postcode = order_params[:billing_address][:postcode]
 
       @order.billing_address = [company, street_number_and_name, post_town, postcode].join(", ")
     end
