@@ -15,7 +15,7 @@
       <%= currency_for(@orders.sum(&:subtotal_amount)) %> total
     </p>
     <p>
-      <%= @orders.average(:subtotal_amount) %> average order value
+      <%= currency_for(@orders.average(:subtotal_amount)) %> average order value
     </p>
   </div>
 </div>
