@@ -13,10 +13,13 @@
       <h3 class="mt-2 font-medium">
         <%= shopping_cart_item.product.name %>
       </h3>
+        <p class="text-sm mt-1">
+          <%= shopping_cart_item.product.colour %>
+        </p>
 
       <div class="text-sm mb-4 flex justify-evenly">
         <p class="mt-1">
-        <%= currency_for(shopping_cart_item.unit_price) %> / <%= shopping_cart_item.product.pac_size %> pcs
+          <%= currency_for(shopping_cart_item.unit_price) %> / <%= shopping_cart_item.product.pac_size %> pcs
         </p>
       </div>
 

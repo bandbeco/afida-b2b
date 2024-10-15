@@ -37,6 +37,10 @@
                 </p>
 
                 <p class="mt-2 text-sm text-gray-600">
+                  Colour: <%= order_item.product.colour %>
+                </p>
+
+                <p class="mt-2 text-sm text-gray-600">
                   PAC Size: <%= order_item.product.pac_size %> pieces
                 </p>
               </div>
@@ -48,7 +52,7 @@
                     <dd class="ml-2 text-gray-700"><%= order_item.quantity %></dd>
                   </div>
                   <div class="flex pl-4 sm:pl-6">
-                    <dt class="font-medium text-gray-900">Price</dt>
+                    <dt class="font-medium text-gray-900">Unit Price</dt>
                     <dd class="ml-2 text-gray-700"><%= currency_for(order_item.unit_price) %></dd>
                   </div>
                   <div class="flex pl-4 sm:pl-6">
