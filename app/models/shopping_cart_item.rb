@@ -2,7 +2,8 @@ class ShoppingCartItem < ApplicationRecord
   belongs_to :shopping_cart
   belongs_to :product
 
-  validates_numericality_of :quantity, only_integer: true, greater_or_equal_to: 0
+  validates :quantity, numericality: { greater_than_or_equal_to: 0 }
+  validates :unit_price, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   scope :added_to_cart, -> { where('quantity > 0') }
 
