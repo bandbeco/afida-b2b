@@ -1,3 +1,5 @@
+<% require "dotenv"; Dotenv.load(".env") %>
+
 # Name of your application. Used to uniquely configure containers.
 service: afida-app
 
@@ -25,14 +27,11 @@ env:
     DB_HOST: 195.201.33.130
   secret:
     - RAILS_MASTER_KEY
-    - POSTGRES_PASSWORD
     - DATABASE_URL
 
 # Use a different ssh user than root
 # ssh:
 #   user: app
-#
-
 
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
 # "bin/kamal logs -r job" will tail logs from the first server in the job section.
@@ -57,14 +56,6 @@ proxy:
 
 # Use accessory services (secrets come from .env).
 accessories:
-  vector:
-    image: timberio/vector:latest-alpine
-    roles:
-      - web
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    files:
-      - "./config/vector/vector.yaml:/etc/vector/vector.yaml"
   db:
     image: postgres:16
     host: 195.201.33.130
