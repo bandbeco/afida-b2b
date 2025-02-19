@@ -19,7 +19,7 @@ class Checkout
   end
 
   def vat_amount
-    subtotal_amount * VAT_RATE
+    (subtotal_amount + shipping_amount) * VAT_RATE
   end
 
   def quantities
