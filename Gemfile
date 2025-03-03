@@ -36,6 +36,8 @@ gem "devise_invitable", "~> 2.0"
 
 gem "cancancan", "~> 3.6"
 
+gem "httparty"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
