@@ -37,6 +37,7 @@
       <p>
         <strong>Item:</strong> <%= order_item.product.name %><br>
         <strong>SKU:</strong> <%= order_item.product.sku %><br>
+        <strong>Colour:</strong> <%= order_item.product.colour&.titleize %><br>
         <% if order_item.product.pac_size.present? %>
           <strong>PAC Size:</strong> <%= order_item.product.pac_size %> pieces<br>
         <% end %>

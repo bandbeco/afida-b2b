@@ -28,6 +28,8 @@ module OrdersHelper
       pdf.move_down 2
       pdf.text "SKU: #{order_item.product.sku}"
       pdf.move_down 2
+      pdf.text "Colour: #{order_item.product.colour&.titleize}"
+      pdf.move_down 2
       if order_item.product.pac_size.present?
         pdf.text "PAC Size: #{order_item.product.pac_size} pieces"
       end
