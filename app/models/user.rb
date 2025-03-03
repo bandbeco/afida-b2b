@@ -15,7 +15,7 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :price_list_items, allow_destroy: true
 
-  enum role: { customer: 0, admin: 1 }
+  enum :role, [:customer, :admin]
 
   delegate :can?, :cannot?, to: :ability
 

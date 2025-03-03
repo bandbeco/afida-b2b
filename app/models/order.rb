@@ -13,8 +13,8 @@ class Order < ApplicationRecord
   validates :payment_method, presence: true, if: :last_step?
 
 
-  enum status: { pending: 0, processing: 1, shipped: 2, delivered: 3, canceled: 4 }
-  enum payment_method: { invoice: 0, bank_transfer: 1, credit_card: 2 }
+  enum :status, [:pending, :processing, :shipped, :delivered, :canceled]
+  enum :payment_method, [:invoice, :bank_transfer, :credit_card]
 
   accepts_nested_attributes_for :order_items, allow_destroy: true, reject_if: lambda { |attributes| attributes['quantity'].to_i.zero? || attributes['quantity'].blank? }
 
