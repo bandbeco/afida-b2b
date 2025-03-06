@@ -22,7 +22,7 @@ ice_cream_cups_category = Category.find_or_create_by!(name: "Ice Cream Cups")
 straws = YAML.load_file(Rails.root.join("db", "straws.yml"))
 
 straws.each do |product|
-  p = Product.find_or_create_by!(product)
+  p = Product.find_or_initialize_by(product)
   p.category = straws_category
   p.save!
 end
@@ -30,7 +30,7 @@ end
 napkins = YAML.load_file(Rails.root.join("db", "napkins.yml"))
 
 napkins.each do |product|
-  p = Product.find_or_create_by!(product)
+  p = Product.find_or_initialize_by(product)
   p.category = napkins_category
   p.save!
 end
@@ -38,7 +38,7 @@ end
 hot_cups = YAML.load_file(Rails.root.join("db", "hot_cups.yml"))
 
 hot_cups.each do |product|
-  p = Product.find_or_create_by!(product)
+  p = Product.find_or_initialize_by(product)
   p.category = hot_cups_category
   p.save!
 end
@@ -46,7 +46,7 @@ end
 hot_cups_extras = YAML.load_file(Rails.root.join("db", "hot_cups_extras.yml"))
 
 hot_cups_extras.each do |product|
-  p = Product.find_or_create_by!(product)
+  p = Product.find_or_initialize_by(product)
   p.category = hot_cups_extras_category
   p.save!
 end
@@ -54,7 +54,7 @@ end
 cold_cups = YAML.load_file(Rails.root.join("db", "cold_cups.yml"))
 
 cold_cups.each do |product|
-  p = Product.find_or_create_by!(product)
+  p = Product.find_or_initialize_by(product)
   p.category = cold_cups_category
   p.save!
 end
@@ -62,7 +62,7 @@ end
 pizza_boxes = YAML.load_file(Rails.root.join("db", "pizza_boxes.yml"))
 
 pizza_boxes.each do |product|
-  p = Product.find_or_create_by!(product)
+  p = Product.find_or_initialize_by(product)
   p.category = pizza_boxes_category
   p.save!
 end
@@ -70,7 +70,7 @@ end
 kraft_food_containers = YAML.load_file(Rails.root.join("db", "kraft_food_containers.yml"))
 
 kraft_food_containers.each do |product|
-  p = Product.find_or_create_by!(product)
+  p = Product.find_or_initialize_by(product)
   p.category = kraft_food_containers_category
   p.save!
 end
@@ -78,7 +78,7 @@ end
 takeaway_extras = YAML.load_file(Rails.root.join("db", "takeaway_extras.yml"))
 
 takeaway_extras.each do |product|
-  p = Product.find_or_create_by!(product)
+  p = Product.find_or_initialize_by(product)
   p.category = takeaway_extras_category
   p.save!
 end
@@ -86,7 +86,7 @@ end
 ice_cream_cups = YAML.load_file(Rails.root.join("db", "ice_cream_cups.yml"))
 
 ice_cream_cups.each do |product|
-  p = Product.find_or_create_by!(product)
+  p = Product.find_or_initialize_by(product)
   p.category = ice_cream_cups_category
   p.save!
 end

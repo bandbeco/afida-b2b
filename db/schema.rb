@@ -96,7 +96,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_06_111759) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "hidden"
+    t.boolean "hidden", default: false
     t.index ["product_id"], name: "index_price_list_items_on_product_id"
     t.index ["user_id"], name: "index_price_list_items_on_user_id"
   end

@@ -24,7 +24,7 @@
       </div>
 
       <div class="flex justify-center mt-4 font-mono">
-        <%= button_to "-", remove_from_cart_path(shopping_cart_item),
+        <%= button_to "-", remove_from_cart_shopping_cart_item_path(shopping_cart_item),
           method: :patch,
           class: "flex-shrink-0 bg-gray-100 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-10 w-10 focus:ring-gray-100 focus:ring-2 focus:outline-none" %>
 
@@ -32,7 +32,7 @@
           <%= shopping_cart_item.quantity %>
         </div>
 
-        <%= button_to "+", add_to_cart_path(shopping_cart_item),
+        <%= button_to "+", add_to_cart_shopping_cart_item_path(shopping_cart_item),
           method: :patch,
           class: "flex-shrink-0 bg-gray-100 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-10 w-10 focus:ring-gray-100 focus:ring-2 focus:outline-none"
         %>

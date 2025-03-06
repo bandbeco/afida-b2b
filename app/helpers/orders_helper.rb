@@ -11,6 +11,7 @@ module OrdersHelper
   end
 
   def order_summary_pdf
+    Prawn::Fonts::AFM.hide_m17n_warning = true
     pdf = Prawn::Document.new
     pdf.font 'Courier'
     pdf.font_size 10
@@ -19,7 +20,7 @@ module OrdersHelper
     pdf.image "#{Rails.root.join('app', 'assets', 'images', 'logo.png')}", width: 50
     pdf.move_down 20
 
-    pdf.text "Order ##{@order.id}", size: 20, style: :bold
+    pdf.text "Order ##{@order.invoice_number}", size: 20, style: :bold
     pdf.text "Placed on #{@order.created_at.strftime('%d %B %Y at %H:%M')}"
     pdf.move_down 40
 

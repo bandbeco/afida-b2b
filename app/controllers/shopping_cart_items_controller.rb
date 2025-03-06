@@ -1,5 +1,5 @@
 class ShoppingCartItemsController < ApplicationController
-  before_action :set_shopping_cart_item, only: %i[ show edit update destroy add_to_cart ]
+  before_action :set_shopping_cart_item, only: %i[ show edit update destroy add_to_cart remove_from_cart ]
 
   # GET /shopping_cart_items or /shopping_cart_items.json
   def index
@@ -23,12 +23,32 @@ class ShoppingCartItemsController < ApplicationController
 
   def add_to_cart
     @shopping_cart_item.quantity += 1
-    @shopping_cart_item.save
+
+    respond_to do |format|
+      if @shopping_cart_item.save
+        format.turbo_stream
+        format.html { redirect_to shopping_cart_items_url }
+        format.json { render json: @shopping_cart_item }
+      else
+        format.html { redirect_to shopping_cart_items_url, status: :unprocessable_entity }
+        format.json { render json: @shopping_cart_item.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def remove_from_cart
     @shopping_cart_item.quantity = [@shopping_cart_item.quantity - 1, 0].max
-    @shopping_cart_item.save
+
+    respond_to do |format|
+      if @shopping_cart_item.save
+        format.turbo_stream
+        format.html { redirect_to shopping_cart_items_url }
+        format.json { render json: @shopping_cart_item }
+      else
+        format.html { redirect_to shopping_cart_items_url, status: :unprocessable_entity }
+        format.json { render json: @shopping_cart_item.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # GET /shopping_cart_items/new

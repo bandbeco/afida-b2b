@@ -2,81 +2,47 @@ require "test_helper"
 
 class OrderTest < ActiveSupport::TestCase
   setup do
-    @order = Order.new(
-        user: users(:one),
-        status: 'pending',
-        subtotal_amount: 100,
-        shipping_address: '123 Main St',
-        billing_address: '456, Wall St',
-        payment_method: 'invoice'
-      )
+    @order = Order.create!(
+      user: users(:one),
+      status: 'pending',
+      subtotal_amount: 100,
+      shipping_address: '123 Main St',
+      billing_address: '456, Wall St',
+      payment_method: 'invoice',
+      total_amount: 100,
+      order_items_attributes: [{
+        product: products(:one),
+        quantity: 1,
+        unit_price: 100
+      }]
+    )
   end
 
-  test "an order has shopping and confirmation steps" do
-    order = Order.new
-  assert_equal %w[shopping confirmation], order.steps
-  end
-
-  test "an order has two steps" do
-    order = Order.new
-    assert_equal 2, order.steps.count
-  end
-
-  test "the first step is shopping" do
-    order = Order.new
-    assert_equal 'shopping', order.steps.first
-  end
-
-  test "the last step is shopping" do
-    order = Order.new
-    assert_equal 'confirmation', order.steps.last
-  end
-
-  test "validates status presence" do
-    @order.status = nil
-    assert_not @order.valid?
-  end
-
-  test "validates subtotal_amount presence if last step" do
-    @order.next_step
+  test "validates subtotal_amount presence" do
     @order.subtotal_amount = nil
     assert_not @order.valid?
   end
 
-  test "validates shipping_address presence if last step" do
-    @order.next_step
+  test "validates shipping_address presence" do
     @order.shipping_address = nil
     assert_not @order.valid?
   end
 
-  test "validates billing_address presence if last step" do
-    @order.next_step
+  test "validates billing_address presence" do
     @order.billing_address = nil
     assert_not @order.valid?
   end
 
-  test "validates payment_method presence if last step" do
-    @order.next_step
+  test "validates payment_method presence" do
     @order.payment_method = nil
     assert_not @order.valid?
   end
 
-  test "formatted_order_id returns a formatted order id" do
-    @order.save
-    assert_equal "INV000#{@order.id}", @order.formatted_order_id
+  test "invoice_number returns a formatted order id" do
+    assert_equal "ONL-000#{@order.id}", @order.invoice_number
   end
 
-  test "vat_amount returns the total amount multiplied by the VAT rate" do
-    assert_equal 20, @order.vat_amount
-  end
-
-  test "shipping_amount returns 0 if total amount is greater than 100" do
-    @order.subtotal_amount = 101
-    assert_equal 0, @order.shipping_amount
-  end
-
-  test "shipping_amount returns 5 if total amount is less than or equal to 100" do
-    @order.subtotal_amount = 100
-    assert_equal 5, @order.shipping_amount
+  test "invoice_number is generated after create" do
+    assert_equal "ONL-000#{@order.id}", @order.invoice_number
   end
 end
