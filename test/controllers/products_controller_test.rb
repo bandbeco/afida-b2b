@@ -4,7 +4,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    sign_in users(:one)
+    sign_in users(:admin)
     @product = products(:one)
   end
 
@@ -19,11 +19,43 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create product" do
-    assert_difference("Product.count") do
-      post products_url, params: { product: { colour: @product.colour, description: @product.description, height_in_mm: @product.height_in_mm, name: @product.name, pac_size: @product.pac_size, price: @product.price, sku: @product.sku, width_in_mm: @product.width_in_mm } }
-    end
+    params = {
+      product: {
+        colour: @product.colour,
+        description: @product.description,
+        height_in_mm: @product.height_in_mm,
+        name: @product.name,
+        pac_size: @product.pac_size,
+        price: 100,
+        sku: @product.sku,
+        width_in_mm: @product.width_in_mm,
+        category_id: @product.category_id
+      }
+    }
+
+    post products_url, params: params
 
     assert_redirected_to product_url(Product.last)
+  end
+
+  test "should create as many price list items as there are users" do
+    params = {
+      product: {
+        colour: @product.colour,
+        description: @product.description,
+        height_in_mm: @product.height_in_mm,
+        name: @product.name,
+        pac_size: @product.pac_size,
+        price: 100,
+        sku: @product.sku,
+        width_in_mm: @product.width_in_mm,
+        category_id: @product.category_id
+      }
+    }
+
+    assert_difference "PriceListItem.count", User.count do
+      post products_url, params: params
+    end
   end
 
   test "should show product" do
@@ -37,8 +69,23 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update product" do
-    patch product_url(@product), params: { product: { colour: @product.colour, description: @product.description, height_in_mm: @product.height_in_mm, name: @product.name, pac_size: @product.pac_size, price: @product.price, sku: @product.sku, width_in_mm: @product.width_in_mm } }
-    assert_redirected_to product_url(@product)
+    params = {
+      product: {
+        colour: @product.colour,
+        description: @product.description,
+        height_in_mm: @product.height_in_mm,
+        name: @product.name,
+        pac_size: @product.pac_size,
+        price: 100,
+        sku: @product.sku,
+        width_in_mm: @product.width_in_mm,
+        category_id: @product.category_id
+      }
+    }
+
+    patch product_url(@product), params: params
+
+    assert_redirected_to products_url
   end
 
   test "should soft delete product" do

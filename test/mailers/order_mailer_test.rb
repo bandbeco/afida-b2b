@@ -26,7 +26,7 @@ class OrderMailerTest < ActionMailer::TestCase
     email_body = html_body
 
     # Order information
-    assert_includes email_body, "<strong>Order Number:</strong> #{@order.formatted_order_id}"
+    assert_includes email_body, "<strong>Order Number:</strong> #{@order.invoice_number}"
     assert_includes email_body, "<strong>Shipping Address:</strong>"
     assert_includes email_body, @order.shipping_address
     assert_includes email_body, "<strong>Billing Address:</strong>"

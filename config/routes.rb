@@ -16,18 +16,20 @@ Rails.application.routes.draw do
 
   resources :price_list_items, only: [:show], path: "price-list"
   resources :users, only: [:show, :edit, :update]
-
+  resources :products
   resources :addresses
-  resources :categories
+  resources :categories, except: [:destroy]
+
   resources :orders do
     get "summary", on: :member
   end
-  resources :order_items
-  resources :products
 
-  resources :shopping_cart_items
-  patch "shopping_cart_items/:id/add_to_cart", to: "shopping_cart_items#add_to_cart", as: :add_to_cart
-  patch "shopping_cart_items/:id/remove_from_cart", to: "shopping_cart_items#remove_from_cart", as: :remove_from_cart
+  resources :shopping_cart_items do
+    member do
+      patch :add_to_cart
+      patch :remove_from_cart
+    end
+  end
 
   get 'postcode_lookup', to: 'postcode_lookups#new'
 

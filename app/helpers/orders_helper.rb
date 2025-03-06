@@ -11,6 +11,7 @@ module OrdersHelper
   end
 
   def order_summary_pdf
+    Prawn::Fonts::AFM.hide_m17n_warning = true
     pdf = Prawn::Document.new
     pdf.font 'Courier'
     pdf.font_size 10

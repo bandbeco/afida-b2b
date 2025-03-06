@@ -60,7 +60,7 @@ class OrdersController < ApplicationController
       postcode = order_params[:shipping_address][:postcode]
       additional_notes = order_params[:shipping_address][:additional_notes]
 
-    @order.shipping_address = [company, attn, street_number_and_name, post_town, postcode, additional_notes].join(", ").chomp(", ")
+      @order.shipping_address = [company, attn, street_number_and_name, post_town, postcode, additional_notes].join(", ").chomp(", ")
     end
 
     if order_params[:billing_address]
