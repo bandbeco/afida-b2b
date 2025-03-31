@@ -66,22 +66,11 @@ Rails.application.configure do
 
   # Log to STDOUT by default
   config.logger = ActiveSupport::Logger.new(STDOUT)
-
-  # Lograge
-  config.lograge.enabled = true
-
-  config.lograge.formatter = Lograge::Formatters::Json.new
-  config.lograge.base_controller_class = ["ActionController::Base"]
-  config.lograge.ignore_actions = ["HealthController#show"]
-  config.lograge.custom_payload do |controller|
-    {
-      host: controller.request.host,
-      user_id: controller.current_user.try(:id)
-    }
-  end
+    .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
+    .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
   # Prepend all log lines with the following tags.
-  # config.log_tags = [ :request_id ]
+  config.log_tags = [ :request_id ]
 
   # "info" includes generic and useful information about system operation, but avoids logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
@@ -128,6 +117,9 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Only use :id for inspections in production.
+  config.active_record.attributes_for_inspect = [ :id ]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
