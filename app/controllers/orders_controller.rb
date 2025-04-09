@@ -30,6 +30,20 @@ class OrdersController < ApplicationController
     @shopping_cart = current_user.shopping_cart || current_user.create_shopping_cart
     build_shopping_cart_items
     @categorized_shopping_cart_items = categorized_shopping_cart_items
+
+    # Load addresses for the form
+    @addresses = current_user.addresses.order(:created_at)
+    @default_shipping_address = current_user.default_shipping_address
+    @default_billing_address = current_user.default_billing_address
+
+    # Pre-select default addresses in dropdowns
+    if @default_shipping_address
+      @order.selected_shipping_address_id = @default_shipping_address.id
+    end
+
+    if @default_billing_address
+      @order.selected_billing_address_id = @default_billing_address.id
+    end
   end
 
   # GET /orders/1/edit
@@ -52,28 +66,10 @@ class OrdersController < ApplicationController
       )
     end
 
-    if order_params[:shipping_address]
-      attn = "attn: #{order_params[:shipping_address][:attn]}"
-      company = order_params[:shipping_address][:company]
-      street_number_and_name = order_params[:shipping_address][:street_number_and_name]
-      post_town = order_params[:shipping_address][:post_town]
-      postcode = order_params[:shipping_address][:postcode]
-      additional_notes = order_params[:shipping_address][:additional_notes]
-
-      @order.shipping_address = [company, attn, street_number_and_name, post_town, postcode, additional_notes].join(", ").chomp(", ")
-    end
-
-    if order_params[:billing_address]
-      company = order_params[:billing_address][:company]
-      street_number_and_name = order_params[:billing_address][:street_number_and_name]
-      post_town = order_params[:billing_address][:post_town]
-      postcode = order_params[:billing_address][:postcode]
-
-      @order.billing_address = [company, street_number_and_name, post_town, postcode].join(", ")
-    end
-
     respond_to do |format|
       if @order.save
+        save_addresses_from_order(@order)
+
         OrderMailer
           .with(order: @order, user: current_user)
           .new_order_email
@@ -84,9 +80,10 @@ class OrdersController < ApplicationController
           redirect_to order_url(@order), notice: "Order was successfully created."
         end
       else
+        # Need to reload addresses for the form if rendering :new
+        @addresses = current_user.addresses.order(:created_at)
         @shopping_cart = current_user.shopping_cart
         @categorized_shopping_cart_items = categorized_shopping_cart_items
-
         format.html { render :new, status: :unprocessable_entity }
       end
     end
@@ -131,12 +128,22 @@ class OrdersController < ApplicationController
       .require(:order)
       .permit(
         :status,
-        :total_amount,
-        :shipping_address,
-        :billing_address,
         :payment_method,
-        shipping_address: %i[company attn street_number_and_name post_town postcode additional_notes],
-        billing_address: %i[company attn street_number_and_name post_town postcode],
+        # New form fields
+        :selected_shipping_address_id,
+        :selected_billing_address_id,
+        :use_shipping_for_billing,
+        # Shipping fields
+        :shipping_company, :shipping_attn, :shipping_building_name, :shipping_street_number_and_name,
+        :shipping_post_town, :shipping_postcode, :shipping_additional_notes,
+        # Billing fields
+        :billing_company, :billing_attn, :billing_building_name, :billing_street_number_and_name,
+        :billing_post_town, :billing_postcode, :billing_additional_notes,
+        # Existing fields (keep total_amount? checkout service might handle this)
+        :total_amount,
+        :save_shipping_address,
+        :save_billing_address,
+        # Keep order_items_attributes
         order_items_attributes: [
           :id,
           :order_id,
@@ -146,6 +153,34 @@ class OrdersController < ApplicationController
           :_destroy
         ]
       )
+  end
+
+  def save_addresses_from_order(order)
+    # Save shipping address if checkbox ticked and it was a new entry
+    if order.save_shipping_address == '1' && (order.selected_shipping_address_id.blank? || order.selected_shipping_address_id == 'new')
+      current_user.addresses.create(
+        company: order.shipping_company,
+        attn: order.shipping_attn,
+        building_name: order.shipping_building_name,
+        street_number_and_name: order.shipping_street_number_and_name,
+        post_town: order.shipping_post_town,
+        postcode: order.shipping_postcode,
+        additional_notes: order.shipping_additional_notes
+      ) # Consider adding error handling for address creation failure
+    end
+
+    # Save billing address if checkbox ticked, not using shipping, and it was a new entry
+    if order.save_billing_address == '1' && order.use_shipping_for_billing != '1' && (order.selected_billing_address_id.blank? || order.selected_billing_address_id == 'new')
+      current_user.addresses.create(
+        company: order.billing_company,
+        attn: order.billing_attn,
+        building_name: order.billing_building_name,
+        street_number_and_name: order.billing_street_number_and_name,
+        post_town: order.billing_post_town,
+        postcode: order.billing_postcode,
+        additional_notes: order.billing_additional_notes
+      ) # Consider adding error handling
+    end
   end
 
   def categorized_shopping_cart_items
