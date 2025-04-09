@@ -20,5 +20,49 @@ module.exports = {
     require('@tailwindcss/typography'),
     require('@tailwindcss/container-queries'),
     require('daisyui')
-  ]
+  ],
+  safelist: [
+    {
+      pattern: /^(.*?):?btn-.*/,
+    },
+    {
+      pattern: /^(.*?):?modal-.*/,
+    },
+    {
+      pattern: /^(.*?):?alert-.*/,
+    },
+    {
+      pattern: /^(.*?):?badge-.*/,
+    },
+    {
+      pattern: /^(.*?):?card-.*/,
+    },
+    {
+      pattern: /^(.*?):?drawer-.*/,
+    },
+    {
+      pattern: /^(.*?):?dropdown-.*/,
+    },
+    {
+      pattern: /^(.*?):?menu-.*/,
+    },
+    {
+      pattern: /^(.*?):?input-.*/,
+    },
+    {
+      pattern: /^(.*?):?textarea-.*/,
+    },
+    {
+      pattern: /^(.*?):?select-.*/,
+    },
+    {
+      pattern: /^(.*?):?checkbox-.*/,
+    },
+    {
+      pattern: /^(.*?):?radio-.*/,
+    },
+    {
+      pattern: /^(.*?):?toggle-.*/,
+    },
+  ],
 } 
