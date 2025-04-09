@@ -1,12 +1,14 @@
 <% content_for :title, "Products" %>
 
-<div class="bg-black text-white italic font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
-  <h1>
-    PRODUCTS
-  </h1>
+<div class="card bg-neutral text-neutral-content my-4">
+  <div class="card-body p-4">
+    <h1 class="card-title text-3xl font-bold italic uppercase">
+      PRODUCTS
+    </h1>
+  </div>
 </div>
 
-<%= link_to new_product_path, class: "inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 no-underline" do %>
+<%= link_to new_product_path, class: "btn btn-primary gap-2" do %>
   New product
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -15,25 +17,27 @@
 
 <div class="mt-8 flow-root">
   <div>
-    <div class="inline-block min-w-full align-middle border-black border-2 rounded">
-      <table class="min-w-full border-separate border-spacing-0 bg-white">
-        <thead>
-          <tr>
-            <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8"></th>
-            <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">SKU</th>
-            <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">Name</th>
-            <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">Colour</th>
-            <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">PAC Size</th>
-            <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">Catalog Price</th>
-            <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @products.each do |product| %>
-            <%= render product %>
-          <% end %>
-        </tbody>
-      </table>
+    <div class="inline-block min-w-full align-middle border-2 border-base-300 rounded-lg">
+      <div class="overflow-x-auto">
+        <table class="table table-zebra bg-base-100">
+          <thead>
+            <tr>
+              <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur"></th>
+              <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur">SKU</th>
+              <th class="sticky top-0 z-10 hidden sm:table-cell bg-base-100 bg-opacity-75 backdrop-blur">Name</th>
+              <th class="sticky top-0 z-10 hidden lg:table-cell bg-base-100 bg-opacity-75 backdrop-blur">Colour</th>
+              <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur">PAC Size</th>
+              <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur">Catalog Price</th>
+              <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @products.each do |product| %>
+              <%= render product %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
