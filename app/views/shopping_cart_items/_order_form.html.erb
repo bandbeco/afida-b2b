@@ -1,223 +1,273 @@
 <%= turbo_frame_tag "order_form_frame" do %>
-  <section aria-labelledby="payment-and-shipping-heading" class="py-16 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:w-full lg:max-w-lg lg:pb-24 lg:pt-0">
+  <section class="mx-auto w-full max-w-xl">
     <%= form_with(model: @order, data: { controller: 'address-selection',
                                          address_selection_addresses_value: @addresses.to_json(only: [:id, :company, :attn, :building_name, :street_number_and_name, :post_town, :postcode, :additional_notes]),
                                          address_selection_default_shipping_id_value: @default_shipping_address&.id,
                                          address_selection_default_billing_id_value: @default_billing_address&.id,
-                                         turbo: true }) do |form| %>
-      <div class="mx-auto max-w-2xl px-4 lg:max-w-none lg:px-4">
-          <h3 class="text-lg font-medium text-gray-900">Payment details</h3>
-        <div class="mt-10">
-          <% if @order.errors.any? %>
-            <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-              <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
-              <ul>
+                                         turbo: false }) do |form| %>
+      <div class="mx-auto">
+        <% if @order.errors.any? %>
+          <div class="alert alert-error mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <div>
+              <h3 class="font-medium"><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved</h3>
+              <ul class="list-disc ml-5 mt-1 text-sm">
                 <% @order.errors.full_messages.each do |message| %>
                   <li><%= message %></li>
                 <% end %>
               </ul>
             </div>
-          <% end %>
+          </div>
+        <% end %>
 
-          <div class="mt-6 grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4">
-            <div class="col-span-3 sm:col-span-4">
-              <div class="mt-1">
-                <fieldset>
-                  <div class="space-y-4">
-                    <div class="flex items-center">
-                      <%= form.radio_button :payment_method, :invoice, checked: true, class: "h-4 w-4 border-gray-300 focus:ring-indigo-600" %>
-                      <%= form.label :payment_method_invoice, "Invoice", class: "ml-3 block text-sm font-medium leading-6 text-gray-900" %>
-                    </div>
-                    <div class="flex items-center">
-                      <%= form.radio_button :payment_method, :bank_transfer, class: "h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" %>
-                      <%= form.label :payment_method_bank_transfer, "Bank Transfer", class: "ml-3 block text-sm font-medium leading-6 text-gray-900" %>
-                    </div>
-                  </div>
-                </fieldset>
+        <!-- Payment Method Section -->
+        <div class="card bg-base-100 border border-base-200 mb-6">
+          <div class="card-body p-6">
+            <h2 class="text-lg font-medium flex items-center mb-4 text-base-content">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+              </svg>
+              Payment Method
+            </h2>
+            
+            <div class="form-control">
+              <div class="flex flex-col gap-2">
+                <label class="label cursor-pointer justify-start gap-3 py-2">
+                  <%= form.radio_button :payment_method, :invoice, checked: true, class: "radio radio-primary" %>
+                  <span class="label-text">Invoice</span>
+                </label>
+                <label class="label cursor-pointer justify-start gap-3 py-2">
+                  <%= form.radio_button :payment_method, :bank_transfer, class: "radio radio-primary" %>
+                  <span class="label-text">Bank Transfer</span>
+                </label>
               </div>
             </div>
           </div>
         </div>
 
-        <%# --- Shipping Address Section --- %>
-        <div class="mt-10">
-          <h3 class="text-lg font-medium text-gray-900">Shipping address</h3>
-          <div class="mt-6">
-            <div class="mb-4">
-              <%= form.label :selected_shipping_address_id, "Select a Shipping Address", class: "block text-sm font-medium text-gray-700" %>
+        <!-- Shipping Address Section -->
+        <div class="card bg-base-100 border border-base-200 mb-6">
+          <div class="card-body p-6">
+            <h2 class="text-lg font-medium flex items-center mb-4 text-base-content">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              Shipping Address
+            </h2>
+            
+            <div class="form-control w-full mb-4">
+              <label class="label">
+                <span class="label-text font-medium">Select a Shipping Address</span>
+              </label>
 
               <% shipping_options = options_for_select([["-- Enter New Address --", "new"]]) %>
               <% shipping_options = options_from_collection_for_select(@addresses, :id, :formatted_address, @order.selected_shipping_address_id).concat(shipping_options) %>
 
-              <%= form.select :selected_shipping_address_id,
-                              shipping_options,
-                              {},
-                              { class: "mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm",
-                                data: { action: "change->address-selection#selectShippingAddress" } } %>
+              <div class="relative">
+                <%= form.select :selected_shipping_address_id,
+                                shipping_options,
+                                {},
+                                { class: "select select-bordered w-full h-12 focus:outline-primary bg-base-100 text-base-content",
+                                  data: { action: "change->address-selection#selectShippingAddress" } } %>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
             </div>
 
             <div data-address-selection-target="shippingFields">
-              <div class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
-                <div class="sm:col-span-3">
-                  <%= form.label :shipping_company, "Company", class: "block text-sm font-medium text-gray-700" %>
-                  <div class="mt-1">
-                    <%= form.text_field :shipping_company, autocomplete: "organization", class: "input-field", data: { address_selection_target: "shippingCompany" } %>
+              <div class="divider text-sm text-base-content/70">Enter a new address</div>
+              <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div class="sm:col-span-2">
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text font-medium">Company</span>
+                    </label>
+                    <%= form.text_field :shipping_company, autocomplete: "organization", class: "input input-bordered h-12 w-full bg-base-100 text-base-content", data: { address_selection_target: "shippingCompany" } %>
                   </div>
                 </div>
 
-                <div class="sm:col-span-3">
-                  <%= form.label :shipping_attn, "Attention Of", class: "block text-sm font-medium text-gray-700" %>
-                  <div class="mt-1">
-                    <%= form.text_field :shipping_attn, autocomplete: "name", class: "input-field", data: { address_selection_target: "shippingAttn" } %>
+                <div class="sm:col-span-2">
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text font-medium">Attention Of</span>
+                    </label>
+                    <%= form.text_field :shipping_attn, autocomplete: "name", class: "input input-bordered h-12 w-full bg-base-100 text-base-content", data: { address_selection_target: "shippingAttn" } %>
                   </div>
                 </div>
 
-                 <div class="sm:col-span-3">
-                   <%= form.label :shipping_building_name, "Building Name (Optional)", class: "block text-sm font-medium text-gray-700" %>
-                   <div class="mt-1">
-                     <%= form.text_field :shipping_building_name, class: "input-field", data: { address_selection_target: "shippingBuildingName" } %>
-                   </div>
-                 </div>
+                <div class="sm:col-span-2">
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text font-medium">Building Name</span>
+                      <span class="label-text-alt">Optional</span>
+                    </label>
+                    <%= form.text_field :shipping_building_name, class: "input input-bordered h-12 w-full bg-base-100 text-base-content", data: { address_selection_target: "shippingBuildingName" } %>
+                  </div>
+                </div>
 
-                <div class="sm:col-span-3">
-                  <%= form.label :shipping_street_number_and_name, "Address", class: "block text-sm font-medium text-gray-700" %>
-                  <div class="mt-1">
-                    <%= form.text_field :shipping_street_number_and_name, autocomplete: "street-address", class: "input-field", data: { address_selection_target: "shippingStreet" } %>
+                <div class="sm:col-span-2">
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text font-medium">Address</span>
+                    </label>
+                    <%= form.text_field :shipping_street_number_and_name, autocomplete: "street-address", class: "input input-bordered h-12 w-full bg-base-100 text-base-content", data: { address_selection_target: "shippingStreet" } %>
                   </div>
                 </div>
 
                 <div>
-                  <%= form.label :shipping_post_town, "City", class: "block text-sm font-medium text-gray-700" %>
-                  <div class="mt-1">
-                    <%= form.text_field :shipping_post_town, autocomplete: "address-level2", class: "input-field", data: { address_selection_target: "shippingCity" } %>
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text font-medium">City</span>
+                    </label>
+                    <%= form.text_field :shipping_post_town, autocomplete: "address-level2", class: "input input-bordered h-12 w-full bg-base-100 text-base-content", data: { address_selection_target: "shippingCity" } %>
                   </div>
                 </div>
 
                 <div>
-                  <%= form.label :shipping_postcode, "Postcode", class: "block text-sm font-medium text-gray-700" %>
-                  <div class="mt-1">
-                    <%= form.text_field :shipping_postcode, autocomplete: "postal-code", class: "input-field", data: { address_selection_target: "shippingPostcode" } %>
-                    <%# TODO: Re-add postcode validator? %>
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text font-medium">Postcode</span>
+                    </label>
+                    <%= form.text_field :shipping_postcode, autocomplete: "postal-code", class: "input input-bordered h-12 w-full bg-base-100 text-base-content", data: { address_selection_target: "shippingPostcode" } %>
                   </div>
                 </div>
 
-                <div class="sm:col-span-3">
-                  <%= form.label :shipping_additional_notes, "Additional Notes", class: "block text-sm font-medium text-gray-700" %>
-                  <div class="mt-1">
-                    <%= form.text_area :shipping_additional_notes, rows: 2, class: "input-field", data: { address_selection_target: "shippingNotes" } %>
+                <div class="sm:col-span-2">
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text font-medium">Additional Notes</span>
+                    </label>
+                    <%= form.text_area :shipping_additional_notes, rows: 3, class: "textarea textarea-bordered w-full bg-base-100 text-base-content", data: { address_selection_target: "shippingNotes" } %>
                   </div>
                 </div>
               </div>
 
-              <%# Save Shipping Address Checkbox (Don't start hidden) %>
-              <div class="mt-4 relative flex items-start" data-address-selection-target="saveShippingCheckboxContainer">
-                <div class="flex h-5 items-center">
-                  <%= form.check_box :save_shipping_address, { class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" }, "1", "0" %>
-                </div>
-                <div class="ml-3 text-sm">
-                  <%= form.label :save_shipping_address, "Save this address to my address book", class: "font-medium text-gray-700" %>
-                </div>
+              <div class="form-control mt-4" data-address-selection-target="saveShippingCheckboxContainer">
+                <label class="label cursor-pointer justify-start gap-3">
+                  <%= form.check_box :save_shipping_address, { class: "checkbox checkbox-primary" }, "1", "0" %>
+                  <span class="label-text">Save this address to my address book</span>
+                </label>
               </div>
             </div>
           </div>
         </div>
 
-        <%# --- Billing Address Section --- %>
-        <div class="mt-10">
-          <h3 class="text-lg font-medium text-gray-900">Billing address</h3>
+        <!-- Billing Address Section -->
+        <div class="card bg-base-100 border border-base-200 mb-6">
+          <div class="card-body p-6">
+            <h2 class="text-lg font-medium flex items-center mb-4 text-base-content">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              Billing Address
+            </h2>
 
-          <div class="mt-6">
-            <%# Use Shipping Address Checkbox %>
-            <div class="relative flex items-start mb-4">
-              <div class="flex h-5 items-center">
-                <%= form.check_box :use_shipping_for_billing, { data: { action: "change->address-selection#toggleBillingFields" }, class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" }, "1", "0" %>
-              </div>
-              <div class="ml-3 text-sm">
-                <%= form.label :use_shipping_for_billing, "Same as shipping address", class: "font-medium text-gray-700" %>
-              </div>
+            <div class="form-control mb-4">
+              <label class="label cursor-pointer justify-start gap-3">
+                <%= form.check_box :use_shipping_for_billing, { data: { action: "change->address-selection#toggleBillingFields" }, class: "checkbox checkbox-primary" }, "1", "0" %>
+                <span class="label-text">Same as shipping address</span>
+              </label>
             </div>
 
-            <%# Billing Address Selection Dropdown + Fields (Stimulus target for show/hide) %>
             <div data-address-selection-target="billingSection">
-              <div class="mb-4">
-                <%= form.label :selected_billing_address_id, "Select Billing Address", class: "block text-sm font-medium text-gray-700" %>
+              <div class="form-control w-full mb-4">
+                <label class="label">
+                  <span class="label-text font-medium">Select Billing Address</span>
+                </label>
 
                 <% billing_options = options_for_select([["-- Enter New Address --", "new"]]) %>
                 <% billing_options = options_from_collection_for_select(@addresses, :id, :formatted_address, @order.selected_billing_address_id).concat(billing_options) %>
 
-                <%= form.select :selected_billing_address_id,
-                                billing_options,
-                                {},
-                                { class: "mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm",
-                                  data: { action: "change->address-selection#selectBillingAddress" } } %>
+                <div class="relative">
+                  <%= form.select :selected_billing_address_id,
+                                  billing_options,
+                                  {},
+                                  { class: "select select-bordered w-full h-12 focus:outline-primary bg-base-100 text-base-content",
+                                    data: { action: "change->address-selection#selectBillingAddress" } } %>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
               </div>
 
-              <%# Address Fields (Don't start hidden) %>
               <div data-address-selection-target="billingFields">
-                <div class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
-                   <div class="sm:col-span-3">
-                    <%= form.label :billing_company, "Company", class: "block text-sm font-medium text-gray-700" %>
-                    <div class="mt-1">
-                      <%= form.text_field :billing_company, autocomplete: "organization", class: "input-field", data: { address_selection_target: "billingCompany" } %>
+                <div class="divider text-sm text-base-content/70">Or enter a new address</div>
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div class="sm:col-span-2">
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text font-medium">Company</span>
+                      </label>
+                      <%= form.text_field :billing_company, autocomplete: "organization", class: "input input-bordered h-12 w-full bg-base-100 text-base-content", data: { address_selection_target: "billingCompany" } %>
                     </div>
                   </div>
 
-                  <%# Removed Attn for billing, add back if needed %>
-                  <%# <div class="sm:col-span-3"> ... form.label :billing_attn ... </div> %>
+                  <div class="sm:col-span-2">
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text font-medium">Building Name</span>
+                        <span class="label-text-alt">Optional</span>
+                      </label>
+                      <%= form.text_field :billing_building_name, class: "input input-bordered h-12 w-full bg-base-100 text-base-content", data: { address_selection_target: "billingBuildingName" } %>
+                    </div>
+                  </div>
 
-                   <div class="sm:col-span-3">
-                     <%= form.label :billing_building_name, "Building Name (Optional)", class: "block text-sm font-medium text-gray-700" %>
-                     <div class="mt-1">
-                       <%= form.text_field :billing_building_name, class: "input-field", data: { address_selection_target: "billingBuildingName" } %>
-                     </div>
-                   </div>
-
-                  <div class="sm:col-span-3">
-                    <%= form.label :billing_street_number_and_name, "Address", class: "block text-sm font-medium text-gray-700" %>
-                    <div class="mt-1">
-                      <%= form.text_field :billing_street_number_and_name, autocomplete: "street-address", class: "input-field", data: { address_selection_target: "billingStreet" } %>
+                  <div class="sm:col-span-2">
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text font-medium">Address</span>
+                      </label>
+                      <%= form.text_field :billing_street_number_and_name, autocomplete: "street-address", class: "input input-bordered h-12 w-full bg-base-100 text-base-content", data: { address_selection_target: "billingStreet" } %>
                     </div>
                   </div>
 
                   <div>
-                    <%= form.label :billing_post_town, "City", class: "block text-sm font-medium text-gray-700" %>
-                    <div class="mt-1">
-                      <%= form.text_field :billing_post_town, autocomplete: "address-level2", class: "input-field", data: { address_selection_target: "billingCity" } %>
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text font-medium">City</span>
+                      </label>
+                      <%= form.text_field :billing_post_town, autocomplete: "address-level2", class: "input input-bordered h-12 w-full bg-base-100 text-base-content", data: { address_selection_target: "billingCity" } %>
                     </div>
                   </div>
 
                   <div>
-                    <%= form.label :billing_postcode, "Postcode", class: "block text-sm font-medium text-gray-700" %>
-                    <div class="mt-1">
-                      <%= form.text_field :billing_postcode, autocomplete: "postal-code", class: "input-field", data: { address_selection_target: "billingPostcode" } %>
-                       <%# TODO: Re-add postcode validator? %>
-                 </div>
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text font-medium">Postcode</span>
+                      </label>
+                      <%= form.text_field :billing_postcode, autocomplete: "postal-code", class: "input input-bordered h-12 w-full bg-base-100 text-base-content", data: { address_selection_target: "billingPostcode" } %>
+                    </div>
                   </div>
 
-                   <div class="sm:col-span-3">
-                     <%= form.label :billing_additional_notes, "Additional Notes", class: "block text-sm font-medium text-gray-700" %>
-                     <div class="mt-1">
-                       <%= form.text_area :billing_additional_notes, rows: 2, class: "input-field", data: { address_selection_target: "billingNotes" } %>
-                     </div>
-                   </div>
+                  <div class="sm:col-span-2">
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text font-medium">Additional Notes</span>
+                      </label>
+                      <%= form.text_area :billing_additional_notes, rows: 3, class: "textarea textarea-bordered w-full bg-base-100 text-base-content", data: { address_selection_target: "billingNotes" } %>
+                    </div>
+                  </div>
                 </div>
 
-                <%# Save Billing Address Checkbox (Don't start hidden) %>
-                <div class="mt-4 relative flex items-start" data-address-selection-target="saveBillingCheckboxContainer">
-                  <div class="flex h-5 items-center">
-                    <%= form.check_box :save_billing_address, { class: "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" }, "1", "0" %>
-                  </div>
-                  <div class="ml-3 text-sm">
-                    <%= form.label :save_billing_address, "Save this address to my address book", class: "font-medium text-gray-700" %>
-                  </div>
+                <div class="form-control mt-4" data-address-selection-target="saveBillingCheckboxContainer">
+                  <label class="label cursor-pointer justify-start gap-3">
+                    <%= form.check_box :save_billing_address, { class: "checkbox checkbox-primary" }, "1", "0" %>
+                    <span class="label-text">Save this address to my address book</span>
+                  </label>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="mt-10 flex justify-end border-t border-gray-200 pt-6">
-          <%= form.submit "Submit Order", class: "btn-primary" %>
+        <div class="mt-6 flex justify-end pt-6 m-4">
+          <%= form.submit "Submit Order", class: "btn btn-primary px-8" %>
         </div>
       </div>
     <% end %>
