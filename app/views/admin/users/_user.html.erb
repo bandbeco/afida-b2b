@@ -1,35 +1,35 @@
-<tr id="<%= dom_id user %>" class="even:bg-gray-50">
-  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-    <%= link_to user.formatted_name, edit_user_path(user) %>
+<tr id="<%= dom_id user %>">
+  <td>
+    <%= link_to user.formatted_name, edit_user_path(user), class: "link link-hover" %>
   </td>
 
-  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+  <td>
     <%= user.company %>
   </td>
 
-  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+  <td>
     <%= user.email %>
   </td>
 
-  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+  <td>
     <%= user.role %>
   </td>
 
-  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+  <td>
     <%= form_for(user, url: invitation_path(user), html: { method: :post }) do |f| %>
       <%= f.hidden_field :user_id, value: user.id %>
       <% if user.invited? && !user.invitation_accepted? %>
-        <%= f.submit "Resend Invitation",  class: "btn-primary" %>
+        <%= f.submit "Resend Invitation", class: "btn btn-primary btn-sm" %>
       <% elsif !user.invited? %>
-        <%= f.submit "Send Invitation",  class: "btn-primary" %>
+        <%= f.submit "Send Invitation", class: "btn btn-primary btn-sm" %>
       <% else %>
       <% end %>
     <% end %>
   </td>
 
-  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+  <td>
     <% if user.price_list_items.any? %>
-      <%= link_to "Price List", user_price_list_items_path(user) %>
+      <%= link_to "Price List", user_price_list_items_path(user), class: "link link-primary" %>
     <% end %>
   </td>
 </tr>

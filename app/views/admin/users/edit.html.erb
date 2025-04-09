@@ -1,15 +1,14 @@
-<div class="bg-black text-white font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
-  <h1 class="italic mb-2">
-    <%= @user.formatted_name %>
-  </h1>
+<div class="card bg-neutral text-neutral-content my-4">
+  <div class="card-body p-4">
+    <h1 class="card-title text-3xl font-bold italic mb-2">
+      <%= @user.formatted_name %>
+    </h1>
 
-  <p class="text-xs font-mono">
-    Joined on <%= local_time(@user.invitation_accepted_at) if @user.accepted_invitation? %>
-  </p>
+    <p class="text-xs font-mono">
+      Joined on <%= local_time(@user.invitation_accepted_at) if @user.accepted_invitation? %>
+    </p>
+  </div>
 </div>
-
-<p>
-</p>
 
 <div class="md:w-1/3 w-full">
   <%= render "form", user: @user %>
