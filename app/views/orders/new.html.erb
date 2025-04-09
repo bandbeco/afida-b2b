@@ -2,10 +2,12 @@
   <%= render "shared/category_navbar", shopping_cart: @shopping_cart %>
 
   <% @categorized_shopping_cart_items.each do |category, shopping_cart_items| %>
-    <div class="bg-black text-white italic font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
-      <h2 id="<%= category.name.downcase.gsub(" ", "_") %>">
-        <%= category.name.upcase %>
-      </h2>
+    <div class="card bg-neutral text-neutral-content my-4">
+      <div class="card-body p-4">
+        <h2 id="<%= category.name.downcase.gsub(" ", "_") %>" class="card-title text-3xl font-bold italic uppercase">
+          <%= category.name.upcase %>
+        </h2>
+      </div>
     </div>
 
     <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
@@ -15,10 +17,12 @@
 </div>
 
 <div class="bg-white mt-12">
-  <div class="bg-black text-white italic font-extrabold grid text-3xl font-impact border-black border-2 p-4">
-    <h2 id="checkout">
-      CHECKOUT
-    </h2>
+  <div class="bg-neutral text-neutral-content mb-4">
+    <div class="p-4">
+      <h2 id="checkout" class="card-title text-3xl font-bold italic uppercase">
+        CHECKOUT
+      </h2>
+    </div>
   </div>
 
   <div class="relative mx-auto grid max-w-7xl grid-cols-1 gap-x-16 lg:grid-cols-2 lg:pt-4">
