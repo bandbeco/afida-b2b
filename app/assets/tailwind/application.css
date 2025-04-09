@@ -1,6 +1,15 @@
 @import 'tailwindcss';
+@plugin '@tailwindcss/typography';
 @plugin './daisyui.js';
 
 html {
     scroll-padding-top: 14rem;
-  }
+}
+
+a {
+    @apply link;
+}
+
+a:hover {
+    @apply text-primary/80;
+}
