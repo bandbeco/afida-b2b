@@ -2,7 +2,7 @@
   <%= render "shared/category_navbar", shopping_cart: @shopping_cart %>
 
   <% @categorized_shopping_cart_items.each do |category, shopping_cart_items| %>
-    <div class="card bg-neutral text-neutral-content my-4">
+    <div class="bg-neutral text-neutral-content my-4 rounded-lg">
       <div class="card-body p-4">
         <h2 id="<%= category.name.downcase.gsub(" ", "_") %>" class="card-title text-3xl font-bold italic uppercase">
           <%= category.name.upcase %>
@@ -16,8 +16,8 @@
   <% end %>
 </div>
 
-<div class="bg-white mt-12">
-  <div class="bg-neutral text-neutral-content mb-4">
+<div class="bg-white mt-12 rounded-lg">
+  <div class="bg-neutral text-neutral-content mb-4 rounded-lg">
     <div class="p-4">
       <h2 id="checkout" class="card-title text-3xl font-bold italic uppercase">
         CHECKOUT
@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div class="relative mx-auto grid max-w-7xl grid-cols-1 gap-x-16 lg:grid-cols-2 lg:pt-4">
+  <div class="relative mx-auto grid max-w-7xl grid-cols-1 gap-x-16 lg:grid-cols-2 lg:pt-4 pb-8">
     <%= render "shopping_cart_items/order_summary", checkout: Checkout.new(@shopping_cart) %>
     <%= turbo_frame_tag "order_form_frame" do %>
       <%= render "shopping_cart_items/order_form" %>
