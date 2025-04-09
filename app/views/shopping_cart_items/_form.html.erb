@@ -1,32 +1,33 @@
 <%= form_with(model: shopping_cart_item, class: "contents") do |form| %>
   <% if shopping_cart_item.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(shopping_cart_item.errors.count, "error") %> prohibited this shopping_cart_item from being saved:</h2>
-
-      <ul>
-        <% shopping_cart_item.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div id="error_explanation" class="alert alert-error mt-3">
+      <div>
+        <h2><%= pluralize(shopping_cart_item.errors.count, "error") %> prohibited this shopping_cart_item from being saved:</h2>
+        <ul>
+          <% shopping_cart_item.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
-  <div class="my-5">
-    <%= form.label :cart_id %>
-    <%= form.text_field :cart_id, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  <div class="form-control my-5">
+    <%= form.label :cart_id, class: "label" %>
+    <%= form.text_field :cart_id, class: "input input-bordered w-full" %>
   </div>
 
-  <div class="my-5">
-    <%= form.label :product_id %>
-    <%= form.text_field :product_id, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  <div class="form-control my-5">
+    <%= form.label :product_id, class: "label" %>
+    <%= form.text_field :product_id, class: "input input-bordered w-full" %>
   </div>
 
-  <div class="my-5">
-    <%= form.label :quantity %>
-    <%= form.number_field :quantity, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  <div class="form-control my-5">
+    <%= form.label :quantity, class: "label" %>
+    <%= form.number_field :quantity, class: "input input-bordered w-full" %>
   </div>
 
   <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>

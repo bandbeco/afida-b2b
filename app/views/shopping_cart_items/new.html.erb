@@ -1,7 +1,17 @@
 <div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">New shopping cart item</h1>
+  <div class="card bg-neutral text-neutral-content mb-6">
+    <div class="card-body p-4">
+      <h1 class="card-title text-3xl font-bold">New shopping cart item</h1>
+    </div>
+  </div>
 
-  <%= render "form", shopping_cart_item: @shopping_cart_item %>
-
-  <%= link_to "Back to shopping cart items", shopping_cart_items_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <%= render "form", shopping_cart_item: @shopping_cart_item %>
+      
+      <div class="card-actions mt-4">
+        <%= link_to "Back to shopping cart items", shopping_cart_items_path, class: "btn btn-outline" %>
+      </div>
+    </div>
+  </div>
 </div>

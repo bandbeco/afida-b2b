@@ -1,27 +1,23 @@
-<div class="mt-10 pb-4">
-  <h3 class="text-lg font-medium text-gray-900">Billing address</h3>
+<div class="card bg-base-100 shadow-sm mt-10 pb-4">
+  <div class="card-body">
+    <h3 class="card-title">Billing address</h3>
 
-  <div class="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
-    <%= form.fields_for :billing_address do |billing_address| %>
-      <div class="sm:col-span-3">
-        <%= billing_address.label :street_number_and_name, "Address", class: "block text-sm font-medium text-gray-700" %>
-        <div class="mt-1">
-          <%= billing_address.text_field :street_number_and_name, autocomplete: "street-address", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <%= form.fields_for :billing_address do |billing_address| %>
+        <div class="form-control sm:col-span-3">
+          <%= billing_address.label :street_number_and_name, "Address", class: "label" %>
+          <%= billing_address.text_field :street_number_and_name, autocomplete: "street-address", class: "input input-bordered w-full" %>
         </div>
-      </div>
 
-      <div>
-        <%= billing_address.label :post_town, "City", class: "block text-sm font-medium text-gray-700" %>
-        <div class="mt-1">
-          <%= billing_address.text_field :post_town, autocomplete: "address-level2", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+        <div class="form-control">
+          <%= billing_address.label :post_town, "City", class: "label" %>
+          <%= billing_address.text_field :post_town, autocomplete: "address-level2", class: "input input-bordered w-full" %>
         </div>
-      </div>
 
-      <div>
-        <%= billing_address.label :postcode, "Postcode", class: "block text-sm font-medium text-gray-700" %>
-        <div class="mt-1">
-          <%= billing_address.text_field :postcode, autocomplete: "postal-code", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+        <div class="form-control">
+          <%= billing_address.label :postcode, "Postcode", class: "label" %>
+          <%= billing_address.text_field :postcode, autocomplete: "postal-code", class: "input input-bordered w-full" %>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>

@@ -1,36 +1,29 @@
-<div class="mt-10 pb-4">
-  <h3 class="text-lg font-medium text-gray-900">Shipping address</h3>
+<div class="card bg-base-100 shadow-sm mt-10 pb-4">
+  <div class="card-body">
+    <h3 class="card-title">Shipping address</h3>
 
-  <div class="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
-    <%= form.fields_for :shipping_address do |shipping_address| %>
-      <div class="sm:col-span-3">
-        <%= shipping_address.label :street_number_and_name, "Address", class: "block text-sm font-medium text-gray-700" %>
-        <div class="mt-1">
-          <%= shipping_address.text_field :street_number_and_name, autocomplete: "street-address", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <%= form.fields_for :shipping_address do |shipping_address| %>
+        <div class="form-control sm:col-span-3">
+          <%= shipping_address.label :street_number_and_name, "Address", class: "label" %>
+          <%= shipping_address.text_field :street_number_and_name, autocomplete: "street-address", class: "input input-bordered w-full" %>
         </div>
-      </div>
 
-      <div>
-        <%= shipping_address.label :post_town, "City", class: "block text-sm font-medium text-gray-700" %>
-        <div class="mt-1">
-          <%= shipping_address.text_field :post_town, autocomplete: "address-level2", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+        <div class="form-control">
+          <%= shipping_address.label :post_town, "City", class: "label" %>
+          <%= shipping_address.text_field :post_town, autocomplete: "address-level2", class: "input input-bordered w-full" %>
         </div>
-      </div>
 
-      <div>
-        <%= shipping_address.label :postcode, "Postcode", class: "block text-sm font-medium text-gray-700" %>
-        <div class="mt-1">
-          <%= shipping_address.text_field :postcode, autocomplete: "postal-code", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+        <div class="form-control">
+          <%= shipping_address.label :postcode, "Postcode", class: "label" %>
+          <%= shipping_address.text_field :postcode, autocomplete: "postal-code", class: "input input-bordered w-full" %>
         </div>
-      </div>
 
-      <div class="sm:col-span-3">
-        <%= shipping_address.label :additional_notes, "Additional Notes", class: "block text-sm font-medium text-gray-700" %>
-        <div class="mt-1">
-          <%= shipping_address.text_field :additional_notes, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+        <div class="form-control sm:col-span-3">
+          <%= shipping_address.label :additional_notes, "Additional Notes", class: "label" %>
+          <%= shipping_address.text_field :additional_notes, class: "input input-bordered w-full" %>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
-

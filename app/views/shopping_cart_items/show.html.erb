@@ -1,17 +1,22 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
+<div class="mx-auto md:w-2/3 w-full">
+  <% if notice.present? %>
+    <div class="alert alert-success mb-5">
+      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+      <span id="notice"><%= notice %></span>
+    </div>
+  <% end %>
 
-    <%= turbo_frame_tag @shopping_cart_item do %>
-      <%= render @shopping_cart_item %>
-    <% end %>
-
-    <%= link_to "Edit this shopping cart item", edit_shopping_cart_item_path(@shopping_cart_item), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Back to shopping cart items", shopping_cart_items_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to "Destroy this shopping cart item", @shopping_cart_item, method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <%= turbo_frame_tag @shopping_cart_item do %>
+        <%= render @shopping_cart_item %>
+      <% end %>
+      
+      <div class="card-actions mt-4 flex flex-wrap gap-2">
+        <%= link_to "Edit this shopping cart item", edit_shopping_cart_item_path(@shopping_cart_item), class: "btn btn-primary" %>
+        <%= link_to "Back to shopping cart items", shopping_cart_items_path, class: "btn btn-outline" %>
+        <%= button_to "Destroy this shopping cart item", @shopping_cart_item, method: :delete, class: "btn btn-error", data: { turbo_confirm: 'Are you sure you want to delete this item?' } %>
+      </div>
     </div>
   </div>
 </div>
