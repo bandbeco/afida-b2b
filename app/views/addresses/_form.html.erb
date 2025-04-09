@@ -1,6 +1,6 @@
-<%= form_with(model: address, class: "space-y-8 divide-y divide-gray-200") do |form| %>
+<%= form_with(model: address) do |form| %>
   <% if address.errors.any? %>
-    <div id="error_explanation" class="alert alert-error">
+    <div id="error_explanation" class="alert alert-error mb-6">
       <div>
         <h2><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h2>
         <ul>
@@ -12,69 +12,59 @@
     </div>
   <% end %>
 
-  <div class="space-y-6 sm:space-y-5">
-    <div>
-      <h3 class="text-lg font-medium">Address Details</h3>
-      <p class="mt-1 max-w-2xl text-sm opacity-70">Enter the details for this address.</p>
-    </div>
-
-    <div class="space-y-6 sm:space-y-5">
-      <div class="form-control sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= form.label :company, class: "label sm:mt-px sm:pt-2" %>
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <%= form.text_field :company, class: "input input-bordered max-w-lg w-full sm:max-w-xs" %>
+  <div class="card bg-base-100 border border-base-200 mb-6">
+    <div class="card-body">
+      <h2 class="card-title flex items-center mb-4 text-base-content">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        Address Details
+      </h2>
+      <p class="text-sm opacity-70 mb-6">Enter the details for this address.</p>
+      
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div class="form-control">
+          <%= form.label :company, class: "label" %>
+          <%= form.text_field :company, class: "input input-bordered bg-white w-full" %>
         </div>
-      </div>
 
-      <div class="form-control sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= form.label :attn, "Attention Of", class: "label sm:mt-px sm:pt-2" %>
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <%= form.text_field :attn, class: "input input-bordered max-w-lg w-full sm:max-w-xs" %>
+        <div class="form-control">
+          <%= form.label :attn, "Attention Of", class: "label" %>
+          <%= form.text_field :attn, class: "input input-bordered bg-white w-full" %>
         </div>
-      </div>
 
-      <div class="form-control sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= form.label :building_name, class: "label sm:mt-px sm:pt-2" %>
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <%= form.text_field :building_name, class: "input input-bordered max-w-lg w-full sm:max-w-xs" %>
+        <div class="form-control">
+          <%= form.label :building_name, class: "label" %>
+          <%= form.text_field :building_name, class: "input input-bordered bg-white w-full" %>
         </div>
-      </div>
 
-      <div class="form-control sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= form.label :street_number_and_name, "Street Address", class: "label sm:mt-px sm:pt-2" %>
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <%= form.text_field :street_number_and_name, class: "input input-bordered max-w-lg w-full" %>
+        <div class="form-control sm:col-span-2">
+          <%= form.label :street_number_and_name, "Street Address", class: "label" %>
+          <%= form.text_field :street_number_and_name, class: "input input-bordered bg-white w-full" %>
         </div>
-      </div>
 
-      <div class="form-control sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= form.label :post_town, "Town/City", class: "label sm:mt-px sm:pt-2" %>
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <%= form.text_field :post_town, class: "input input-bordered max-w-lg w-full sm:max-w-xs" %>
+        <div class="form-control">
+          <%= form.label :post_town, "Town/City", class: "label" %>
+          <%= form.text_field :post_town, class: "input input-bordered bg-white w-full" %>
         </div>
-      </div>
 
-      <div class="form-control sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= form.label :postcode, class: "label sm:mt-px sm:pt-2" %>
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <%= form.text_field :postcode, class: "input input-bordered max-w-lg w-full sm:max-w-xs" %>
+        <div class="form-control">
+          <%= form.label :postcode, class: "label" %>
+          <%= form.text_field :postcode, class: "input input-bordered bg-white w-full" %>
         </div>
-      </div>
 
-      <div class="form-control sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= form.label :additional_notes, class: "label sm:mt-px sm:pt-2" %>
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <%= form.text_area :additional_notes, rows: 3, class: "textarea textarea-bordered max-w-lg w-full" %>
+        <div class="form-control sm:col-span-2">
+          <%= form.label :additional_notes, class: "label" %>
+          <%= form.text_area :additional_notes, rows: 3, class: "textarea textarea-bordered bg-white w-full" %>
           <p class="mt-2 text-sm opacity-70">Optional notes, e.g., delivery instructions.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="pt-5">
-    <div class="flex justify-end space-x-3">
-      <%= link_to 'Cancel', addresses_path, class: "btn btn-outline" %>
-      <%= form.submit "Save Address", class: "btn btn-primary" %>
-    </div>
+  <div class="flex justify-end space-x-3">
+    <%= link_to 'Cancel', addresses_path, class: "btn btn-outline" %>
+    <%= form.submit "Save Address", class: "btn btn-primary" %>
   </div>
 <% end %>
