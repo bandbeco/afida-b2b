@@ -1,69 +1,71 @@
 <%= form_with(model: address, class: "space-y-8 divide-y divide-gray-200") do |form| %>
   <% if address.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg">
-      <h2><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h2>
-      <ul>
-        <% address.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+    <div id="error_explanation" class="alert alert-error">
+      <div>
+        <h2><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h2>
+        <ul>
+          <% address.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
   <div class="space-y-6 sm:space-y-5">
     <div>
-      <h3 class="text-lg leading-6 font-medium text-gray-900">Address Details</h3>
-      <p class="mt-1 max-w-2xl text-sm text-gray-500">Enter the details for this address.</p>
+      <h3 class="text-lg font-medium">Address Details</h3>
+      <p class="mt-1 max-w-2xl text-sm opacity-70">Enter the details for this address.</p>
     </div>
 
     <div class="space-y-6 sm:space-y-5">
-      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= form.label :company, class: "block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" %>
+      <div class="form-control sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <%= form.label :company, class: "label sm:mt-px sm:pt-2" %>
         <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <%= form.text_field :company, class: "max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" %>
+          <%= form.text_field :company, class: "input input-bordered max-w-lg w-full sm:max-w-xs" %>
         </div>
       </div>
 
-      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= form.label :attn, "Attention Of", class: "block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" %>
+      <div class="form-control sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <%= form.label :attn, "Attention Of", class: "label sm:mt-px sm:pt-2" %>
         <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <%= form.text_field :attn, class: "max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" %>
+          <%= form.text_field :attn, class: "input input-bordered max-w-lg w-full sm:max-w-xs" %>
         </div>
       </div>
 
-      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= form.label :building_name, class: "block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" %>
+      <div class="form-control sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <%= form.label :building_name, class: "label sm:mt-px sm:pt-2" %>
         <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <%= form.text_field :building_name, class: "max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" %>
+          <%= form.text_field :building_name, class: "input input-bordered max-w-lg w-full sm:max-w-xs" %>
         </div>
       </div>
 
-      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= form.label :street_number_and_name, "Street Address", class: "block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" %>
+      <div class="form-control sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <%= form.label :street_number_and_name, "Street Address", class: "label sm:mt-px sm:pt-2" %>
         <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <%= form.text_field :street_number_and_name, class: "block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md" %>
+          <%= form.text_field :street_number_and_name, class: "input input-bordered max-w-lg w-full" %>
         </div>
       </div>
 
-      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= form.label :post_town, "Town/City", class: "block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" %>
+      <div class="form-control sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <%= form.label :post_town, "Town/City", class: "label sm:mt-px sm:pt-2" %>
         <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <%= form.text_field :post_town, class: "max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" %>
+          <%= form.text_field :post_town, class: "input input-bordered max-w-lg w-full sm:max-w-xs" %>
         </div>
       </div>
 
-      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= form.label :postcode, class: "block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" %>
+      <div class="form-control sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <%= form.label :postcode, class: "label sm:mt-px sm:pt-2" %>
         <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <%= form.text_field :postcode, class: "max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" %>
+          <%= form.text_field :postcode, class: "input input-bordered max-w-lg w-full sm:max-w-xs" %>
         </div>
       </div>
 
-      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= form.label :additional_notes, class: "block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" %>
+      <div class="form-control sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <%= form.label :additional_notes, class: "label sm:mt-px sm:pt-2" %>
         <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <%= form.text_area :additional_notes, rows: 3, class: "max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md" %>
-          <p class="mt-2 text-sm text-gray-500">Optional notes, e.g., delivery instructions.</p>
+          <%= form.text_area :additional_notes, rows: 3, class: "textarea textarea-bordered max-w-lg w-full" %>
+          <p class="mt-2 text-sm opacity-70">Optional notes, e.g., delivery instructions.</p>
         </div>
       </div>
     </div>
@@ -71,8 +73,8 @@
 
   <div class="pt-5">
     <div class="flex justify-end space-x-3">
-      <%= link_to 'Cancel', addresses_path, class: "btn-secondary" %>
-      <%= form.submit "Save Address", class: "btn-primary" %>
+      <%= link_to 'Cancel', addresses_path, class: "btn btn-outline" %>
+      <%= form.submit "Save Address", class: "btn btn-primary" %>
     </div>
   </div>
-<% end %> 
+<% end %>
