@@ -11,5 +11,5 @@ a {
 }
 
 a:hover {
-    @apply text-primary/80;
+    @apply text-primary;
 }
