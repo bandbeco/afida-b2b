@@ -1,1 +1,6 @@
 @import 'tailwindcss';
+@plugin './daisyui.js';
+
+html {
+    scroll-padding-top: 14rem;
+  }
