@@ -21,8 +21,10 @@
     </h2>
   </div>
 
-  <div class="relative mx-auto grid max-w-7xl grid-cols-1 gap-x-16 lg:grid-cols-2 lg:pt-4 rounded-md">
+  <div class="relative mx-auto grid max-w-7xl grid-cols-1 gap-x-16 lg:grid-cols-2 lg:pt-4">
     <%= render "shopping_cart_items/order_summary", checkout: Checkout.new(@shopping_cart) %>
-    <%= render "shopping_cart_items/order_form" %>
+    <%= turbo_frame_tag "order_form_frame" do %>
+      <%= render "shopping_cart_items/order_form" %>
+    <% end %>
   </div>
 </div>

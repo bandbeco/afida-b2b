@@ -12,6 +12,7 @@ class Order < ApplicationRecord
 
   validates_associated :order_items
   validates_presence_of :order_items
+  validates :shipping_address, :billing_address, presence: true
 
   validates :subtotal_amount, presence: true, numericality: { greater_than: 0 }
   validates :payment_method, :status, presence: true
