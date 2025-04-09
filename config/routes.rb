@@ -7,6 +7,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "orders#new"
 
+  resources :addresses do
+    member do
+      patch :set_default_shipping
+      patch :set_default_billing
+    end
+  end
+
   scope module: "admin" do
     resources :users, only: [:index, :new, :create, :edit, :update, :destroy] do
       resources :price_list_items, only: [:index], path: "price-list"
@@ -17,7 +24,6 @@ Rails.application.routes.draw do
   resources :price_list_items, only: [:show], path: "price-list"
   resources :users, only: [:show, :edit, :update]
   resources :products
-  resources :addresses
   resources :categories, except: [:destroy]
 
   resources :orders do

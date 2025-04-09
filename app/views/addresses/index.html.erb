@@ -1,55 +1,61 @@
-<% content_for :title, "Addresses" %>
-
-<div class="bg-black text-white italic font-extrabold grid text-3xl font-impact rounded border-black border-2 p-4 my-4">
-  <h1>
-    ADDRESSES
-  </h1>
-</div>
-
-<%= link_to new_address_path, class: "inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 no-underline" do %>
-  Create new address
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-</svg>
-<% end %>
-
-<div class="flow-root mt-8">
-  <div>
-    <div class="inline-block min-w-full align-middle border-black border-2 rounded">
-      <table class="min-w-full border-separate border-spacing-0 bg-white">
-        <thead>
-          <tr class="even:bg-gray-50">
-            <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
-              Building Name
-            </th>
-
-            <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
-              Street Number and Name
-            </th>
-
-            <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
-              Post Town
-            </th>
-
-            <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
-              Postcode
-            </th>
-
-            <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-right text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
-              Additional Notes
-            </th>
-            <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-right text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
-            </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% @addresses.each do |address| %>
-            <%= render address %>
-          <% end %>
-        </tbody>
-      </table>
-
-    </div>
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-semibold text-gray-900">My Addresses</h1>
+    <%= link_to 'Add New Address', new_address_path, class: "btn-primary" %>
   </div>
+
+  <% if @addresses.any? %>
+    <div class="bg-white shadow overflow-hidden sm:rounded-md">
+      <ul role="list" class="divide-y divide-gray-200">
+        <% @addresses.each do |address| %>
+          <li class="px-4 py-4 sm:px-6">
+            <div class="flex items-center justify-between">
+              <div class="text-sm font-medium text-gray-900 truncate">
+                <%= address.formatted_address %>
+              </div>
+              <div class="ml-2 flex-shrink-0 flex space-x-2">
+                <%= link_to 'Edit', edit_address_path(address), class: "text-indigo-600 hover:text-indigo-900" %>
+                <%= button_to 'Delete', address_path(address), method: :delete, data: { turbo_confirm: 'Are you sure you want to delete this address?' }, class: "text-red-600 hover:text-red-900" %>
+              </div>
+            </div>
+            <div class="mt-2 sm:flex sm:justify-between">
+              <div class="sm:flex space-x-4">
+                <%# Default Shipping Badge/Button %>
+                <% if address.id == @default_shipping_address_id %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Default Shipping
+                  </span>
+                <% else %>
+                  <%= button_to 'Set as Default Shipping', set_default_shipping_address_path(address), method: :patch, class: "text-sm text-gray-500 hover:text-gray-700" %>
+                <% end %>
+
+                <%# Default Billing Badge/Button %>
+                <% if address.id == @default_billing_address_id %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    Default Billing
+                  </span>
+                <% else %>
+                  <%= button_to 'Set as Default Billing', set_default_billing_address_path(address), method: :patch, class: "text-sm text-gray-500 hover:text-gray-700" %>
+                <% end %>
+              </div>
+              <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                <%# Optional: Add other info like created_at %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% else %>
+    <div class="text-center py-12">
+      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+      </svg>
+      <h3 class="mt-2 text-sm font-medium text-gray-900">No addresses yet</h3>
+      <p class="mt-1 text-sm text-gray-500">Get started by adding your first address.</p>
+      <div class="mt-6">
+        <%= link_to 'Add New Address', new_address_path, class: "btn-primary" %>
+      </div>
+    </div>
+  <% end %>
 </div>
