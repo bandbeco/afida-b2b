@@ -14,9 +14,10 @@ Rails.application.routes.draw do
     end
   end
 
-  scope module: "admin" do
+  scope module: "admin", path: "/admin" do
     resources :users, only: [:index, :new, :create, :edit, :update, :destroy] do
       resources :price_list_items, only: [:index], path: "price-list"
+      resources :addresses
     end
     resources :price_list_items, only: [:edit, :update], path: "price-list"
   end

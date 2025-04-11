@@ -1,0 +1,76 @@
+<%= form_with(model: [@user, @address], class: "space-y-4") do |form| %>
+  <% if @address.errors.any? %>
+    <div role="alert" class="alert alert-error shadow-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2 2m2-2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+      <div>
+        <h3 class="font-bold"><%= pluralize(@address.errors.count, "error") %> prohibited this address from being saved:</h3>
+        <ul class="mt-1 list-disc list-inside text-xs">
+          <% @address.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="form-control w-full">
+      <%= form.label :company, class: "label" do %>
+        <span class="label-text">Company</span>
+      <% end %>
+      <%= form.text_field :company, class: "input input-bordered w-full" %>
+    </div>
+
+    <div class="form-control w-full">
+      <%= form.label :attn, class: "label" do %>
+        <span class="label-text">Attention</span>
+        <span class="label-text-alt">(Optional)</span>
+      <% end %>
+      <%= form.text_field :attn, class: "input input-bordered w-full" %>
+    </div>
+  </div>
+
+  <div class="form-control w-full">
+    <%= form.label :building_name, class: "label" do %>
+      <span class="label-text">Building Name</span>
+      <span class="label-text-alt">(Optional)</span>
+    <% end %>
+    <%= form.text_field :building_name, class: "input input-bordered w-full" %>
+  </div>
+
+  <div class="form-control w-full">
+    <%= form.label :street_number_and_name, class: "label" do %>
+      <span class="label-text">Street & Number</span>
+    <% end %>
+    <%= form.text_field :street_number_and_name, class: "input input-bordered w-full" %>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="form-control w-full">
+      <%= form.label :post_town, class: "label" do %>
+        <span class="label-text">Town/City</span>
+      <% end %>
+      <%= form.text_field :post_town, class: "input input-bordered w-full" %>
+    </div>
+
+    <div class="form-control w-full">
+      <%= form.label :postcode, class: "label" do %>
+        <span class="label-text">Postcode</span>
+      <% end %>
+      <%= form.text_field :postcode, class: "input input-bordered w-full" %>
+    </div>
+  </div>
+
+  <div class="form-control w-full">
+    <%= form.label :additional_notes, class: "label" do %>
+      <span class="label-text">Additional Notes</span>
+      <span class="label-text-alt">(Optional)</span>
+    <% end %>
+    <%= form.text_area :additional_notes, rows: 3, class: "textarea textarea-bordered w-full" %>
+  </div>
+
+  <div class="flex justify-end space-x-3 pt-4">
+    <%= link_to 'Cancel', user_addresses_path(@user), class: "btn btn-ghost" %>
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>
