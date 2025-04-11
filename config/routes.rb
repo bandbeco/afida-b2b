@@ -14,14 +14,16 @@ Rails.application.routes.draw do
     end
   end
 
-  scope module: "admin", path: "/admin" do
+  # Admin Namespace
+  namespace :admin do
     resources :users, only: [:index, :new, :create, :edit, :update, :destroy] do
       resources :price_list_items, only: [:index], path: "price-list"
-      resources :addresses
+      resources :addresses # Nested address routes for admin
     end
     resources :price_list_items, only: [:edit, :update], path: "price-list"
   end
 
+  # Non-admin routes
   resources :price_list_items, only: [:show], path: "price-list"
   resources :users, only: [:show, :edit, :update]
   resources :products

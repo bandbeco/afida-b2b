@@ -22,8 +22,9 @@ class Admin::PriceListItemsController < ApplicationController
   def update
     respond_to do |format|
       if @price_list_item.update(price_list_item_params)
-        format.html { redirect_to price_list_item_url(@price_list_item), notice: "Price list item was successfully updated." }
-        format.json { render :show, status: :ok, location: @price_list_item }
+        # Redirect back to the user's price list index after updating a single item
+        format.html { redirect_to admin_user_price_list_items_url(@price_list_item.user), notice: "Price list item was successfully updated." }
+        format.json { render :show, status: :ok, location: admin_price_list_item_url(@price_list_item) }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @price_list_item.errors, status: :unprocessable_entity }
@@ -32,12 +33,10 @@ class Admin::PriceListItemsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_price_list_item
       @price_list_item = PriceListItem.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def price_list_item_params
       params.require(:price_list_item).permit(:user_id, :product_id, :price, :hidden)
     end

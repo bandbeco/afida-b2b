@@ -1,8 +1,10 @@
 <div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editing price list item</h1>
+  <h1 class="font-bold text-4xl">Editing Price List Item for <%= @price_list_item.user.formatted_name %></h1>
+  <p class="text-lg"><%= @price_list_item.product.name %></p>
 
-  <%= render "form", price_list_item: @price_list_item %>
+  <%= render "form", price_list_item: @price_list_item %> <%# Assuming form partial is shared and uses namespaced model %>
 
-  <%= link_to "Show this price list item", @price_list_item, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-  <%= link_to "Back to price list items", price_list_items_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  <%# The show path for a single admin price list item might not be standard, using index as fallback %>
+  <%# link_to "Show this price list item", admin_price_list_item_path(@price_list_item), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  <%= link_to "Back to User's Price List", admin_user_price_list_items_path(@price_list_item.user), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
 </div>

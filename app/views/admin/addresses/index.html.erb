@@ -1,7 +1,7 @@
 <div class="container mx-auto px-4 py-8">
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-semibold text-gray-800">Addresses for <%= @user.email %></h1>
-    <%= link_to 'Add New Address', new_user_address_path(@user), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    <%= link_to 'Add New Address', new_admin_user_address_path(@user), class: "btn btn-primary" %>
   </div>
 
   <% if @addresses.any? %>
@@ -34,8 +34,8 @@
                 <p class="text-gray-900 whitespace-no-wrap"><%= address.postcode %></p>
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                <%= link_to 'Edit', edit_user_address_path(@user, address), class: "text-indigo-600 hover:text-indigo-900 mr-3" %>
-                <%= link_to 'Delete', user_address_path(@user, address), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "text-red-600 hover:text-red-900" %>
+                <%= link_to 'Edit', edit_admin_user_address_path(@user, address), class: "link link-primary mr-3" %>
+                <%= link_to 'Delete', admin_user_address_path(@user, address), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "link link-error" %>
               </td>
             </tr>
           <% end %>
@@ -47,7 +47,6 @@
   <% end %>
 
   <div class="mt-6">
-    <%= link_to 'Back to User', edit_user_path(@user), class: "text-gray-600 hover:text-gray-800" %> |
-    <%= link_to 'Back to All Users', users_path, class: "text-gray-600 hover:text-gray-800" %>
+    <%= link_to 'Back to User', edit_admin_user_path(@user), class: "link" %> | <%= link_to 'Back to All Users', admin_users_path, class: "link" %>
   </div>
 </div>

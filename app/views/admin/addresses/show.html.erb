@@ -35,7 +35,7 @@
   </div>
 
   <div class="mt-6 flex space-x-3">
-    <%= link_to 'Edit', edit_user_address_path(@user, @address), class: "bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded" %>
-    <%= link_to 'Back to Addresses', user_addresses_path(@user), class: "bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50" %>
+    <%= link_to 'Edit', edit_admin_user_address_path(@user, @address), class: "btn btn-primary" %>
+    <%= link_to 'Back to Addresses', admin_user_addresses_path(@user), class: "btn btn-ghost" %>
   </div>
 </div>

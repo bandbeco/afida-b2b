@@ -27,8 +27,8 @@ class Admin::UsersController < ApplicationController
       if @user.save
         Product.all.each { |p| @user.price_list_items.create!(product: p, price: p.price) }
 
-        format.html { redirect_to users_url, notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @user }
+        format.html { redirect_to admin_users_url, notice: "User was successfully created." }
+        format.json { render :show, status: :created, location: admin_user_url(@user) }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -41,9 +41,9 @@ class Admin::UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         if user_params[:price_list_items_attributes]
-          format.html { redirect_to user_price_list_items_url(@user), notice: "Price list items were successfully updated." }
+          format.html { redirect_to admin_user_price_list_items_url(@user), notice: "Price list items were successfully updated." }
         else
-          format.html { redirect_to edit_user_url(@user), notice: "User was successfully updated." }
+          format.html { redirect_to edit_admin_user_url(@user), notice: "User was successfully updated." }
         end
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +56,7 @@ class Admin::UsersController < ApplicationController
     @user.destroy!
 
     respond_to do |format|
-      format.html { redirect_to users_url, notice: "User was successfully destroyed." }
+      format.html { redirect_to admin_users_url, notice: "User was successfully destroyed." }
       format.json { head :no_content }
     end
   end

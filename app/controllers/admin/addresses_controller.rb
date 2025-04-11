@@ -32,8 +32,8 @@ module Admin
           if @user.addresses.count == 1
             @user.update(default_shipping_address: @address, default_billing_address: @address)
           end
-          format.html { redirect_to user_addresses_path(@user), notice: 'Address was successfully created.' } # Corrected path
-          format.json { render :show, status: :created, location: user_address_path(@user, @address) } # Corrected path
+          format.html { redirect_to admin_user_addresses_path(@user), notice: 'Address was successfully created.' }
+          format.json { render :show, status: :created, location: admin_user_address_path(@user, @address) }
         else
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @address.errors, status: :unprocessable_entity }
@@ -50,8 +50,8 @@ module Admin
     def update
       respond_to do |format|
         if @address.update(address_params)
-          format.html { redirect_to user_addresses_path(@user), notice: 'Address was successfully updated.' } # Corrected path
-          format.json { render :show, status: :ok, location: user_address_path(@user, @address) } # Corrected path
+          format.html { redirect_to admin_user_addresses_path(@user), notice: 'Address was successfully updated.' }
+          format.json { render :show, status: :ok, location: admin_user_address_path(@user, @address) }
         else
           format.html { render :edit, status: :unprocessable_entity }
           format.json { render json: @address.errors, status: :unprocessable_entity }
@@ -68,7 +68,7 @@ module Admin
       @address.destroy
 
       respond_to do |format|
-        format.html { redirect_to user_addresses_path(@user), notice: 'Address was successfully destroyed.' } # Corrected path
+        format.html { redirect_to admin_user_addresses_path(@user), notice: 'Address was successfully destroyed.' }
         format.json { head :no_content }
       end
     end
@@ -82,13 +82,13 @@ module Admin
     def set_user
       @user = User.find(params[:user_id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to users_path, alert: 'User not found.'
+      redirect_to admin_users_path, alert: 'User not found.'
     end
 
     def set_address
       @address = @user.addresses.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to user_addresses_path(@user), alert: 'Address not found.' # Corrected path
+      redirect_to admin_user_addresses_path(@user), alert: 'Address not found.'
     end
 
     # Use the same permitted parameters as the regular controller
