@@ -41,7 +41,10 @@ aliases:
 
 # Configure builder setup.
 builder:
-  arch: amd64
+  arch:
+    - amd64
+    - arm64
+  remote: ssh://root@100.67.171.22
 
 proxy:
   host: customer.afida.com
