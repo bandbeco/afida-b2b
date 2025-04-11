@@ -16,6 +16,16 @@
   </td>
 
   <td>
+    <%= link_to 'Addresses', admin_user_addresses_path(user), class: "link link-primary" %>
+  </td>
+
+  <td>
+    <% if user.price_list_items.any? %>
+      <%= link_to "Price List", admin_user_price_list_items_path(user), class: "link link-primary" %>
+    <% end %>
+  </td>
+
+  <td>
     <%= form_with(model: user, url: user_invitation_path, method: :post) do |f| %>
       <% if user.invited? && !user.invitation_accepted? %>
         <%= f.submit "Resend Invitation", class: "btn btn-primary btn-sm" %>
@@ -23,12 +33,6 @@
         <%= f.submit "Send Invitation", class: "btn btn-primary btn-sm" %>
       <% else %>
       <% end %>
-    <% end %>
-  </td>
-
-  <td>
-    <% if user.price_list_items.any? %>
-      <%= link_to "Price List", admin_user_price_list_items_path(user), class: "link link-primary" %>
     <% end %>
   </td>
 </tr>

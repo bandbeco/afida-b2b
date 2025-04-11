@@ -4,13 +4,11 @@
       <%= @user.formatted_name %>
     </h1>
 
-    <p class="text-xs font-mono">
-      Joined on <%= local_time(@user.invitation_accepted_at) if @user.accepted_invitation? %>
-    </p>
-
-    <div class="card-actions justify-end mt-4">
-      <%= link_to 'Manage Addresses', admin_user_addresses_path(@user), class: "btn btn-sm btn-outline" %>
-    </div>
+    <% if @user.accepted_invitation? %>
+      <p class="text-xs font-mono">
+        Joined on <%= local_time(@user.invitation_accepted_at) %>
+      </p>
+    <% end %>
   </div>
 </div>
 
