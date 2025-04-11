@@ -49,6 +49,8 @@ The AFIDA e-commerce platform is currently in active development with a focus on
 - Clear, descriptive variable and method names
 - RESTful route naming
 - Consistent use of Ruby and Rails conventions
+- **No Commented-Out Code**: Remove unused code instead of commenting it out. Use version control (Git) to track history.
+- No comments whatsoever, the code should be clear enough that we do not need comments
 
 ### Testing Approach
 - Model tests for business logic
