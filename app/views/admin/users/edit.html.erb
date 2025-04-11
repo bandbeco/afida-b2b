@@ -16,3 +16,32 @@
   <%= render "form", user: @user %>
   <%= render "invitation_email_button" if current_user.admin? %>
 </div>
+
+<div class="divider py-8">Past Orders</div>
+
+<div class="mt-8">
+  <% if @user.orders.any? %>
+    <div class="overflow-x-auto">
+      <table class="table w-full bg-white">
+        <thead>
+          <tr>
+            <th>Invoice No.</th>
+            <th>Date</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @user.orders.order(created_at: :desc).each do |order| %>
+            <tr>
+              <td><%= link_to order.invoice_number, order, class: "link" %></td>
+              <td><%= local_time(order.created_at, format: :short) %></td>
+              <td><%= number_to_currency(order.total_amount) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>This user has no orders yet.</p>
+  <% end %>
+</div>
