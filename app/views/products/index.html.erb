@@ -8,36 +8,48 @@
   </div>
 </div>
 
-<%= link_to new_product_path, class: "btn btn-primary gap-2" do %>
-  New product
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-  </svg>
-<% end %>
+<div class="flex justify-between items-center mb-4">
+  <%= form_with url: products_path, method: :get, class: "flex gap-2", data: { controller: "search-form", turbo_frame: "products_list" } do |form| %>
+    <%= form.text_field :query,
+      value: params[:query],
+      placeholder: "Search by name or SKU...",
+      class: "input input-bordered",
+      data: { action: "input->search-form#search" } %>
+  <% end %>
 
-<div class="mt-8 flow-root">
-  <div>
-    <div class="inline-block min-w-full align-middle border-2 border-base-300 rounded-lg">
-      <div class="overflow-x-auto">
-        <table class="table table-zebra bg-base-100">
-          <thead>
-            <tr>
-              <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur"></th>
-              <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur">SKU</th>
-              <th class="sticky top-0 z-10 hidden sm:table-cell bg-base-100 bg-opacity-75 backdrop-blur">Name</th>
-              <th class="sticky top-0 z-10 hidden lg:table-cell bg-base-100 bg-opacity-75 backdrop-blur">Colour</th>
-              <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur">PAC Size</th>
-              <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur">Catalog Price</th>
-              <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @products.each do |product| %>
-              <%= render product %>
-            <% end %>
-          </tbody>
-        </table>
+  <%= link_to new_product_path, class: "btn btn-primary gap-2" do %>
+    New product
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+    </svg>
+  <% end %>
+</div>
+
+<%= turbo_frame_tag "products_list" do %>
+  <div class="mt-8 flow-root">
+    <div>
+      <div class="inline-block min-w-full align-middle border-2 border-base-300 rounded-lg">
+        <div class="overflow-x-auto">
+          <table class="table table-zebra bg-base-100">
+            <thead>
+              <tr>
+                <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur"></th>
+                <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur">SKU</th>
+                <th class="sticky top-0 z-10 hidden sm:table-cell bg-base-100 bg-opacity-75 backdrop-blur">Name</th>
+                <th class="sticky top-0 z-10 hidden lg:table-cell bg-base-100 bg-opacity-75 backdrop-blur">Colour</th>
+                <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur">PAC Size</th>
+                <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur">Catalog Price</th>
+                <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @products.each do |product| %>
+                <%= render product %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>

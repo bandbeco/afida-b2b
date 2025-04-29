@@ -4,6 +4,12 @@ class ProductsController < ApplicationController
   # GET /products or /products.json
   def index
     @products = Product.all
+    if params[:query].present?
+      @products = @products.where(
+        "name ILIKE :query OR sku ILIKE :query",
+        query: "%#{params[:query]}%"
+      )
+    end
   end
 
   # GET /products/1 or /products/1.json
