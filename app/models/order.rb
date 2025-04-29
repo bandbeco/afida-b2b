@@ -20,6 +20,9 @@ class Order < ApplicationRecord
   enum :status, [:pending, :processing, :shipped, :delivered, :canceled]
   enum :payment_method, [:invoice, :bank_transfer, :credit_card]
 
+  scope :revenue_in_range, ->(range) { where(created_at: range).sum(:total_amount) }
+  scope :count_in_range, ->(range) { where(created_at: range).count }
+
   accepts_nested_attributes_for :order_items, allow_destroy: true, reject_if: lambda { |attributes| attributes['quantity'].to_i.zero? || attributes['quantity'].blank? }
 
   before_validation :build_address_strings, on: :create

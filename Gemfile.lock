@@ -153,6 +153,8 @@ GEM
     ffi (1.17.0-x86_64-linux-musl)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    groupdate (6.5.1)
+      activesupport (>= 7)
     honeybadger (5.16.0)
       logger
     http-accept (1.7.0)
@@ -421,6 +423,7 @@ DEPENDENCIES
   debug
   devise (~> 4.9)
   devise_invitable (~> 2.0)
+  groupdate (~> 6.5)
   honeybadger (~> 5.16)
   httparty
   image_processing (~> 1.2)

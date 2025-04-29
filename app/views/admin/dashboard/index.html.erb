@@ -1,0 +1,130 @@
+<% content_for :title, "Sales Dashboard" %>
+
+<div class="card bg-neutral text-neutral-content my-4">
+  <div class="card-body p-4">
+    <h1 class="card-title text-3xl font-bold italic uppercase">
+      💰 DASHBOARD
+    </h1>
+  </div>
+</div>
+
+<div class="flex flex-col gap-4">
+  <div class="stats bg-white p-4 rounded shadow">
+    <div class="stat">
+      <div class="stat-title">Total Revenue (Last 30 Days)</div>
+      <div class="stat-value"><%= number_to_currency(@total_revenue_last_30_days, unit: "£") %></div>
+      <%# Add comparison percentage later %>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Total Orders (Last 30 Days)</div>
+      <div class="stat-value"><%= @total_orders_last_30_days %></div>
+      <%# Add comparison percentage later %>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Avg. Order Value (Last 30 Days)</div>
+      <div class="stat-value"><%= number_to_currency(@average_order_value_last_30_days, unit: "£") %></div>
+      <%# Add comparison percentage later %>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">New Client Orders (Last 30 Days)</div>
+      <div class="stat-value"><%= @new_client_orders_last_30_days %></div>
+      <%# Add comparison percentage later %>
+    </div>
+  </div>
+
+  <div class="bg-white p-4 rounded shadow">
+    <h2 class="text-xl font-semibold mb-4">Revenue (Last 30 Days)</h2>
+    <canvas
+      data-controller="chart"
+      data-chart-type-value="line"
+      data-chart-label-value="Revenue (£)"
+      data-chart-y-axis-label-value="Revenue (£)"
+      data-chart-xy-data-value="<%= @revenue_trend_data.to_json %>"
+    ></canvas>
+  </div>
+
+  <div class="bg-white p-4 rounded shadow">
+    <h2 class="text-xl font-semibold mb-4">Orders (Last 30 Days)</h2>
+    <canvas
+      data-controller="chart"
+      data-chart-type-value="bar"
+      data-chart-label-value="Orders"
+      data-chart-y-axis-label-value="Number of Orders"
+      data-chart-xy-data-value="<%= @order_trend_data.to_json %>"
+    ></canvas>
+  </div>
+
+  <div class="overflow-x-auto bg-white p-4 rounded shadow">
+    <h2 class="text-xl font-semibold mb-4">Top Clients by Revenue (Last 30 Days)</h2>
+    <table class="table table-zebra w-full">
+      <thead class="bg-black text-white">
+        <tr>
+          <th>Rank</th>
+          <th>Client</th>
+          <th class="text-right">Total Revenue</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @top_clients_by_revenue.each_with_index do |client, index| %>
+          <tr>
+            <th><%= index + 1 %></th>
+            <td>
+              <% client_name = client.company.presence || "#{client.first_name} #{client.last_name}" %>
+              <%= client_name %>
+              <span class="text-xs text-gray-500">(ID: <%= client.id %>)</span>
+            </td>
+            <td class="text-right"><%= number_to_currency(client.total_revenue, unit: "£") %></td>
+          </tr>
+        <% end %>
+        <% if @top_clients_by_revenue.empty? %>
+          <tr>
+            <td colspan="3" class="text-center italic text-gray-500">No client data available for this period.</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="overflow-x-auto bg-white p-4 rounded shadow">
+    <h2 class="text-xl font-semibold mb-4">Best Selling Products (Last 30 Days by Quantity)</h2>
+    <table class="table table-zebra w-full">
+      <thead class="bg-black text-white">
+        <tr>
+          <th>Rank</th>
+          <th>SKU</th>
+          <th>Name</th>
+          <th class="text-right">Quantity Sold</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @top_products_by_quantity.each_with_index do |product, index| %>
+          <tr>
+            <th><%= index + 1 %></th>
+            <td><%= product.sku %></td>
+            <td><%= product.name %></td>
+            <td class="text-right"><%= product.total_quantity %></td>
+          </tr>
+        <% end %>
+        <% if @top_products_by_quantity.empty? %>
+          <tr>
+            <td colspan="4" class="text-center italic text-gray-500">No product data available for this period.</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="bg-white p-4 rounded shadow">
+    <h2 class="text-xl font-semibold mb-4">Revenue by Category (Last 30 Days)</h2>
+    <div class="flex justify-center w-1/2 mx-auto p-4">
+      <canvas
+        data-controller="chart"
+        data-chart-type-value="pie"
+        data-chart-pie-data-value="<%= @revenue_by_category_data.to_json %>"
+      ></canvas>
+    </div>
+  </div>
+</div>

@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
   # Admin Namespace
   namespace :admin do
+    get "dashboard", to: "dashboard#index"
+
     resources :users, only: [:index, :new, :create, :edit, :update, :destroy] do
       resources :price_list_items, only: [:index], path: "price-list"
       resources :addresses # Nested address routes for admin
@@ -40,7 +42,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'postcode_lookup', to: 'postcode_lookups#new'
+  get "postcode_lookup", to: "postcode_lookups#new"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
