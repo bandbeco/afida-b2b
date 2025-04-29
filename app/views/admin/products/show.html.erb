@@ -11,40 +11,18 @@
   </div>
 </div>
 
-<div class="flex flex-row bg-white rounded">
-  <div class="w-1/2">
-    <% if @product.picture.attached? %>
-      <%= image_tag @product.picture, class: "h-full w-full object-center group-hover:opacity-75" %>
-    <% end %>
-  </div>
-
-  <div class="text-xl flex flex-col justify-center font-mono">
-    <div>
-      Price: <%= currency_for(@product.price) %>
-    </div>
-
-    <div>
-      PAC Size: <%= @product.pac_size %>
-    </div>
-
-    <div>
-      Colour: <%= @product.colour&.titleize %>
-    </div>
-  </div>
-</div>
-
-<div class="mt-8 bg-white rounded shadow-md p-6">
+<div class="flex flex-col bg-white rounded p-4">
   <h2 class="text-xl font-semibold mb-4">Who can see this product in their price list?</h2>
 
   <%= form_with url: update_visibility_admin_product_path(@product), method: :patch, class: "mb-4", data: { controller: "visibility" } do |form| %>
     <div class="overflow-x-auto">
-      <table class="table table-zebra w-full">
-        <thead>
+      <table class="table table-zebra w-full border-2 border-black">
+        <thead class="bg-black text-white">
           <tr>
             <th>
               <div class="flex items-center gap-2">
-                <input type="checkbox" id="select-all" class="checkbox" data-action="change->visibility#toggleAll" />
-                <label for="select-all" class="cursor-pointer">Select All</label>
+                <input type="checkbox" id="select-all" class="checkbox bg-white checked:bg-white" data-action="change->visibility#toggleAll" />
+                <label for="select-all" class="cursor-pointer text-white">Select All</label>
               </div>
             </th>
             <th>User</th>
@@ -61,8 +39,8 @@
                     class: "checkbox", 
                     data: { 
                       visibility_target: "checkbox",
-                      action: "change->visibility#updateSelectAll" 
-                    } 
+                      action: "change->visibility#updateSelectAll"
+                    }
                 %>
               </td>
               <td><%= item.user.formatted_name %></td>
