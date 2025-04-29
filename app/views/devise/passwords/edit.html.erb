@@ -6,37 +6,37 @@
     </h2>
   </div>
 
-  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }, class: "space-y-6") do |f| %>
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm card shadow-xl bg-base-100 p-8">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "space-y-4" }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
       <%= f.hidden_field :reset_password_token %>
 
-      <div class="mt-2">
-        <%= f.label :password, "New password", class: "block text-sm font-medium leading-6 text-gray-900" %>
-
+      <div class="form-control w-full">
+        <div class="label">
+          <%= f.label :password, "New password", class: "label-text" %>
+        </div>
         <% if @minimum_password_length %>
-          <p class="text-xs italic text-gray-600">(<%= @minimum_password_length %> characters minimum)</p>
+          <div class="label">
+            <span class="label-text-alt">(<%= @minimum_password_length %> characters minimum)</span>
+          </div>
         <% end %>
-
-        <div class="mt-2">
-          <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
-        </div>
+        <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "input input-bordered w-full" %>
       </div>
 
-      <div class="mt-2">
-        <%= f.label :password_confirmation, "Confirm new password", class: "block text-sm font-medium leading-6 text-gray-900" %>
-        <div class="mt-2">
-          <%= f.password_field :password_confirmation, autofocus: true, autocomplete: "email", class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+      <div class="form-control w-full">
+        <div class="label">
+          <%= f.label :password_confirmation, "Confirm new password", class: "label-text" %>
         </div>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-bordered w-full" %>
       </div>
 
-      <div class="mt-8">
-        <%= f.submit "Save my new password", class: "flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+      <div class="form-control mt-6">
+        <%= f.submit "Save my new password", class: "btn btn-primary w-full" %>
       </div>
     <% end %>
 
-    <p class="mt-4 text-center text-sm text-gray-500">
+    <div class="mt-4 text-center text-sm">
       <%= render "devise/shared/links" %>
-    </p>
+    </div>
   </div>
 </div> 
