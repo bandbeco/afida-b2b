@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_09_103444) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_29_212507) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -98,7 +98,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_09_103444) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "hidden", default: false
+    t.boolean "hidden", default: true
     t.index ["product_id"], name: "index_price_list_items_on_product_id"
     t.index ["user_id"], name: "index_price_list_items_on_user_id"
   end
