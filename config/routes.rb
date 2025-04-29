@@ -23,6 +23,11 @@ Rails.application.routes.draw do
       resources :addresses # Nested address routes for admin
     end
     resources :price_list_items, only: [:edit, :update], path: "price-list"
+    resources :products, only: [:show] do
+      member do
+        patch :update_visibility
+      end
+    end
   end
 
   # Non-admin routes
