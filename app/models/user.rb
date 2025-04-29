@@ -41,9 +41,33 @@ class User < ApplicationRecord
     invitation_accepted_at.present?
   end
 
+  def most_ordered_products(limit = 3)
+    return [] if orders.empty?
+
+    product_data = OrderItem
+      .joins(:order, :product)
+      .where(orders: { user_id: id })
+      .group('products.id')
+      .select(
+        'products.id as product_id',
+        'COUNT(DISTINCT orders.id) as frequency',
+        'SUM(order_items.quantity) as total_quantity'
+      )
+      .order('frequency DESC')
+      .limit(limit)
+
+    product_data.map do |record|
+      {
+        product: Product.find(record.product_id),
+        frequency: record.frequency,
+        total_quantity: record.total_quantity
+      }
+    end
+  end
+
   protected
 
-  def password_required? 
-    false 
+  def password_required?
+    false
   end
 end
