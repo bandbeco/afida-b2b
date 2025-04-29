@@ -1,21 +1,39 @@
-<div class="w-full">
+<% content_for :title, "Categories" %>
+
+<div class="container mx-auto px-4 py-8">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <div class="alert alert-success shadow-lg mb-5">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span><%= notice %></span>
+      </div>
+    </div>
   <% end %>
 
-  <% content_for :title, "Categories" %>
-
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Categories</h1>
-    <%= link_to "New category", new_category_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Categories</h1>
+    <%= link_to "New category", new_category_path, class: "btn btn-primary" %>
   </div>
 
-  <div id="categories" class="min-w-full">
-    <% @categories.each do |category| %>
-      <%= render category %>
-      <p>
-        <%= link_to "Show this category", category, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-      </p>
-    <% end %>
+  <div class="overflow-x-auto">
+    <table class="table table-zebra w-full bg-base-100 border border-base-300">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @categories.each do |category| %>
+          <tr id="<%= dom_id category %>">
+            <td><%= link_to category.name, category %></td>
+            <td class="space-x-2">
+              <%= link_to "Edit", edit_category_path(category), class: "btn btn-ghost btn-xs" %>
+              <%= link_to "Destroy", category, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-error btn-xs" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

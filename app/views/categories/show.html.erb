@@ -1,12 +1,21 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
+<div class="container mx-auto px-4 py-8">
+  <% if notice.present? %>
+    <div class="alert alert-success shadow-lg mb-5">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span><%= notice %></span>
+      </div>
+    </div>
+  <% end %>
 
-    <%= render @category %>
+  <div class="prose lg:prose-xl mb-6">
+    <h1 class="text-3xl font-bold">Category Details</h1>
+  </div>
 
-    <%= link_to "Edit this category", edit_category_path(@category), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Back to categories", categories_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  <%= render @category %>
+
+  <div class="mt-6 space-x-2">
+    <%= link_to "Edit this category", edit_category_path(@category), class: "btn btn-secondary" %>
+    <%= link_to "Back to categories", categories_path, class: "btn btn-outline" %>
   </div>
 </div>
