@@ -2,7 +2,7 @@
   <%= render "shopping_cart_items/shopping_cart", shopping_cart: shopping_cart %>
 
   <div class="grid grid-cols-3 lg:grid-cols-9 bg-emerald-300 pt-2">
-    <% Category.all.each do |category| %>
+    <% Category.first(9).each do |category| %>
       <% category_name = category.name.downcase.gsub(" ", "_") %>
       <%= link_to "##{category_name}", class: "font-bold text-xs no-underline" do %>
         <div class="mx-auto text-center w-16">
