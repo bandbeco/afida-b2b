@@ -26,7 +26,7 @@
   </td>
 
   <td>
-    <%= form_with(model: user, url: user_invitation_path, method: :post) do |f| %>
+    <%= form_with(model: user, url: user_invitation_path(params: { user: { user_id: user.id } }), method: :post) do |f| %>
       <% if user.invited? && !user.invitation_accepted? %>
         <%= f.submit "Resend Invitation", class: "btn btn-primary btn-sm" %>
       <% elsif !user.invited? %>
