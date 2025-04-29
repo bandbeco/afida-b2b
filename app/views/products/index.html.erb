@@ -9,37 +9,56 @@
 </div>
 
 <div class="flex justify-between items-center mb-4">
-  <%= form_with url: products_path, method: :get, class: "flex gap-2", data: { controller: "search-form", turbo_frame: "products_list" } do |form| %>
-    <%= form.text_field :query,
-      value: params[:query],
-      placeholder: "Search by name or SKU...",
-      class: "input input-bordered",
-      data: { action: "input->search-form#search" } %>
-  <% end %>
+  <div class="flex gap-2 w-full max-w-2xl">
+    <label class="input">
+      <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <g
+        stroke-linejoin="round"
+        stroke-linecap="round"
+        stroke-width="2.5"
+        fill="none"
+        stroke="currentColor"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </g>
+      </svg>
+      <%= form_with url: products_path, method: :get, data: { controller: "search-form", turbo_frame: "products_list" } do |form| %>
+        <%= form.text_field :query,
+          value: params[:query],
+          placeholder: "name or SKU",
+          class: "input input-bordered w-full focus:outline-none focus:ring-0",
+          type: "search",
+          data: { action: "input->search-form#search" } %>
+      <% end %>
+    </label>
+  </div>
 
-  <%= link_to new_product_path, class: "btn btn-primary gap-2" do %>
-    New product
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-    </svg>
-  <% end %>
+  <div class="flex gap-2">
+    <%= link_to new_product_path, class: "btn btn-primary gap-2" do %>
+      New product
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      </svg>
+    <% end %>
+  </div>
 </div>
 
 <%= turbo_frame_tag "products_list" do %>
   <div class="mt-8 flow-root">
     <div>
-      <div class="inline-block min-w-full align-middle border-2 border-base-300 rounded-lg">
+      <div class="inline-block min-w-full align-middle">
         <div class="overflow-x-auto">
-          <table class="table table-zebra bg-base-100">
-            <thead>
+          <table class="table table-zebra bg-base-300">
+            <thead class="bg-black text-white">
               <tr>
-                <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur"></th>
-                <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur">SKU</th>
-                <th class="sticky top-0 z-10 hidden sm:table-cell bg-base-100 bg-opacity-75 backdrop-blur">Name</th>
-                <th class="sticky top-0 z-10 hidden lg:table-cell bg-base-100 bg-opacity-75 backdrop-blur">Colour</th>
-                <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur">PAC Size</th>
-                <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur">Catalog Price</th>
-                <th class="sticky top-0 z-10 bg-base-100 bg-opacity-75 backdrop-blur"></th>
+                <th class="sticky top-0 z-10 bg-black text-white"></th>
+                <th class="sticky top-0 z-10 bg-black text-white">SKU</th>
+                <th class="sticky top-0 z-10 hidden sm:table-cell bg-black text-white">Name</th>
+                <th class="sticky top-0 z-10 hidden lg:table-cell bg-black text-white">Colour</th>
+                <th class="sticky top-0 z-10 bg-black text-white">PAC Size</th>
+                <th class="sticky top-0 z-10 bg-black text-white">Catalog Price</th>
+                <th class="sticky top-0 z-10 bg-black text-white"></th>
               </tr>
             </thead>
             <tbody>

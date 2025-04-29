@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="search-form"
 export default class extends Controller {
   timeout = null
-  debounceWait = 300 // milliseconds
+  debounceWait = 100 // milliseconds
 
   search() {
     clearTimeout(this.timeout)

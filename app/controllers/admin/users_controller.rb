@@ -3,7 +3,15 @@ class Admin::UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @users = User.all.sort_by(&:first_name)
+    @users = User.all
+    if params[:query].present?
+      query = "%#{params[:query]}%"
+      @users = @users.where(
+        "first_name ILIKE :query OR last_name ILIKE :query OR company ILIKE :query OR email ILIKE :query",
+        query: query
+      )
+    end
+    @users = @users.sort_by(&:first_name)
   end
 
   # GET /users/1 or /users/1.json

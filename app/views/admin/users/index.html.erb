@@ -8,37 +8,68 @@
   </div>
 </div>
 
-<%= link_to new_admin_user_path, class: "btn btn-primary gap-2" do %>
-  Create new user
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-  </svg>
-<% end %>
+<div class="flex justify-between items-center mb-4">
+  <div class="flex gap-2 w-full max-w-2xl">
+    <label class="input">
+      <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <g
+          stroke-linejoin="round"
+          stroke-linecap="round"
+          stroke-width="2.5"
+          fill="none"
+          stroke="currentColor"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </g>
+      </svg>
+      <%= form_with url: admin_users_path, method: :get, data: { controller: "search-form", turbo_frame: "users_list" } do |form| %>
+        <%= form.text_field :query,
+          value: params[:query],
+          placeholder: "name, company or email",
+          type: "search",
+          class: "input input-bordered w-full focus:outline-none focus:ring-0",
+          data: { action: "input->search-form#search" } %>
+      <% end %>
+    </label>
+  </div>
 
-<div class="card bg-base-100 shadow-xl mt-4">
-  <div class="card-body p-0">
-    <div class="overflow-x-auto">
-      <table class="table table-zebra">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Company</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>
-              <span class="sr-only">Invite</span>
-            </th>
-            <th>
-              <span class="sr-only">Update price list</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @users.each do |user| %>
-            <%= render user %>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+  <div class="flex gap-2">
+    <%= link_to new_admin_user_path, class: "btn btn-primary gap-2" do %>
+      Create new user
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      </svg>
+    <% end %>
   </div>
 </div>
+
+<%= turbo_frame_tag "users_list" do %>
+  <div class="card bg-base-100 shadow-xl mt-4">
+    <div class="card-body p-0">
+      <div class="overflow-x-auto">
+        <table class="table table-zebra">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Company</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>
+                <span class="sr-only">Invite</span>
+              </th>
+              <th>
+                <span class="sr-only">Update price list</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
+              <%= render user %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>
