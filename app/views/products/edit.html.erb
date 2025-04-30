@@ -1,5 +1,6 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editing SKU <%= @product.sku %></h1>
-
-  <%= render "form", product: @product %>
+<div class="card w-full md:w-2/3 bg-base-100 shadow-xl mx-auto">
+  <div class="card-body">
+    <h2 class="card-title text-2xl">Editing SKU <%= @product.sku %></h2>
+    <%= render "form", product: @product %>
+  </div>
 </div>

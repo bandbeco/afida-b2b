@@ -1,35 +1,39 @@
-<div class="bg-black text-white italic font-extrabold grid grid-cols-2 justify-between text-3xl font-impact rounded border-black border-2 p-4 my-4">
-  <div>
-    <h1>
-      <%= @product.name&.titleize %>
-    </h1>
-    <p class="py-2 text-base not-italic font-mono"><%= @product.sku %></p>
-  </div>
-
-  <div class="text-right flex flex-col space-y-2 items-end">
-    <%= link_to "Edit", edit_product_path(@product), class: "btn-primary" %>
-  </div>
-</div>
-
-
-<div class="flex flex-row bg-white rounded">
-  <div class="w-1/2">
-    <% if @product.picture.attached? %>
-      <%= image_tag @product.picture, class: "h-full w-full object-center group-hover:opacity-75" %>
-    <% end %>
-  </div>
-
-  <div class="text-xl flex flex-col justify-center font-mono">
-    <div>
-      Price: <%= currency_for(@product.price) %>
+<div class="card lg:card-side bg-base-100 shadow-xl my-4">
+  <% if @product.picture.attached? %>
+    <figure class="lg:w-1/2">
+      <%= image_tag @product.picture, class: "object-cover h-full w-full" %>
+    </figure>
+  <% end %>
+  <div class="card-body <%= 'lg:w-1/2' if @product.picture.attached? %>">
+    <div class="flex justify-between items-start">
+      <div>
+        <h2 class="card-title text-2xl"><%= @product.name&.titleize %></h2>
+        <p class="text-sm text-base-content text-opacity-60"><%= @product.sku %></p>
+      </div>
+      <div class="card-actions justify-end">
+        <%= link_to "Edit", edit_product_path(@product), class: "btn btn-primary" %>
+      </div>
     </div>
 
-    <div>
-      PAC Size: <%= @product.pac_size %>
-    </div>
-
-    <div>
-      Colour: <%= @product.colour&.titleize %>
+    <div class="mt-4 space-y-2">
+      <div class="stat p-0">
+        <div class="stat-title">Price</div>
+        <div class="stat-value text-lg"><%= currency_for(@product.price) %></div>
+      </div>
+      <div class="stat p-0">
+        <div class="stat-title">PAC Size</div>
+        <div class="stat-value text-lg"><%= @product.pac_size %></div>
+      </div>
+      <div class="stat p-0">
+        <div class="stat-title">Colour</div>
+        <div class="stat-value text-lg"><%= @product.colour&.titleize %></div>
+      </div>
+      <% if @product.description.present? %>
+        <div class="pt-4">
+          <h3 class="font-semibold mb-1">Description</h3>
+          <p class="text-base-content text-opacity-80"><%= @product.description %></p>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

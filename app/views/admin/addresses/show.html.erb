@@ -1,41 +1,47 @@
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-2xl font-semibold text-gray-800 mb-6">Address Details for <%= @user.email %></h1>
-
-  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-      <div class="sm:col-span-1">
-        <dt class="text-sm font-medium text-gray-500">Company</dt>
-        <dd class="mt-1 text-sm text-gray-900"><%= @address.company %></dd>
-      </div>
-      <div class="sm:col-span-1">
-        <dt class="text-sm font-medium text-gray-500">Attention</dt>
-        <dd class="mt-1 text-sm text-gray-900"><%= @address.attn.presence || '-' %></dd>
-      </div>
-      <div class="sm:col-span-1">
-        <dt class="text-sm font-medium text-gray-500">Building Name</dt>
-        <dd class="mt-1 text-sm text-gray-900"><%= @address.building_name.presence || '-' %></dd>
-      </div>
-      <div class="sm:col-span-1">
-        <dt class="text-sm font-medium text-gray-500">Street & Number</dt>
-        <dd class="mt-1 text-sm text-gray-900"><%= @address.street_number_and_name %></dd>
-      </div>
-      <div class="sm:col-span-1">
-        <dt class="text-sm font-medium text-gray-500">Town/City</dt>
-        <dd class="mt-1 text-sm text-gray-900"><%= @address.post_town %></dd>
-      </div>
-      <div class="sm:col-span-1">
-        <dt class="text-sm font-medium text-gray-500">Postcode</dt>
-        <dd class="mt-1 text-sm text-gray-900"><%= @address.postcode %></dd>
-      </div>
-      <div class="sm:col-span-2">
-        <dt class="text-sm font-medium text-gray-500">Additional Notes</dt>
-        <dd class="mt-1 text-sm text-gray-900"><%= @address.additional_notes.presence || '-' %></dd>
-      </div>
-    </dl>
+<div class="card bg-neutral text-neutral-content my-4">
+  <div class="card-body p-4">
+    <h1 class="card-title text-3xl font-bold italic uppercase">
+      Address Details for <%= @user.formatted_name %>
+    </h1>
   </div>
+</div>
 
-  <div class="mt-6 flex space-x-3">
-    <%= link_to 'Edit', edit_admin_user_address_path(@user, @address), class: "btn btn-primary" %>
-    <%= link_to 'Back to Addresses', admin_user_addresses_path(@user), class: "btn btn-ghost" %>
+<div class="card w-full md:w-2/3 bg-base-100 shadow-xl mx-auto">
+  <div class="card-body">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="stat p-0">
+        <div class="stat-title">Company</div>
+        <div class="stat-value text-lg"><%= @address.company %></div>
+      </div>
+      <div class="stat p-0">
+        <div class="stat-title">Attention</div>
+        <div class="stat-value text-lg"><%= @address.attn.presence || '-' %></div>
+      </div>
+      <div class="stat p-0">
+        <div class="stat-title">Building Name</div>
+        <div class="stat-value text-lg"><%= @address.building_name.presence || '-' %></div>
+      </div>
+      <div class="stat p-0">
+        <div class="stat-title">Street & Number</div>
+        <div class="stat-value text-lg"><%= @address.street_number_and_name %></div>
+      </div>
+      <div class="stat p-0">
+        <div class="stat-title">Town/City</div>
+        <div class="stat-value text-lg"><%= @address.post_town %></div>
+      </div>
+      <div class="stat p-0">
+        <div class="stat-title">Postcode</div>
+        <div class="stat-value text-lg"><%= @address.postcode %></div>
+      </div>
+      <div class="md:col-span-2 stat p-0">
+        <div class="stat-title">Additional Notes</div>
+        <div class="stat-value text-lg whitespace-pre-wrap"><%= @address.additional_notes.presence || '-' %></div>
+      </div>
+    </div>
+
+    <div class="card-actions justify-end mt-6 gap-2">
+      <%= link_to 'Edit', edit_admin_user_address_path(@user, @address), class: "btn btn-primary" %>
+      <%= link_to 'Back to Addresses', admin_user_addresses_path(@user), class: "btn btn-ghost" %>
+    </div>
   </div>
 </div>
