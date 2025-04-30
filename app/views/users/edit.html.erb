@@ -3,39 +3,49 @@
 
   <%= form_with(model: @user, class: "contents") do |form| %>
     <% if @user.errors.any? %>
-      <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-        <ul>
-          <% @user.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
+      <div id="error_explanation" role="alert" class="alert alert-error mt-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2 2m2-2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <div>
+          <h3 class="font-bold"><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h3>
+          <ul class="list-disc list-inside">
+            <% @user.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
       </div>
     <% end %>
 
-    <div class="my-5">
-      <%= form.label :first_name %>
-      <%= form.text_field :first_name, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <div class="form-control w-full my-5">
+      <%= form.label :first_name, class: "label" do %>
+        <span class="label-text">First name</span>
+      <% end %>
+      <%= form.text_field :first_name, class: "input input-bordered w-full" %>
     </div>
 
-    <div class="my-5">
-      <%= form.label :last_name %>
-      <%= form.text_field :last_name, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <div class="form-control w-full my-5">
+      <%= form.label :last_name, class: "label" do %>
+        <span class="label-text">Last name</span>
+      <% end %>
+      <%= form.text_field :last_name, class: "input input-bordered w-full" %>
     </div>
 
-    <div class="my-5">
-      <%= form.label :company %>
-      <%= form.text_field :company, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <div class="form-control w-full my-5">
+      <%= form.label :company, class: "label" do %>
+        <span class="label-text">Company</span>
+      <% end %>
+      <%= form.text_field :company, class: "input input-bordered w-full" %>
     </div>
 
-    <div class="my-5">
-      <%= form.label :email %>
-      <%= form.text_field :email, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <div class="form-control w-full my-5">
+      <%= form.label :email, class: "label" do %>
+        <span class="label-text">Email</span>
+      <% end %>
+      <%= form.email_field :email, class: "input input-bordered w-full" %>
     </div>
 
-    <div class="inline">
-      <%= form.submit "Update", class: "btn-primary" %>
+    <div class="mt-5">
+      <%= form.submit "Update", class: "btn btn-primary" %>
     </div>
   <% end %>
 </div>
