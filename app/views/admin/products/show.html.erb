@@ -19,21 +19,23 @@
       <table class="table table-zebra w-full border-2 border-black">
         <thead class="bg-black text-white">
           <tr>
-            <th>
-              <div class="flex items-center gap-2">
-                <input type="checkbox" id="select-all" class="checkbox bg-white checked:bg-white" data-action="change->visibility#toggleAll" />
-                <label for="select-all" class="cursor-pointer text-white">Select All</label>
-              </div>
-            </th>
             <th>User</th>
             <th>Company</th>
             <th>Custom Price</th>
-            <th>Current Status</th>
+            <th>
+              <div class="flex items-center gap-2">
+                <input type="checkbox" id="select-all" class="checkbox bg-white checked:bg-white" data-action="change->visibility#toggleAll" />
+                <label for="select-all" class="cursor-pointer text-white">Hidden</label>
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
           <% @price_list_items.each do |item| %>
             <tr>
+              <td><%= link_to item.user.formatted_name, edit_admin_user_path(item.user) %></td>
+              <td><%= item.user.company %></td>
+              <td><%= currency_for(item.price) %></td>
               <td>
                 <%= check_box_tag "visible_user_ids[]", item.user.id, !item.hidden?,
                     id: "visibility_checkbox_#{item.id}",
@@ -44,25 +46,14 @@
                     }
                 %>
               </td>
-              <td><%= item.user.formatted_name %></td>
-              <td><%= item.user.company %></td>
-              <td><%= currency_for(item.price) %></td>
-              <td>
-                <% if item.hidden? %>
-                  <span class="badge badge-error">Hidden</span>
-                <% else %>
-                  <span class="badge badge-success">Visible</span>
-                <% end %>
-              </td>
             </tr>
           <% end %>
         </tbody>
       </table>
     </div>
 
-    <div class="mt-4">
-      <%= form.submit "Save",
-                     class: "btn btn-primary" %>
+    <div class="mt-4 flex justify-end">
+      <%= form.submit "Save", class: "btn btn-primary" %>
     </div>
   <% end %>
 </div>
