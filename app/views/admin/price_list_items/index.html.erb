@@ -1,4 +1,14 @@
-<%= form_with(model: [:admin, @user], data: { turbo: false }) do |form| %>
+<% content_for :title, "Products" %>
+
+<div class="card bg-neutral text-neutral-content my-4">
+  <div class="card-body p-4">
+    <h1 class="card-title text-3xl font-bold italic uppercase">
+      <%= @user.formatted_name %>'s Price List
+    </h1>
+  </div>
+</div>
+
+<%= form_with(model: [:admin, @user], data: { turbo: false }, html: { autocomplete: "off" }) do |form| %>
   <% if @user.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
       <h2>
@@ -13,15 +23,20 @@
     </div>
   <% end %>
 
-  <div class="overflow-x-auto">
+  <div class="overflow-x-auto" data-controller="visibility">
     <table class="table table-zebra w-full border-2 border-black">
       <thead class="bg-black text-white">
         <tr>
           <th scope="col" class="px-6 py-3 text-left w-64">Name</th>
-          <th scope="col" class="px-6 py-3 text-left">Category</th>
-          <th scope="col" class="px-6 py-3 text-left">List Price</th>
-          <th scope="col" class="px-6 py-3 text-left">Customer Price</th>
-          <th scope="col" class="px-6 py-3 text-left">Hidden from customer</th>
+          <th scope="col" class="px-6 py-3 text-left w-32">Category</th>
+          <th scope="col" class="px-6 py-3 text-left w-32">List Price</th>
+          <th scope="col" class="px-6 py-3 text-left w-32">Customer Price</th>
+          <th scope="col" class="px-6 py-3 text-left w-16">
+            <div class="flex items-center gap-2">
+              <input type="checkbox" id="select-all" class="checkbox bg-white checked:bg-white" data-action="change->visibility#toggleAll" />
+              <label for="select-all" class="cursor-pointer text-white">Hidden</label>
+            </div>
+          </th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
@@ -29,25 +44,36 @@
           <%= form.fields_for :price_list_items, price_list_item do |f| %>
             <tr>
               <td class="px-6 py-4 text-sm font-medium text-gray-900 break-words w-64">
-                <%= f.object.product.name %> (<%= f.object.product.pac_size %> pcs)
+                <%= link_to f.object.product.name, admin_product_path(f.object.product) %>
+                <br /><span class="text-xs text-gray-500"><%= f.object.product.pac_size %> pcs</span>
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+              <td class="px-6 py-4 text-sm font-medium text-gray-900 w-32 break-words">
                 <%= f.object.product.category.name %>
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-32">
                 <%= currency_for(f.object.product.price) %>
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-64">
                 <div class="relative rounded-md shadow-sm">
                   <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                     <span class="text-gray-500 sm:text-sm">&pound;</span>
                   </div>
-                  <%= f.text_field :price, min: 0, value: number_with_precision(f.object.price, precision: 2), class: "block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+                  <%= f.text_field :price, min: 0, value: number_with_precision(f.object.price, precision: 2), class: "block w-full rounded-md border-0 py-1.5 pl-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
                 </div>
               </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-16">
                 <div class="flex items-center">
-                  <%= f.check_box :hidden, checked: f.object.hidden?, class: "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" %>
+                  <%= f.check_box :hidden,
+                      { 
+                        checked: f.object.hidden?,
+                        class: "checkbox",
+                        data: {
+                          visibility_target: "checkbox",
+                          action: "change->visibility#updateSelectAll",
+                          original_state: f.object.hidden?
+                        }
+                      }
+                  %>
                 </div>
               </td>
             </tr>
@@ -55,9 +81,11 @@
         <% end %>
       </tbody>
     </table>
-  </div>
-
-  <div class="mt-4">
-    <%= form.submit "Save Changes", class: "btn btn-primary" %>
+    <div class="mt-4 flex justify-end">
+      <%= form.submit "Save Changes",
+                     class: "btn btn-disabled opacity-50 cursor-not-allowed",
+                     data: { visibility_target: "saveButton" },
+                     disabled: true %>
+    </div>
   </div>
 <% end %>
