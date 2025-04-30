@@ -4,10 +4,9 @@ class Admin::PriceListItemsController < ApplicationController
   # GET /price_list_items or /price_list_items.json
   def index
     @user = User.find(params[:user_id])
-    @categorized_price_list_items = @user
+    @price_list_items = @user
       .price_list_items
       .includes(:product)
-      .group_by(&:category)
   end
 
   # GET /price_list_items/1 or /price_list_items/1.json
