@@ -68,6 +68,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
+        capture_order_created(@order) if Rails.env.production?
         save_addresses_from_order(@order)
 
         OrderMailer
@@ -200,5 +201,38 @@ class OrdersController < ApplicationController
         unit_price: item.price
       )
     end
+  end
+
+  private
+
+  def capture_order_created(order)
+    $posthog.capture({
+      distinct_id: current_user.id,
+      event: "order_created",
+      properties: {
+        "user_name" => current_user.formatted_name,
+        "user_email" => current_user.email,
+        "order_id" => @order.id,
+        "total_amount" => @order.total_amount,
+        "subtotal_amount" => @order.subtotal_amount,
+        "payment_method" => @order.payment_method,
+        "shipping_address" => @order.shipping_address,
+        "billing_address" => @order.billing_address,
+        "shipping_amount" => @order.shipping_amount,
+        "vat_rate" => @order.vat_rate,
+        "vat_amount" => @order.vat_amount,
+        "invoice_number" => @order.invoice_number,
+        "order_items" => @order.order_items.map do |item|
+          {
+            "name" => item.product.name,
+            "id" => item.product_id,
+            "sku" => item.product.sku,
+            "quantity" => item.quantity,
+            "unit_price" => item.unit_price,
+            "total_price" => item.total_price
+          }
+        end
+      }
+    })
   end
 end
