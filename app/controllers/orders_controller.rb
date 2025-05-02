@@ -68,7 +68,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
-        capture_order_created(@order) if Rails.env.production?
+        capture_order_created(@order)
         save_addresses_from_order(@order)
 
         OrderMailer
@@ -207,7 +207,7 @@ class OrdersController < ApplicationController
 
   def capture_order_created(order)
     $posthog.capture({
-      distinct_id: current_user.id,
+      distinct_id: current_user.email,
       event: "order_created",
       properties: {
         "user_name" => current_user.formatted_name,

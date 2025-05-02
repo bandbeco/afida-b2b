@@ -26,6 +26,7 @@ class ShoppingCartItemsController < ApplicationController
 
     respond_to do |format|
       if @shopping_cart_item.save
+        capture_add_to_cart
         format.turbo_stream
         format.html { redirect_to shopping_cart_items_url }
         format.json { render json: @shopping_cart_item }
@@ -41,6 +42,7 @@ class ShoppingCartItemsController < ApplicationController
 
     respond_to do |format|
       if @shopping_cart_item.save
+        capture_remove_from_cart
         format.turbo_stream
         format.html { redirect_to shopping_cart_items_url }
         format.json { render json: @shopping_cart_item }
@@ -99,13 +101,36 @@ class ShoppingCartItemsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_shopping_cart_item
-      @shopping_cart_item = current_user.shopping_cart_items.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def shopping_cart_item_params
-      params.require(:shopping_cart_item).permit(:shopping_cart_id, :product_id, :quantity)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_shopping_cart_item
+    @shopping_cart_item = current_user.shopping_cart_items.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def shopping_cart_item_params
+    params.require(:shopping_cart_item).permit(:shopping_cart_id, :product_id, :quantity)
+  end
+
+  def capture_add_to_cart
+    $posthog.capture({
+      distinct_id: current_user.email,
+      event: "product_added_to_cart",
+      properties: {
+        "product_sku" => @shopping_cart_item.product.sku,
+        "product_name" => @shopping_cart_item.product.name,
+      }
+    })
+  end
+
+  def capture_remove_from_cart
+    $posthog.capture({
+      distinct_id: current_user.email,
+      event: "product_removed_from_cart",
+      properties: {
+        "product_sku" => @shopping_cart_item.product.sku,
+        "product_name" => @shopping_cart_item.product.name,
+      }
+    })
+  end
 end
