@@ -137,9 +137,11 @@ class OrdersController < ApplicationController
         # Shipping fields
         :shipping_company, :shipping_attn, :shipping_building_name, :shipping_street_number_and_name,
         :shipping_post_town, :shipping_postcode, :shipping_additional_notes,
+        :shipping_address,
         # Billing fields
         :billing_company, :billing_attn, :billing_building_name, :billing_street_number_and_name,
         :billing_post_town, :billing_postcode, :billing_additional_notes,
+        :billing_address,
         # Existing fields (keep total_amount? checkout service might handle this)
         :total_amount,
         :save_shipping_address,
