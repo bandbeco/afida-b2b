@@ -6,7 +6,8 @@ class Product < ApplicationRecord
 
   has_many :orders, through: :order_items 
   has_many :order_items, dependent: :destroy
-  has_many :price_list_items
+  has_many :price_list_items, dependent: :destroy
+  has_many :shopping_cart_items, dependent: :destroy
 
   has_one_attached :picture
 
