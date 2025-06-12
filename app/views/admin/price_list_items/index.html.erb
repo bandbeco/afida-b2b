@@ -45,7 +45,10 @@
             <tr>
               <td class="px-6 py-4 text-sm font-medium text-gray-900 break-words w-64">
                 <%= link_to f.object.product.name, admin_product_path(f.object.product) %>
-                <br /><span class="text-xs text-gray-500"><%= f.object.product.pac_size %> pcs</span>
+                <br />
+                <span class="text-xs text-gray-500"><%= f.object.product.colour&.titleize %></span>
+                <br />
+                <span class="text-xs text-gray-500"><%= f.object.product.pac_size %> pieces</span>
               </td>
               <td class="px-6 py-4 text-sm font-medium text-gray-900 w-32 break-words">
                 <%= f.object.product.category.name %>
