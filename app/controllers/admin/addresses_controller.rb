@@ -22,6 +22,11 @@ module Admin
       @address = @user.addresses.build
     end
 
+    # GET /admin/users/:user_id/addresses/:id/edit
+    def edit
+      # @address is set by before_action
+    end
+
     # POST /admin/users/:user_id/addresses
     def create
       @address = @user.addresses.build(address_params)
@@ -29,9 +34,7 @@ module Admin
       respond_to do |format|
         if @address.save
           # Set default addresses if this is the user's first address
-          if @user.addresses.count == 1
-            @user.update(default_shipping_address: @address, default_billing_address: @address)
-          end
+          @user.update(default_shipping_address: @address, default_billing_address: @address) if @user.addresses.count == 1
           format.html { redirect_to admin_user_addresses_path(@user), notice: 'Address was successfully created.' }
           format.json { render :show, status: :created, location: admin_user_address_path(@user, @address) }
         else
@@ -39,11 +42,6 @@ module Admin
           format.json { render json: @address.errors, status: :unprocessable_entity }
         end
       end
-    end
-
-    # GET /admin/users/:user_id/addresses/:id/edit
-    def edit
-      # @address is set by before_action
     end
 
     # PATCH/PUT /admin/users/:user_id/addresses/:id
@@ -93,14 +91,14 @@ module Admin
 
     # Use the same permitted parameters as the regular controller
     def address_params
-      params.require(:address).permit(
-        :company,
-        :attn,
-        :building_name,
-        :street_number_and_name,
-        :post_town,
-        :postcode,
-        :additional_notes
+      params.expect(
+        address: %i[company
+                    attn
+                    building_name
+                    street_number_and_name
+                    post_town
+                    postcode
+                    additional_notes]
       )
     end
   end

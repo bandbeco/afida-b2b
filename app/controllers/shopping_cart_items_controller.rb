@@ -113,7 +113,7 @@ class ShoppingCartItemsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def shopping_cart_item_params
-    params.require(:shopping_cart_item).permit(:shopping_cart_id, :product_id, :quantity)
+    params.expect(shopping_cart_item: %i[shopping_cart_id product_id quantity])
   end
 
   def capture_add_to_cart

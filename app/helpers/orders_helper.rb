@@ -19,7 +19,7 @@ module OrdersHelper
     pdf.font_size 10
     pdf.stroke_color 'e6e6e6'
 
-    pdf.image Rails.root.join('app', 'assets', 'images', 'logo.png').to_s, width: 50
+    pdf.image Rails.root.join('app/assets/images/logo.png').to_s, width: 50
     pdf.move_down 20
 
     pdf.text "Order ##{@order.invoice_number}", size: 20, style: :bold

@@ -34,7 +34,7 @@ module Admin
 
       respond_to do |format|
         if @user.save
-          Product.all.each { |p| @user.price_list_items.create!(product: p, price: p.price) }
+          Product.find_each { |p| @user.price_list_items.create!(product: p, price: p.price) }
 
           format.html { redirect_to admin_users_url, notice: 'User was successfully created.' }
           format.json { render :show, status: :created, location: admin_user_url(@user) }
@@ -82,18 +82,17 @@ module Admin
     # Only allow a list of trusted parameters through.
     def user_params
       params
-        .require(:user)
-        .permit(
-          :first_name,
-          :last_name,
-          :company,
-          :email,
-          :role,
-          price_list_items_attributes: %i[
-            id
-            price
-            hidden
-          ]
+        .expect(
+          user: [:first_name,
+                 :last_name,
+                 :company,
+                 :email,
+                 :role,
+                 { price_list_items_attributes: %i[
+                   id
+                   price
+                   hidden
+                 ] }]
         )
     end
   end

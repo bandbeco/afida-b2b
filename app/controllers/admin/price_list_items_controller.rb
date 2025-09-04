@@ -42,7 +42,7 @@ module Admin
     end
 
     def price_list_item_params
-      params.require(:price_list_item).permit(:user_id, :product_id, :price, :hidden)
+      params.expect(price_list_item: %i[user_id product_id price hidden])
     end
   end
 end

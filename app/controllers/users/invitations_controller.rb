@@ -12,7 +12,7 @@ module Users
     protected
 
     def invitation_params
-      params.require(:user).permit(:user_id)
+      params.expect(user: [:user_id])
     end
   end
 end

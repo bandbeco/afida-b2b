@@ -42,6 +42,6 @@ class PriceListItemsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def price_list_item_params
-    params.require(:price_list_item).permit(:user_id, :product_id, :price)
+    params.expect(price_list_item: %i[user_id product_id price])
   end
 end

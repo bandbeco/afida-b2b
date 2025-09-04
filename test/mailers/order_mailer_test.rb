@@ -82,6 +82,6 @@ class OrderMailerTest < ActionMailer::TestCase
     email_body = email.deliver_now.parts.find { |p| p.content_type.match(/html/) }.body.to_s
 
     assert_includes email_body, '<strong>Colour:</strong>'
-    refute_includes email_body, 'nil'
+    assert_not_includes email_body, 'nil'
   end
 end

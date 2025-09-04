@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
   # GET /orders or /orders.json
   def index
     @orders = if current_user.admin?
-                Order.all.order(created_at: :desc)
+                Order.order(created_at: :desc)
               else
                 current_user.orders.order(created_at: :desc)
               end
@@ -126,35 +126,34 @@ class OrdersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def order_params
     params
-      .require(:order)
-      .permit(
-        :status,
-        :payment_method,
-        # New form fields
-        :selected_shipping_address_id,
-        :selected_billing_address_id,
-        :use_shipping_for_billing,
-        # Shipping fields
-        :shipping_company, :shipping_attn, :shipping_building_name, :shipping_street_number_and_name,
-        :shipping_post_town, :shipping_postcode, :shipping_additional_notes,
-        :shipping_address,
-        # Billing fields
-        :billing_company, :billing_attn, :billing_building_name, :billing_street_number_and_name,
-        :billing_post_town, :billing_postcode, :billing_additional_notes,
-        :billing_address,
-        # Existing fields (keep total_amount? checkout service might handle this)
-        :total_amount,
-        :save_shipping_address,
-        :save_billing_address,
-        # Keep order_items_attributes
-        order_items_attributes: %i[
-          id
-          order_id
-          product_id
-          quantity
-          unit_price
-          _destroy
-        ]
+      .expect(
+        order: [:status,
+                :payment_method,
+                # New form fields
+                :selected_shipping_address_id,
+                :selected_billing_address_id,
+                :use_shipping_for_billing,
+                # Shipping fields
+                :shipping_company, :shipping_attn, :shipping_building_name, :shipping_street_number_and_name,
+                :shipping_post_town, :shipping_postcode, :shipping_additional_notes,
+                :shipping_address,
+                # Billing fields
+                :billing_company, :billing_attn, :billing_building_name, :billing_street_number_and_name,
+                :billing_post_town, :billing_postcode, :billing_additional_notes,
+                :billing_address,
+                # Existing fields (keep total_amount? checkout service might handle this)
+                :total_amount,
+                :save_shipping_address,
+                :save_billing_address,
+                # Keep order_items_attributes
+                { order_items_attributes: %i[
+                  id
+                  order_id
+                  product_id
+                  quantity
+                  unit_price
+                  _destroy
+                ] }]
       )
   end
 

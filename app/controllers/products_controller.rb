@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
   # GET /products or /products.json
   def index
     @products = Product.all
-    return unless params[:query].present?
+    return if params[:query].blank?
 
     @products = @products.where(
       'name ILIKE :query OR sku ILIKE :query',
@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
         ActiveRecord::Base.transaction do
           @product.save!
 
-          User.all.each do |user|
+          User.find_each do |user|
             user.price_list_items.create!(product: @product, price: @product.price)
           end
         end
@@ -84,21 +84,20 @@ class ProductsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def product_params
     params
-      .require(:product)
-      .permit(
-        :sku,
-        :name,
-        :picture,
-        :description,
-        :colour,
-        :pac_size,
-        :price,
-        :width_in_mm,
-        :height_in_mm,
-        :depth_in_mm,
-        :diameter_in_mm,
-        :volume_in_ml,
-        :category_id
+      .expect(
+        product: %i[sku
+                    name
+                    picture
+                    description
+                    colour
+                    pac_size
+                    price
+                    width_in_mm
+                    height_in_mm
+                    depth_in_mm
+                    diameter_in_mm
+                    volume_in_ml
+                    category_id]
       )
   end
 end

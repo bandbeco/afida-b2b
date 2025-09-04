@@ -4,7 +4,10 @@ class Order < ApplicationRecord
   # For form handling
   attr_accessor :selected_shipping_address_id, :selected_billing_address_id, :use_shipping_for_billing
   attr_accessor :shipping_company, :shipping_attn, :shipping_building_name, :shipping_street_number_and_name,
-                :shipping_post_town, :shipping_postcode, :shipping_additional_notes, :billing_company, :billing_attn, :billing_building_name, :billing_street_number_and_name, :billing_post_town, :billing_postcode, :billing_additional_notes, :save_shipping_address, :save_billing_address
+                :shipping_post_town, :shipping_postcode, :shipping_additional_notes,
+                :billing_company, :billing_attn, :billing_building_name, :billing_street_number_and_name,
+                :billing_post_town, :billing_postcode, :billing_additional_notes,
+                :save_shipping_address, :save_billing_address
 
   belongs_to :user
 
@@ -12,14 +15,14 @@ class Order < ApplicationRecord
   has_many :products, through: :order_items
 
   validates_associated :order_items
-  validates_presence_of :order_items
+  validates :order_items, presence: true
   validates :shipping_address, :billing_address, presence: true
 
   validates :subtotal_amount, presence: true, numericality: { greater_than: 0 }
   validates :payment_method, :status, presence: true
 
-  enum :status, %i[pending processing shipped delivered canceled]
-  enum :payment_method, %i[invoice bank_transfer credit_card]
+  enum :status, { pending: 0, processing: 1, shipped: 2, delivered: 3, canceled: 4 }
+  enum :payment_method, { invoice: 0, bank_transfer: 1, credit_card: 2 }
 
   scope :revenue_in_range, ->(range) { where(created_at: range).sum(:total_amount) }
   scope :count_in_range, ->(range) { where(created_at: range).count }

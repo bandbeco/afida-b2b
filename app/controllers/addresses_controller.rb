@@ -14,14 +14,14 @@ class AddressesController < ApplicationController
     @address = current_user.addresses.build
   end
 
+  def edit; end
+
   def create
     @address = current_user.addresses.build(address_params)
 
     respond_to do |format|
       if @address.save
-        if current_user.addresses.count == 1
-          current_user.update(default_shipping_address: @address, default_billing_address: @address)
-        end
+        current_user.update(default_shipping_address: @address, default_billing_address: @address) if current_user.addresses.count == 1
         format.html { redirect_to addresses_url, notice: 'Address was successfully created.' }
         format.json { render :show, status: :created, location: @address }
       else
@@ -30,8 +30,6 @@ class AddressesController < ApplicationController
       end
     end
   end
-
-  def edit; end
 
   def update
     respond_to do |format|
@@ -81,14 +79,14 @@ class AddressesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def address_params
-    params.require(:address).permit(
-      :company,
-      :attn,
-      :building_name,
-      :street_number_and_name,
-      :post_town,
-      :postcode,
-      :additional_notes
+    params.expect(
+      address: %i[company
+                  attn
+                  building_name
+                  street_number_and_name
+                  post_town
+                  postcode
+                  additional_notes]
     )
   end
 end

@@ -4,7 +4,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    return unless user.present?
+    return if user.blank?
 
     can :read, Order, user: user
     can :read, PriceListItem, user: user

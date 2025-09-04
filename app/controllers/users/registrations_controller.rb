@@ -13,7 +13,7 @@ module Users
     # POST /resource
     def create
       super do |user|
-        Product.all.each do |product|
+        Product.find_each do |product|
           user.price_list_items.create!(product: product, price: 1.00)
         end
       end

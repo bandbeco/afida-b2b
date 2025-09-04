@@ -21,7 +21,7 @@ kraft_food_containers_category = Category.find_or_create_by!(name: 'Kraft Food C
 takeaway_extras_category = Category.find_or_create_by!(name: 'Takeaway Extras')
 ice_cream_cups_category = Category.find_or_create_by!(name: 'Ice Cream Cups')
 
-straws = YAML.load_file(Rails.root.join('db', 'straws.yml'))
+straws = YAML.load_file(Rails.root.join('db/straws.yml'))
 
 straws.each do |product|
   p = Product.find_or_initialize_by(product)
@@ -29,7 +29,7 @@ straws.each do |product|
   p.save!
 end
 
-napkins = YAML.load_file(Rails.root.join('db', 'napkins.yml'))
+napkins = YAML.load_file(Rails.root.join('db/napkins.yml'))
 
 napkins.each do |product|
   p = Product.find_or_initialize_by(product)
@@ -37,7 +37,7 @@ napkins.each do |product|
   p.save!
 end
 
-hot_cups = YAML.load_file(Rails.root.join('db', 'hot_cups.yml'))
+hot_cups = YAML.load_file(Rails.root.join('db/hot_cups.yml'))
 
 hot_cups.each do |product|
   p = Product.find_or_initialize_by(product)
@@ -45,7 +45,7 @@ hot_cups.each do |product|
   p.save!
 end
 
-hot_cups_extras = YAML.load_file(Rails.root.join('db', 'hot_cups_extras.yml'))
+hot_cups_extras = YAML.load_file(Rails.root.join('db/hot_cups_extras.yml'))
 
 hot_cups_extras.each do |product|
   p = Product.find_or_initialize_by(product)
@@ -53,7 +53,7 @@ hot_cups_extras.each do |product|
   p.save!
 end
 
-cold_cups = YAML.load_file(Rails.root.join('db', 'cold_cups.yml'))
+cold_cups = YAML.load_file(Rails.root.join('db/cold_cups.yml'))
 
 cold_cups.each do |product|
   p = Product.find_or_initialize_by(product)
@@ -61,7 +61,7 @@ cold_cups.each do |product|
   p.save!
 end
 
-pizza_boxes = YAML.load_file(Rails.root.join('db', 'pizza_boxes.yml'))
+pizza_boxes = YAML.load_file(Rails.root.join('db/pizza_boxes.yml'))
 
 pizza_boxes.each do |product|
   p = Product.find_or_initialize_by(product)
@@ -69,7 +69,7 @@ pizza_boxes.each do |product|
   p.save!
 end
 
-kraft_food_containers = YAML.load_file(Rails.root.join('db', 'kraft_food_containers.yml'))
+kraft_food_containers = YAML.load_file(Rails.root.join('db/kraft_food_containers.yml'))
 
 kraft_food_containers.each do |product|
   p = Product.find_or_initialize_by(product)
@@ -77,7 +77,7 @@ kraft_food_containers.each do |product|
   p.save!
 end
 
-takeaway_extras = YAML.load_file(Rails.root.join('db', 'takeaway_extras.yml'))
+takeaway_extras = YAML.load_file(Rails.root.join('db/takeaway_extras.yml'))
 
 takeaway_extras.each do |product|
   p = Product.find_or_initialize_by(product)
@@ -85,7 +85,7 @@ takeaway_extras.each do |product|
   p.save!
 end
 
-ice_cream_cups = YAML.load_file(Rails.root.join('db', 'ice_cream_cups.yml'))
+ice_cream_cups = YAML.load_file(Rails.root.join('db/ice_cream_cups.yml'))
 
 ice_cream_cups.each do |product|
   p = Product.find_or_initialize_by(product)

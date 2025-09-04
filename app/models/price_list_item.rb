@@ -18,7 +18,5 @@ class PriceListItem < ApplicationRecord
     update!(deleted_at: Time.zone.now)
   end
 
-  def category
-    product.category
-  end
+  delegate :category, to: :product
 end
