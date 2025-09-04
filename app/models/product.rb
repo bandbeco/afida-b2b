@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Product < ApplicationRecord
   default_scope { where(deleted_at: nil) }
   scope :with_deleted, -> { unscope(where: :deleted_at) }
 
   belongs_to :category
 
-  has_many :orders, through: :order_items 
+  has_many :orders, through: :order_items
   has_many :order_items, dependent: :destroy
   has_many :price_list_items, dependent: :destroy
   has_many :shopping_cart_items, dependent: :destroy

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PriceListItem < ApplicationRecord
   default_scope do
     where(deleted_at: nil)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Address < ApplicationRecord
   belongs_to :user
 
@@ -17,6 +19,6 @@ class Address < ApplicationRecord
       post_town,
       postcode
     ]
-    parts.compact_blank.join(", ")
+    parts.compact_blank.join(', ')
   end
 end

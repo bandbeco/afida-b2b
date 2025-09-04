@@ -1,25 +1,24 @@
+# frozen_string_literal: true
+
 class ShoppingCartItemsController < ApplicationController
-  before_action :set_shopping_cart_item, only: %i[ show edit update destroy add_to_cart remove_from_cart ]
+  before_action :set_shopping_cart_item, only: %i[show edit update destroy add_to_cart remove_from_cart]
 
   # GET /shopping_cart_items or /shopping_cart_items.json
   def index
     @order = current_user.orders.build
     @shopping_cart = current_user.shopping_cart || current_user.create_shopping_cart
 
-    @shopping_cart_items = begin
-      current_user.price_list_items.without_hidden.map do |item|
-        @shopping_cart.shopping_cart_items.find_or_create_by(
-          shopping_cart_id: @shopping_cart.id,
-          product_id: item.product_id,
-          unit_price: item.price
-        )
-      end
+    @shopping_cart_items = current_user.price_list_items.without_hidden.map do |item|
+      @shopping_cart.shopping_cart_items.find_or_create_by(
+        shopping_cart_id: @shopping_cart.id,
+        product_id: item.product_id,
+        unit_price: item.price
+      )
     end
   end
 
   # GET /shopping_cart_items/1 or /shopping_cart_items/1.json
-  def show
-  end
+  def show; end
 
   def add_to_cart
     @shopping_cart_item.quantity += 1
@@ -59,8 +58,7 @@ class ShoppingCartItemsController < ApplicationController
   end
 
   # GET /shopping_cart_items/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /shopping_cart_items or /shopping_cart_items.json
   def create
@@ -68,7 +66,10 @@ class ShoppingCartItemsController < ApplicationController
 
     respond_to do |format|
       if @shopping_cart_item.save
-        format.html { redirect_to shopping_cart_item_url(@shopping_cart_item), notice: "Shopping cart item was successfully created." }
+        format.html do
+          redirect_to shopping_cart_item_url(@shopping_cart_item),
+                      notice: 'Shopping cart item was successfully created.'
+        end
         format.json { render :show, status: :created, location: @shopping_cart_item }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -81,7 +82,10 @@ class ShoppingCartItemsController < ApplicationController
   def update
     respond_to do |format|
       if @shopping_cart_item.update(shopping_cart_item_params)
-        format.html { redirect_to shopping_cart_item_url(@shopping_cart_item), notice: "Shopping cart item was successfully updated." }
+        format.html do
+          redirect_to shopping_cart_item_url(@shopping_cart_item),
+                      notice: 'Shopping cart item was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @shopping_cart_item }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -95,7 +99,7 @@ class ShoppingCartItemsController < ApplicationController
     @shopping_cart_item.destroy!
 
     respond_to do |format|
-      format.html { redirect_to shopping_cart_items_url, notice: "Shopping cart item was successfully destroyed." }
+      format.html { redirect_to shopping_cart_items_url, notice: 'Shopping cart item was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -114,23 +118,23 @@ class ShoppingCartItemsController < ApplicationController
 
   def capture_add_to_cart
     $posthog.capture({
-      distinct_id: current_user.email,
-      event: "product_added_to_cart",
-      properties: {
-        "product_sku" => @shopping_cart_item.product.sku,
-        "product_name" => @shopping_cart_item.product.name,
-      }
-    })
+                       distinct_id: current_user.email,
+                       event: 'product_added_to_cart',
+                       properties: {
+                         'product_sku' => @shopping_cart_item.product.sku,
+                         'product_name' => @shopping_cart_item.product.name
+                       }
+                     })
   end
 
   def capture_remove_from_cart
     $posthog.capture({
-      distinct_id: current_user.email,
-      event: "product_removed_from_cart",
-      properties: {
-        "product_sku" => @shopping_cart_item.product.sku,
-        "product_name" => @shopping_cart_item.product.name,
-      }
-    })
+                       distinct_id: current_user.email,
+                       event: 'product_removed_from_cart',
+                       properties: {
+                         'product_sku' => @shopping_cart_item.product.sku,
+                         'product_name' => @shopping_cart_item.product.name
+                       }
+                     })
   end
 end

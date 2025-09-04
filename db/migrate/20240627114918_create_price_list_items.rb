@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatePriceListItems < ActiveRecord::Migration[7.1]
   def change
     create_table :price_list_items do |t|

@@ -1,4 +1,6 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class ShoppingCartItemsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
@@ -14,14 +16,14 @@ class ShoppingCartItemsControllerTest < ActionDispatch::IntegrationTest
     )
   end
 
-  test "should add to cart" do
+  test 'should add to cart' do
     patch add_to_cart_shopping_cart_item_url(@shopping_cart_item, format: :json)
     assert_response :success
     @shopping_cart_item.reload
     assert_equal 2, @shopping_cart_item.quantity
   end
 
-  test "should remove from cart" do
+  test 'should remove from cart' do
     patch remove_from_cart_shopping_cart_item_url(@shopping_cart_item, format: :json)
     assert_response :success
     @shopping_cart_item.reload

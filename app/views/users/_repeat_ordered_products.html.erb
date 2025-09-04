@@ -1,0 +1,14 @@
+
+<% user.products_ordered_more_than_once.each do |product_data| %>
+  <div class="bg-neutral text-neutral-content my-4 rounded-lg">
+      <h2 id="<%= product_data[:product].name.downcase.gsub(" ", "_") %>" class="card-title text-3xl font-bold italic uppercase">
+        <%= product_data[:product].name.upcase %>
+        <%= category.name.upcase %>
+      </h2>
+    </div>
+  </div>
+
+    <%= render partial: "shopping_cart_items/shopping_cart_item", collection: product_data[:product].sort_by { |i| i.product.sku } %>
+    <%= render partial: "shopping_cart_items/shopping_cart_item", collection: shopping_cart_items.sort_by { |i| i.product.sku } %>
+  </div>
+<% end %>

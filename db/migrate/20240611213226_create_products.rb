@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class CreateProducts < ActiveRecord::Migration[7.1]
   def change
-    enable_extension("citext") # case-insensitive text
+    enable_extension('citext') # case-insensitive text
 
     create_table :products do |t|
       t.citext :sku, index: true, null: false # index SKUs on case-insensitive text

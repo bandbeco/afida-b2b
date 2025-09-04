@@ -1,4 +1,6 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
@@ -8,17 +10,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @user = users(:one)
   end
 
-  test "should show user" do
+  test 'should show user' do
     get user_url(@user)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_user_url(@user)
     assert_response :success
   end
 
-  test "should update user" do
+  test 'should update user' do
     params = {
       user: {
         email: @user.email,

@@ -1,20 +1,21 @@
+# frozen_string_literal: true
+
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i[ show edit update destroy ]
+  before_action :set_product, only: %i[show edit update destroy]
 
   # GET /products or /products.json
   def index
     @products = Product.all
-    if params[:query].present?
-      @products = @products.where(
-        "name ILIKE :query OR sku ILIKE :query",
-        query: "%#{params[:query]}%"
-      )
-    end
+    return unless params[:query].present?
+
+    @products = @products.where(
+      'name ILIKE :query OR sku ILIKE :query',
+      query: "%#{params[:query]}%"
+    )
   end
 
   # GET /products/1 or /products/1.json
-  def show
-  end
+  def show; end
 
   # GET /products/new
   def new
@@ -22,8 +23,7 @@ class ProductsController < ApplicationController
   end
 
   # GET /products/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /products or /products.json
   def create
@@ -39,7 +39,7 @@ class ProductsController < ApplicationController
           end
         end
 
-        format.html { redirect_to product_url(@product), notice: "Product was successfully created." }
+        format.html { redirect_to product_url(@product), notice: 'Product was successfully created.' }
         format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -65,18 +65,17 @@ class ProductsController < ApplicationController
   def destroy
     ActiveRecord::Base.transaction do
       @product.soft_delete!
-      @product.price_list_items.each do |price_list_item|
-        price_list_item.soft_delete!
-      end
+      @product.price_list_items.each(&:soft_delete!)
 
       respond_to do |format|
-        format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
+        format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
         format.json { head :no_content }
       end
     end
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_product
     @product = Product.find(params[:id])
@@ -99,7 +98,7 @@ class ProductsController < ApplicationController
         :depth_in_mm,
         :diameter_in_mm,
         :volume_in_ml,
-        :category_id,
+        :category_id
       )
   end
 end

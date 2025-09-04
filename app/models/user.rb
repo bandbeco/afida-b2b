@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -11,13 +13,13 @@ class User < ApplicationRecord
   has_many :orders
   has_many :price_list_items, dependent: :destroy
   has_many :addresses, dependent: :destroy
-  belongs_to :default_shipping_address, class_name: 'Address', foreign_key: 'default_shipping_address_id', optional: true
+  belongs_to :default_shipping_address, class_name: 'Address', foreign_key: 'default_shipping_address_id',
+                                        optional: true
   belongs_to :default_billing_address, class_name: 'Address', foreign_key: 'default_billing_address_id', optional: true
-
 
   accepts_nested_attributes_for :price_list_items, allow_destroy: true
 
-  enum :role, [:customer, :admin]
+  enum :role, %i[customer admin]
 
   delegate :can?, :cannot?, to: :ability
 
@@ -45,16 +47,16 @@ class User < ApplicationRecord
     return [] if orders.empty?
 
     product_data = OrderItem
-      .joins(:order, :product)
-      .where(orders: { user_id: id })
-      .group('products.id')
-      .select(
-        'products.id as product_id',
-        'COUNT(DISTINCT orders.id) as frequency',
-        'SUM(order_items.quantity) as total_quantity'
-      )
-      .order('frequency DESC')
-      .limit(limit)
+                   .joins(:order, :product)
+                   .where(orders: { user_id: id })
+                   .group('products.id')
+                   .select(
+                     'products.id as product_id',
+                     'COUNT(DISTINCT orders.id) as frequency',
+                     'SUM(order_items.quantity) as total_quantity'
+                   )
+                   .order('frequency DESC')
+                   .limit(limit)
 
     product_data.map do |record|
       {

@@ -1,28 +1,30 @@
+# frozen_string_literal: true
+
 class PriceListItemsController < ApplicationController
-  before_action :set_price_list_item, only: %i[ show edit update ]
+  before_action :set_price_list_item, only: %i[show edit update]
 
   # GET /price_list_items or /price_list_items.json
   def index
     @user = User.find(params[:user_id])
     @categorized_price_list_items = @user
-      .price_list_items
-      .includes(:product)
-      . group_by(&:category)
+                                    .price_list_items
+                                    .includes(:product)
+                                    .group_by(&:category)
   end
 
   # GET /price_list_items/1 or /price_list_items/1.json
-  def show
-  end
+  def show; end
 
   # GET /price_list_items/1/edit
-  def edit
-  end
+  def edit; end
 
   # PATCH/PUT /price_list_items/1 or /price_list_items/1.json
   def update
     respond_to do |format|
       if @price_list_item.update(price_list_item_params)
-        format.html { redirect_to price_list_item_url(@price_list_item), notice: "Price list item was successfully updated." }
+        format.html do
+          redirect_to price_list_item_url(@price_list_item), notice: 'Price list item was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @price_list_item }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -32,13 +34,14 @@ class PriceListItemsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_price_list_item
-      @price_list_item = PriceListItem.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def price_list_item_params
-      params.require(:price_list_item).permit(:user_id, :product_id, :price)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_price_list_item
+    @price_list_item = PriceListItem.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def price_list_item_params
+    params.require(:price_list_item).permit(:user_id, :product_id, :price)
+  end
 end

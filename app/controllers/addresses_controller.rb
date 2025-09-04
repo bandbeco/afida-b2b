@@ -31,8 +31,7 @@ class AddressesController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     respond_to do |format|
@@ -49,7 +48,7 @@ class AddressesController < ApplicationController
   def destroy
     @address.destroy
 
-      respond_to do |format|
+    respond_to do |format|
       format.html { redirect_to addresses_url, notice: 'Address was successfully destroyed.' }
       format.json { head :no_content }
     end
@@ -58,38 +57,38 @@ class AddressesController < ApplicationController
   def set_default_shipping
     if current_user.update(default_shipping_address: @address)
       redirect_to addresses_url, notice: 'Default shipping address updated.'
-      else
-        redirect_to addresses_url, alert: 'Could not update default shipping address.'
-      end
+    else
+      redirect_to addresses_url, alert: 'Could not update default shipping address.'
     end
+  end
 
   def set_default_billing
     if current_user.update(default_billing_address: @address)
       redirect_to addresses_url, notice: 'Default billing address updated.'
-      else
-        redirect_to addresses_url, alert: 'Could not update default billing address.'
-      end
-    end
-
-    private
-
-    # Use callbacks to share common setup or constraints between actions.
-    def set_address
-      @address = current_user.addresses.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to addresses_url, alert: 'Address not found.'
-    end
-
-    # Only allow a list of trusted parameters through.
-    def address_params
-      params.require(:address).permit(
-        :company,
-        :attn,
-        :building_name,
-        :street_number_and_name,
-        :post_town,
-        :postcode,
-        :additional_notes
-      )
+    else
+      redirect_to addresses_url, alert: 'Could not update default billing address.'
     end
   end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_address
+    @address = current_user.addresses.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to addresses_url, alert: 'Address not found.'
+  end
+
+  # Only allow a list of trusted parameters through.
+  def address_params
+    params.require(:address).permit(
+      :company,
+      :attn,
+      :building_name,
+      :street_number_and_name,
+      :post_town,
+      :postcode,
+      :additional_notes
+    )
+  end
+end

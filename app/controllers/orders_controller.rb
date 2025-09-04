@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 class OrdersController < ApplicationController
   load_and_authorize_resource
 
-  before_action :set_order, only: %i[ show edit update destroy ]
+  before_action :set_order, only: %i[show edit update destroy]
 
   # GET /orders or /orders.json
   def index
-    if current_user.admin?
-      @orders = Order.all.order(created_at: :desc)
-    else
-      @orders = current_user.orders.order(created_at: :desc)
-    end
+    @orders = if current_user.admin?
+                Order.all.order(created_at: :desc)
+              else
+                current_user.orders.order(created_at: :desc)
+              end
   end
 
   # GET /orders/1 or /orders/1.json
@@ -18,8 +20,8 @@ class OrdersController < ApplicationController
       format.html
       format.pdf do
         send_data helpers.order_summary_pdf.render,
-          type: "application/pdf",
-          disposition: "inline"
+                  type: 'application/pdf',
+                  disposition: 'inline'
       end
     end
   end
@@ -37,18 +39,15 @@ class OrdersController < ApplicationController
     @default_billing_address = current_user.default_billing_address
 
     # Pre-select default addresses in dropdowns
-    if @default_shipping_address
-      @order.selected_shipping_address_id = @default_shipping_address.id
-    end
+    @order.selected_shipping_address_id = @default_shipping_address.id if @default_shipping_address
 
-    if @default_billing_address
-      @order.selected_billing_address_id = @default_billing_address.id
-    end
+    return unless @default_billing_address
+
+    @order.selected_billing_address_id = @default_billing_address.id
   end
 
   # GET /orders/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /orders or /orders.json
   def create
@@ -78,7 +77,7 @@ class OrdersController < ApplicationController
 
         format.html do
           current_user.shopping_cart.shopping_cart_items.destroy_all
-          redirect_to order_url(@order), notice: "Order was successfully created."
+          redirect_to order_url(@order), notice: 'Order was successfully created.'
         end
       else
         # Need to reload addresses for the form if rendering :new
@@ -94,7 +93,7 @@ class OrdersController < ApplicationController
   def update
     respond_to do |format|
       if @order.update(order_params)
-        format.html { redirect_to order_url(@order), notice: "Order was successfully updated." }
+        format.html { redirect_to order_url(@order), notice: 'Order was successfully updated.' }
         format.json { render :show, status: :ok, location: @order }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -108,19 +107,20 @@ class OrdersController < ApplicationController
     @order.destroy!
 
     respond_to do |format|
-      format.html { redirect_to orders_url, notice: "Order was successfully destroyed." }
+      format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_order
-    if current_user.admin?
-      @order = Order.find(params[:id])
-    else
-      @order = current_user.orders.find(params[:id])
-    end
+    @order = if current_user.admin?
+               Order.find(params[:id])
+             else
+               current_user.orders.find(params[:id])
+             end
   end
 
   # Only allow a list of trusted parameters through.
@@ -147,13 +147,13 @@ class OrdersController < ApplicationController
         :save_shipping_address,
         :save_billing_address,
         # Keep order_items_attributes
-        order_items_attributes: [
-          :id,
-          :order_id,
-          :product_id,
-          :quantity,
-          :unit_price,
-          :_destroy
+        order_items_attributes: %i[
+          id
+          order_id
+          product_id
+          quantity
+          unit_price
+          _destroy
         ]
       )
   end
@@ -187,12 +187,12 @@ class OrdersController < ApplicationController
   end
 
   def categorized_shopping_cart_items
-      current_user
-        .shopping_cart
-        .shopping_cart_items
-        .includes(product: [:category, { picture_attachment: :blob }])
-        .group_by { |item| item.product.category }
-        .sort_by { |category, _| category.id }
+    current_user
+      .shopping_cart
+      .shopping_cart_items
+      .includes(product: [:category, { picture_attachment: :blob }])
+      .group_by { |item| item.product.category }
+      .sort_by { |category, _| category.id }
   end
 
   def build_shopping_cart_items
@@ -205,36 +205,34 @@ class OrdersController < ApplicationController
     end
   end
 
-  private
-
-  def capture_order_created(order)
+  def capture_order_created(_order)
     $posthog.capture({
-      distinct_id: current_user.email,
-      event: "order_created",
-      properties: {
-        "user_name" => current_user.formatted_name,
-        "user_email" => current_user.email,
-        "order_id" => @order.id,
-        "total_amount" => @order.total_amount,
-        "subtotal_amount" => @order.subtotal_amount,
-        "payment_method" => @order.payment_method,
-        "shipping_address" => @order.shipping_address,
-        "billing_address" => @order.billing_address,
-        "shipping_amount" => @order.shipping_amount,
-        "vat_rate" => @order.vat_rate,
-        "vat_amount" => @order.vat_amount,
-        "invoice_number" => @order.invoice_number,
-        "order_items" => @order.order_items.map do |item|
-          {
-            "name" => item.product.name,
-            "id" => item.product_id,
-            "sku" => item.product.sku,
-            "quantity" => item.quantity,
-            "unit_price" => item.unit_price,
-            "total_price" => item.total_price
-          }
-        end
-      }
-    })
+                       distinct_id: current_user.email,
+                       event: 'order_created',
+                       properties: {
+                         'user_name' => current_user.formatted_name,
+                         'user_email' => current_user.email,
+                         'order_id' => @order.id,
+                         'total_amount' => @order.total_amount,
+                         'subtotal_amount' => @order.subtotal_amount,
+                         'payment_method' => @order.payment_method,
+                         'shipping_address' => @order.shipping_address,
+                         'billing_address' => @order.billing_address,
+                         'shipping_amount' => @order.shipping_amount,
+                         'vat_rate' => @order.vat_rate,
+                         'vat_amount' => @order.vat_amount,
+                         'invoice_number' => @order.invoice_number,
+                         'order_items' => @order.order_items.map do |item|
+                           {
+                             'name' => item.product.name,
+                             'id' => item.product_id,
+                             'sku' => item.product.sku,
+                             'quantity' => item.quantity,
+                             'unit_price' => item.unit_price,
+                             'total_price' => item.total_price
+                           }
+                         end
+                       }
+                     })
   end
 end

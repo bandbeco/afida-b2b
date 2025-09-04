@@ -1,4 +1,6 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class CheckoutTest < ActiveSupport::TestCase
   setup do
@@ -10,7 +12,7 @@ class CheckoutTest < ActiveSupport::TestCase
     )
   end
 
-  test "vat_amount should be calculated on subtotal plus shipping amount" do
+  test 'vat_amount should be calculated on subtotal plus shipping amount' do
     checkout = Checkout.new(@shopping_cart)
     # With subtotal of 95.00, shipping will be 5.00
     # VAT should be 20% of (95 + 5) = 20.00

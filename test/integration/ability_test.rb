@@ -1,4 +1,6 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class AbilityTest < ActionDispatch::IntegrationTest
   test 'user can only see their own order' do

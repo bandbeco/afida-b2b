@@ -1,4 +1,6 @@
-require "active_support/core_ext/integer/time"
+# frozen_string_literal: true
+
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -53,29 +55,29 @@ Rails.application.configure do
   config.force_ssl = false
 
   # Skip http-to-https redirect for the default health check endpoint.
-  config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
+  config.ssl_options = { redirect: { exclude: ->(request) { request.path == '/up' } } }
 
   # Skip DNS rebinding protection for the default health check endpoint.
-  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  config.host_authorization = { exclude: ->(request) { request.path == '/up' } }
 
   # Skip http-to-https redirect for the default health check endpoint.
-  config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
+  config.ssl_options = { redirect: { exclude: ->(request) { request.path == '/up' } } }
 
   # Skip DNS rebinding protection for the default health check endpoint.
-  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  config.host_authorization = { exclude: ->(request) { request.path == '/up' } }
 
   # Log to STDOUT by default
-  config.logger = ActiveSupport::Logger.new(STDOUT)
-    .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
-    .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+  config.logger = ActiveSupport::Logger.new($stdout)
+                                       .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
+                                       .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # "info" includes generic and useful information about system operation, but avoids logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
   # want to log everything, set the level to "debug".
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'info')
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -87,20 +89,20 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.default_url_options = {
-    host: Rails.application.credentials.dig(:app_host)
+    host: Rails.application.credentials[:app_host]
   }
 
   Rails.application.routes.default_url_options = {
-    host: Rails.application.credentials.dig(:app_host),
-    protocol: "https"
+    host: Rails.application.credentials[:app_host],
+    protocol: 'https'
   }
 
   config.action_mailer.delivery_method = :mailgun
 
   config.action_mailer.mailgun_settings = {
-    api_key: Rails.application.credentials.dig(:mailgun_api_key),
-    domain: "mg.afida.com",
-    api_host: "api.eu.mailgun.net"  # Uncomment this line for EU region domains
+    api_key: Rails.application.credentials[:mailgun_api_key],
+    domain: 'mg.afida.com',
+    api_host: 'api.eu.mailgun.net' # Uncomment this line for EU region domains
     # timeout: 20 # Default depends on rest-client, whose default is 60s. Added in 1.2.3.
   }
 
@@ -119,7 +121,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Only use :id for inspections in production.
-  config.active_record.attributes_for_inspect = [ :id ]
+  config.active_record.attributes_for_inspect = [:id]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [

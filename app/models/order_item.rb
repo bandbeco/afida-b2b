@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrderItem < ApplicationRecord
   belongs_to :product, optional: true
   belongs_to :order

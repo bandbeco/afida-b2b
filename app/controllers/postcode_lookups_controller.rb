@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class PostcodeLookupsController < ApplicationController
   skip_load_and_authorize_resource
 
   def new
     response = HTTParty.get(
-      "https://api.postcodes.io/postcodes/#{params[:postcode].gsub(" ", "")}",
-      headers: { "Content-Type" => "application/json" }
+      "https://api.postcodes.io/postcodes/#{params[:postcode].gsub(' ', '')}",
+      headers: { 'Content-Type' => 'application/json' }
     )
 
     if response.success?

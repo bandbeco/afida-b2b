@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrderMailer < ApplicationMailer
   include OrdersHelper
 
@@ -10,8 +12,8 @@ class OrderMailer < ApplicationMailer
     attachments["order_#{@order.id}_summary.pdf"] = order_summary_pdf.render
 
     mail(
-      to: @user.email, 
-      subject: "Your order has been placed!"
+      to: @user.email,
+      subject: 'Your order has been placed!'
     )
   end
 end

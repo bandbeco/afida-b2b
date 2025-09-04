@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Checkout
   SHIPPING_FEE = 5.00
   VAT_RATE = 0.20
