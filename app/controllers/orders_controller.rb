@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        send_data helpers.order_summary_pdf.render,
+        send_data helpers.order_summary_pdf(@order).render,
                   type: 'application/pdf',
                   disposition: 'inline'
       end

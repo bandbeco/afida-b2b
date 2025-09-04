@@ -9,7 +9,7 @@ class OrderMailer < ApplicationMailer
     @order = params[:order]
     @user = params[:user]
 
-    attachments["order_#{@order.id}_summary.pdf"] = order_summary_pdf.render
+    attachments["order_#{@order.id}_summary.pdf"] = order_summary_pdf(@order).render
 
     mail(
       to: @user.email,
