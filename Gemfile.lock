@@ -108,6 +108,8 @@ GEM
     bindex (0.8.1)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
+    brakeman (7.1.0)
+      racc
     builder (3.3.0)
     cancancan (3.6.1)
     capybara (3.40.0)
@@ -464,6 +466,7 @@ DEPENDENCIES
   activerecord-session_store
   aws-sdk-s3
   bootsnap
+  brakeman
   cancancan (~> 3.6)
   capybara
   debug
