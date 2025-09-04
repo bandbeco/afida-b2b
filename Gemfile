@@ -63,7 +63,7 @@ gem 'image_processing', '~> 1.2'
 
 gem 'aws-sdk-s3', require: false
 
-gem 'mailgun-ruby', '~> 1.2'
+gem 'mailgun-ruby', '~> 1.3'
 
 gem 'local_time', '~> 3.0'
 
