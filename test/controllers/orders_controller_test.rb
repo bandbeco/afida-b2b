@@ -29,24 +29,16 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
         order: {
           status: "pending",
           payment_method: "invoice",
-          subtotal_amount: 20.0,
-          shipping_amount: 5.0,
-          vat_amount: 5.0,
-          total_amount: 30.0,
-          shipping_address: {
-            company: "Test Company",
-            attn: "John Doe",
-            street_number_and_name: "123 Test St",
-            post_town: "Test Town",
-            postcode: "TE1 1ST",
-            additional_notes: "Test notes"
-          },
-          billing_address: {
-            company: "Test Company",
-            street_number_and_name: "123 Test St",
-            post_town: "Test Town",
-            postcode: "TE1 1ST"
-          }
+          shipping_company: "Test Company",
+          shipping_attn: "John Doe",
+          shipping_street_number_and_name: "123 Test St",
+          shipping_post_town: "Test Town",
+          shipping_postcode: "TE1 1ST",
+          shipping_additional_notes: "Test notes",
+          billing_company: "Test Company",
+          billing_street_number_and_name: "123 Test St",
+          billing_post_town: "Test Town",
+          billing_postcode: "TE1 1ST"
         }
       }
       post orders_url, params: params
