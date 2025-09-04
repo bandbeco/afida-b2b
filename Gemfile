@@ -73,9 +73,9 @@ gem 'posthog-ruby'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem 'brakeman', require: false
   gem 'debug', platforms: %i[mri windows]
   gem 'rubocop-rails-omakase', require: false
-  gem 'brakeman', require: false
 end
 
 group :development do
