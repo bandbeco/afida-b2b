@@ -128,7 +128,6 @@
 - Database migration strategy
 
 ### Monitoring & Maintenance
-- Honeybadger for error tracking
 - Logging strategy
 - Performance monitoring
 - Database maintenance tasks

@@ -95,8 +95,6 @@ group :test do
   gem 'selenium-webdriver'
 end
 
-gem 'honeybadger', '~> 5.16'
-
 gem 'lograge', '~> 0.14.0'
 
 gem 'tailwindcss-ruby', '~> 4.1'
