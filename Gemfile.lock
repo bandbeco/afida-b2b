@@ -141,6 +141,7 @@ GEM
     devise_invitable (2.0.11)
       actionmailer (>= 5.0)
       devise (>= 4.6)
+    docile (1.4.1)
     dotenv (3.1.8)
     drb (2.2.3)
     ed25519 (1.4.0)
@@ -396,6 +397,12 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.13.2)
+    simplecov_json_formatter (0.1.4)
     sshkit (1.24.0)
       base64
       logger
@@ -494,6 +501,7 @@ DEPENDENCIES
   rails (~> 8.0.2)
   rubocop-rails-omakase
   selenium-webdriver
+  simplecov
   stimulus-rails
   tailwindcss-rails (~> 4.3)
   tailwindcss-ruby (~> 4.1)
