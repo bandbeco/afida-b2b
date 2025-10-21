@@ -25,7 +25,7 @@ module Admin
           # Redirect back to the user's price list index after updating a single item
           format.html do
             redirect_to admin_user_price_list_items_url(@price_list_item.user),
-                        notice: 'Price list item was successfully updated.'
+                        notice: "Price list item was successfully updated."
           end
           format.json { render :show, status: :ok, location: admin_price_list_item_url(@price_list_item) }
         else

@@ -15,11 +15,11 @@ module OrdersHelper
   def order_summary_pdf(order)
     Prawn::Fonts::AFM.hide_m17n_warning = true
     pdf = Prawn::Document.new
-    pdf.font 'Courier'
+    pdf.font "Courier"
     pdf.font_size 10
-    pdf.stroke_color 'e6e6e6'
+    pdf.stroke_color "e6e6e6"
 
-    pdf.image Rails.root.join('app/assets/images/logo.png').to_s, width: 50
+    pdf.image Rails.root.join("app/assets/images/logo.png").to_s, width: 50
     pdf.move_down 20
 
     pdf.text "Order ##{order.invoice_number}", size: 20, style: :bold
@@ -52,20 +52,20 @@ module OrdersHelper
     pdf.text "VAT 20%  #{currency_for(order.vat_amount)}", align: :right
 
     pdf.move_down 10
-    pdf.stroke_color '000000'
+    pdf.stroke_color "000000"
     pdf.stroke_horizontal_line 0, 550
     pdf.move_down 10
 
     pdf.text "<b>Total</b>: #{currency_for(order.total_amount)}", inline_format: true, align: :right
     pdf.move_down 30
 
-    pdf.text 'Payment method', style: :bold
+    pdf.text "Payment method", style: :bold
     pdf.text order.payment_method
     pdf.move_down 20
-    pdf.text 'Shipping address', style: :bold
+    pdf.text "Shipping address", style: :bold
     pdf.text order.shipping_address
     pdf.move_down 20
-    pdf.text 'Billing address', style: :bold
+    pdf.text "Billing address", style: :bold
     pdf.text order.billing_address
 
     pdf

@@ -9,7 +9,7 @@ class ProductsController < ApplicationController
     return if params[:query].blank?
 
     @products = @products.where(
-      'name ILIKE :query OR sku ILIKE :query',
+      "name ILIKE :query OR sku ILIKE :query",
       query: "%#{params[:query]}%"
     )
   end
@@ -39,7 +39,7 @@ class ProductsController < ApplicationController
           end
         end
 
-        format.html { redirect_to product_url(@product), notice: 'Product was successfully created.' }
+        format.html { redirect_to product_url(@product), notice: "Product was successfully created." }
         format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -68,7 +68,7 @@ class ProductsController < ApplicationController
       @product.price_list_items.each(&:soft_delete!)
 
       respond_to do |format|
-        format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
+        format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
         format.json { head :no_content }
       end
     end

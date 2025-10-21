@@ -10,7 +10,7 @@ module Admin
       if params[:query].present?
         query = "%#{params[:query]}%"
         @users = @users.where(
-          'first_name ILIKE :query OR last_name ILIKE :query OR company ILIKE :query OR email ILIKE :query',
+          "first_name ILIKE :query OR last_name ILIKE :query OR company ILIKE :query OR email ILIKE :query",
           query: query
         )
       end
@@ -36,7 +36,7 @@ module Admin
         if @user.save
           Product.find_each { |p| @user.price_list_items.create!(product: p, price: p.price) }
 
-          format.html { redirect_to admin_users_url, notice: 'User was successfully created.' }
+          format.html { redirect_to admin_users_url, notice: "User was successfully created." }
           format.json { render :show, status: :created, location: admin_user_url(@user) }
         else
           format.html { render :new, status: :unprocessable_entity }
@@ -51,10 +51,10 @@ module Admin
         if @user.update(user_params)
           if user_params[:price_list_items_attributes]
             format.html do
-              redirect_to admin_user_price_list_items_url(@user), notice: 'Price list items were successfully updated.'
+              redirect_to admin_user_price_list_items_url(@user), notice: "Price list items were successfully updated."
             end
           else
-            format.html { redirect_to edit_admin_user_url(@user), notice: 'User was successfully updated.' }
+            format.html { redirect_to edit_admin_user_url(@user), notice: "User was successfully updated." }
           end
         else
           format.html { render :edit, status: :unprocessable_entity }
@@ -67,7 +67,7 @@ module Admin
       @user.destroy!
 
       respond_to do |format|
-        format.html { redirect_to admin_users_url, notice: 'User was successfully destroyed.' }
+        format.html { redirect_to admin_users_url, notice: "User was successfully destroyed." }
         format.json { head :no_content }
       end
     end
@@ -83,7 +83,7 @@ module Admin
     def user_params
       params
         .expect(
-          user: [:first_name,
+          user: [ :first_name,
                  :last_name,
                  :company,
                  :email,
@@ -92,7 +92,7 @@ module Admin
                    id
                    price
                    hidden
-                 ] }]
+                 ] } ]
         )
     end
   end

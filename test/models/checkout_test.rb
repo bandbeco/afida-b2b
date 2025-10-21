@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
 class CheckoutTest < ActiveSupport::TestCase
   setup do
@@ -9,7 +9,7 @@ class CheckoutTest < ActiveSupport::TestCase
   end
 
   # subtotal_amount tests
-  test 'calculates subtotal_amount for single item' do
+  test "calculates subtotal_amount for single item" do
     @shopping_cart.shopping_cart_items.create!(
       product: products(:one),
       quantity: 5,
@@ -20,7 +20,7 @@ class CheckoutTest < ActiveSupport::TestCase
     assert_equal 95.00, checkout.subtotal_amount
   end
 
-  test 'calculates subtotal_amount for multiple items' do
+  test "calculates subtotal_amount for multiple items" do
     @shopping_cart.shopping_cart_items.create!(
       product: products(:one),
       quantity: 2,
@@ -37,14 +37,14 @@ class CheckoutTest < ActiveSupport::TestCase
     assert_equal 65.00, checkout.subtotal_amount
   end
 
-  test 'returns zero subtotal for empty cart' do
+  test "returns zero subtotal for empty cart" do
     checkout = Checkout.new(@shopping_cart)
 
     assert_equal 0, checkout.subtotal_amount
   end
 
   # shipping_amount tests
-  test 'charges shipping for subtotal under £100' do
+  test "charges shipping for subtotal under £100" do
     @shopping_cart.shopping_cart_items.create!(
       product: products(:one),
       quantity: 5,
@@ -56,7 +56,7 @@ class CheckoutTest < ActiveSupport::TestCase
     assert_equal 5.00, checkout.shipping_amount
   end
 
-  test 'free shipping for subtotal over £100' do
+  test "free shipping for subtotal over £100" do
     @shopping_cart.shopping_cart_items.create!(
       product: products(:one),
       quantity: 10,
@@ -68,7 +68,7 @@ class CheckoutTest < ActiveSupport::TestCase
     assert_equal 0, checkout.shipping_amount
   end
 
-  test 'free shipping requires subtotal OVER £100 (not equal)' do
+  test "free shipping requires subtotal OVER £100 (not equal)" do
     @shopping_cart.shopping_cart_items.create!(
       product: products(:one),
       quantity: 10,
@@ -82,7 +82,7 @@ class CheckoutTest < ActiveSupport::TestCase
     assert_equal 5.00, checkout.shipping_amount
   end
 
-  test 'charges shipping just under £100 threshold' do
+  test "charges shipping just under £100 threshold" do
     @shopping_cart.shopping_cart_items.create!(
       product: products(:one),
       quantity: 1,
@@ -95,7 +95,7 @@ class CheckoutTest < ActiveSupport::TestCase
   end
 
   # vat_amount tests
-  test 'calculates VAT on subtotal plus shipping' do
+  test "calculates VAT on subtotal plus shipping" do
     @shopping_cart.shopping_cart_items.create!(
       product: products(:one),
       quantity: 5,
@@ -108,7 +108,7 @@ class CheckoutTest < ActiveSupport::TestCase
     assert_equal 20.00, checkout.vat_amount
   end
 
-  test 'calculates VAT with free shipping' do
+  test "calculates VAT with free shipping" do
     @shopping_cart.shopping_cart_items.create!(
       product: products(:one),
       quantity: 10,
@@ -121,7 +121,7 @@ class CheckoutTest < ActiveSupport::TestCase
     assert_equal 30.00, checkout.vat_amount
   end
 
-  test 'VAT is zero for empty cart' do
+  test "VAT is zero for empty cart" do
     checkout = Checkout.new(@shopping_cart)
 
     # Subtotal = 0, shipping = 5.00 (charged on empty cart)
@@ -130,7 +130,7 @@ class CheckoutTest < ActiveSupport::TestCase
   end
 
   # quantities test
-  test 'sums quantities across all cart items' do
+  test "sums quantities across all cart items" do
     @shopping_cart.shopping_cart_items.create!(
       product: products(:one),
       quantity: 2,
@@ -146,14 +146,14 @@ class CheckoutTest < ActiveSupport::TestCase
     assert_equal 5, checkout.quantities
   end
 
-  test 'returns zero quantities for empty cart' do
+  test "returns zero quantities for empty cart" do
     checkout = Checkout.new(@shopping_cart)
 
     assert_equal 0, checkout.quantities
   end
 
   # total_amount tests
-  test 'calculates total amount with shipping' do
+  test "calculates total amount with shipping" do
     @shopping_cart.shopping_cart_items.create!(
       product: products(:one),
       quantity: 5,
@@ -166,7 +166,7 @@ class CheckoutTest < ActiveSupport::TestCase
     assert_equal 120.00, checkout.total_amount
   end
 
-  test 'calculates total amount without shipping' do
+  test "calculates total amount without shipping" do
     @shopping_cart.shopping_cart_items.create!(
       product: products(:one),
       quantity: 10,
@@ -180,7 +180,7 @@ class CheckoutTest < ActiveSupport::TestCase
   end
 
   # attributes test
-  test 'returns correct attributes hash' do
+  test "returns correct attributes hash" do
     @shopping_cart.shopping_cart_items.create!(
       product: products(:one),
       quantity: 5,
@@ -197,7 +197,7 @@ class CheckoutTest < ActiveSupport::TestCase
     assert_equal 120.00, attributes[:total_amount]
   end
 
-  test 'attributes hash includes all required keys' do
+  test "attributes hash includes all required keys" do
     checkout = Checkout.new(@shopping_cart)
     attributes = checkout.attributes
 
@@ -209,11 +209,11 @@ class CheckoutTest < ActiveSupport::TestCase
   end
 
   # Constants test
-  test 'VAT_RATE constant is 20%' do
+  test "VAT_RATE constant is 20%" do
     assert_equal 0.20, Checkout::VAT_RATE
   end
 
-  test 'SHIPPING_FEE constant is £5.00' do
+  test "SHIPPING_FEE constant is £5.00" do
     assert_equal 5.00, Checkout::SHIPPING_FEE
   end
 end

@@ -19,6 +19,6 @@ class Address < ApplicationRecord
       post_town,
       postcode
     ]
-    parts.compact_blank.join(', ')
+    parts.compact_blank.join(", ")
   end
 end

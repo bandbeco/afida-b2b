@@ -34,8 +34,8 @@ module Admin
       respond_to do |format|
         if @address.save
           # Set default addresses if this is the user's first address
-          @user.update(default_shipping_address: @address, default_billing_address: @address) if @user.addresses.count == 1
-          format.html { redirect_to admin_user_addresses_path(@user), notice: 'Address was successfully created.' }
+          @user.update(default_shipping_address: @address, default_billing_address: @address) if @user.addresses.one?
+          format.html { redirect_to admin_user_addresses_path(@user), notice: "Address was successfully created." }
           format.json { render :show, status: :created, location: admin_user_address_path(@user, @address) }
         else
           format.html { render :new, status: :unprocessable_entity }
@@ -48,7 +48,7 @@ module Admin
     def update
       respond_to do |format|
         if @address.update(address_params)
-          format.html { redirect_to admin_user_addresses_path(@user), notice: 'Address was successfully updated.' }
+          format.html { redirect_to admin_user_addresses_path(@user), notice: "Address was successfully updated." }
           format.json { render :show, status: :ok, location: admin_user_address_path(@user, @address) }
         else
           format.html { render :edit, status: :unprocessable_entity }
@@ -66,7 +66,7 @@ module Admin
       @address.destroy
 
       respond_to do |format|
-        format.html { redirect_to admin_user_addresses_path(@user), notice: 'Address was successfully destroyed.' }
+        format.html { redirect_to admin_user_addresses_path(@user), notice: "Address was successfully destroyed." }
         format.json { head :no_content }
       end
     end
@@ -74,19 +74,19 @@ module Admin
     private
 
     def require_admin!
-      redirect_to root_path, alert: 'You are not authorized to perform this action.' unless current_user.admin?
+      redirect_to root_path, alert: "You are not authorized to perform this action." unless current_user.admin?
     end
 
     def set_user
       @user = User.find(params[:user_id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to admin_users_path, alert: 'User not found.'
+      redirect_to admin_users_path, alert: "User not found."
     end
 
     def set_address
       @address = @user.addresses.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to admin_user_addresses_path(@user), alert: 'Address not found.'
+      redirect_to admin_user_addresses_path(@user), alert: "Address not found."
     end
 
     # Use the same permitted parameters as the regular controller

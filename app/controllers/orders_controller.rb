@@ -9,9 +9,9 @@ class OrdersController < ApplicationController
   def index
     @orders = if current_user.admin?
                 Order.order(created_at: :desc)
-              else
+    else
                 current_user.orders.order(created_at: :desc)
-              end
+    end
   end
 
   # GET /orders/1 or /orders/1.json
@@ -20,8 +20,8 @@ class OrdersController < ApplicationController
       format.html
       format.pdf do
         send_data helpers.order_summary_pdf(@order).render,
-                  type: 'application/pdf',
-                  disposition: 'inline'
+                  type: "application/pdf",
+                  disposition: "inline"
       end
     end
   end
@@ -77,7 +77,7 @@ class OrdersController < ApplicationController
 
         format.html do
           current_user.shopping_cart.shopping_cart_items.destroy_all
-          redirect_to order_url(@order), notice: 'Order was successfully created.'
+          redirect_to order_url(@order), notice: "Order was successfully created."
         end
       else
         # Need to reload addresses for the form if rendering :new
@@ -93,7 +93,7 @@ class OrdersController < ApplicationController
   def update
     respond_to do |format|
       if @order.update(order_params)
-        format.html { redirect_to order_url(@order), notice: 'Order was successfully updated.' }
+        format.html { redirect_to order_url(@order), notice: "Order was successfully updated." }
         format.json { render :show, status: :ok, location: @order }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -107,7 +107,7 @@ class OrdersController < ApplicationController
     @order.destroy!
 
     respond_to do |format|
-      format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
+      format.html { redirect_to orders_url, notice: "Order was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -118,16 +118,16 @@ class OrdersController < ApplicationController
   def set_order
     @order = if current_user.admin?
                Order.find(params[:id])
-             else
+    else
                current_user.orders.find(params[:id])
-             end
+    end
   end
 
   # Only allow a list of trusted parameters through.
   def order_params
     params
       .expect(
-        order: [:status,
+        order: [ :status,
                 :payment_method,
                 # New form fields
                 :selected_shipping_address_id,
@@ -153,13 +153,13 @@ class OrdersController < ApplicationController
                   quantity
                   unit_price
                   _destroy
-                ] }]
+                ] } ]
       )
   end
 
   def save_addresses_from_order(order)
     # Save shipping address if checkbox ticked and it was a new entry
-    if order.save_shipping_address == '1' && (order.selected_shipping_address_id.blank? || order.selected_shipping_address_id == 'new')
+    if order.save_shipping_address == "1" && (order.selected_shipping_address_id.blank? || order.selected_shipping_address_id == "new")
       current_user.addresses.create(
         company: order.shipping_company,
         attn: order.shipping_attn,
@@ -172,7 +172,7 @@ class OrdersController < ApplicationController
     end
 
     # Save billing address if checkbox ticked, not using shipping, and it was a new entry
-    if order.save_billing_address == '1' && order.use_shipping_for_billing != '1' && (order.selected_billing_address_id.blank? || order.selected_billing_address_id == 'new')
+    if order.save_billing_address == "1" && order.use_shipping_for_billing != "1" && (order.selected_billing_address_id.blank? || order.selected_billing_address_id == "new")
       current_user.addresses.create(
         company: order.billing_company,
         attn: order.billing_attn,
@@ -189,7 +189,7 @@ class OrdersController < ApplicationController
     current_user
       .shopping_cart
       .shopping_cart_items
-      .includes(product: [:category, { picture_attachment: :blob }])
+      .includes(product: [ :category, { picture_attachment: :blob } ])
       .group_by { |item| item.product.category }
       .sort_by { |category, _| category.id }
   end
@@ -207,28 +207,28 @@ class OrdersController < ApplicationController
   def capture_order_created(_order)
     $posthog.capture({
                        distinct_id: current_user.email,
-                       event: 'order_created',
+                       event: "order_created",
                        properties: {
-                         'user_name' => current_user.formatted_name,
-                         'user_email' => current_user.email,
-                         'order_id' => @order.id,
-                         'total_amount' => @order.total_amount,
-                         'subtotal_amount' => @order.subtotal_amount,
-                         'payment_method' => @order.payment_method,
-                         'shipping_address' => @order.shipping_address,
-                         'billing_address' => @order.billing_address,
-                         'shipping_amount' => @order.shipping_amount,
-                         'vat_rate' => @order.vat_rate,
-                         'vat_amount' => @order.vat_amount,
-                         'invoice_number' => @order.invoice_number,
-                         'order_items' => @order.order_items.map do |item|
+                         "user_name" => current_user.formatted_name,
+                         "user_email" => current_user.email,
+                         "order_id" => @order.id,
+                         "total_amount" => @order.total_amount,
+                         "subtotal_amount" => @order.subtotal_amount,
+                         "payment_method" => @order.payment_method,
+                         "shipping_address" => @order.shipping_address,
+                         "billing_address" => @order.billing_address,
+                         "shipping_amount" => @order.shipping_amount,
+                         "vat_rate" => @order.vat_rate,
+                         "vat_amount" => @order.vat_amount,
+                         "invoice_number" => @order.invoice_number,
+                         "order_items" => @order.order_items.map do |item|
                            {
-                             'name' => item.product.name,
-                             'id' => item.product_id,
-                             'sku' => item.product.sku,
-                             'quantity' => item.quantity,
-                             'unit_price' => item.unit_price,
-                             'total_price' => item.total_price
+                             "name" => item.product.name,
+                             "id" => item.product_id,
+                             "sku" => item.product.sku,
+                             "quantity" => item.quantity,
+                             "unit_price" => item.unit_price,
+                             "total_price" => item.total_price
                            }
                          end
                        }

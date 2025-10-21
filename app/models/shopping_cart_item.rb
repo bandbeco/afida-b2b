@@ -7,7 +7,7 @@ class ShoppingCartItem < ApplicationRecord
   validates :quantity, numericality: { greater_than_or_equal_to: 0 }
   validates :unit_price, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
-  scope :added_to_cart, -> { where('quantity > 0') }
+  scope :added_to_cart, -> { where("quantity > 0") }
 
   def total_price
     quantity * unit_price.to_d.round(2)

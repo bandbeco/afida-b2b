@@ -11,7 +11,7 @@ module Admin
     def update_visibility
       # When using the bulk action buttons
       if params[:visibility].present?
-        visibility = params[:visibility] == 'true'
+        visibility = params[:visibility] == "true"
 
         ActiveRecord::Base.transaction do
           if params[:user_ids].present?
@@ -20,13 +20,13 @@ module Admin
                     .where(user_id: params[:user_ids])
                     .update_all(hidden: !visibility)
 
-            redirect_to admin_product_path(@product), notice: 'Product visibility was updated for selected users.'
+            redirect_to admin_product_path(@product), notice: "Product visibility was updated for selected users."
           else
             # Update visibility for all users
             @product.price_list_items.update_all(hidden: !visibility)
 
             redirect_to admin_product_path(@product),
-                        notice: 'Product visibility was successfully updated for all users.'
+                        notice: "Product visibility was successfully updated for all users."
           end
         end
       # When using the individual visibility form
@@ -40,12 +40,12 @@ module Admin
                   .where(user_id: params[:visible_user_ids])
                   .update_all(hidden: false)
 
-          redirect_to admin_product_path(@product), notice: 'Product visibility settings were successfully updated.'
+          redirect_to admin_product_path(@product), notice: "Product visibility settings were successfully updated."
         end
       else
         # If no users were selected in the individual form, hide for all
         @product.price_list_items.update_all(hidden: true)
-        redirect_to admin_product_path(@product), notice: 'Product has been hidden for all users.'
+        redirect_to admin_product_path(@product), notice: "Product has been hidden for all users."
       end
     end
 

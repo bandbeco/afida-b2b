@@ -28,7 +28,7 @@ class Order < ApplicationRecord
   scope :count_in_range, ->(range) { where(created_at: range).count }
 
   accepts_nested_attributes_for :order_items, allow_destroy: true, reject_if: lambda { |attributes|
-    attributes['quantity'].to_i.zero? || attributes['quantity'].blank?
+    attributes["quantity"].to_i.zero? || attributes["quantity"].blank?
   }
 
   before_validation :build_address_strings, on: :create
@@ -63,7 +63,7 @@ class Order < ApplicationRecord
       attrs[:additional_notes] = billing_additional_notes
     end
     # If using shipping address, copy the already built string
-    if use_shipping_for_billing == '1'
+    if use_shipping_for_billing == "1"
       self.billing_address = shipping_address
     elsif billing_attrs.compact_blank.any?
       self.billing_address = Address.new(billing_attrs.compact_blank).formatted_address(include_attn: false)

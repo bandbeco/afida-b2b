@@ -37,7 +37,7 @@ class ShoppingCartItemsController < ApplicationController
   end
 
   def remove_from_cart
-    @shopping_cart_item.quantity = [@shopping_cart_item.quantity - 1, 0].max
+    @shopping_cart_item.quantity = [ @shopping_cart_item.quantity - 1, 0 ].max
 
     respond_to do |format|
       if @shopping_cart_item.save
@@ -68,7 +68,7 @@ class ShoppingCartItemsController < ApplicationController
       if @shopping_cart_item.save
         format.html do
           redirect_to shopping_cart_item_url(@shopping_cart_item),
-                      notice: 'Shopping cart item was successfully created.'
+                      notice: "Shopping cart item was successfully created."
         end
         format.json { render :show, status: :created, location: @shopping_cart_item }
       else
@@ -84,7 +84,7 @@ class ShoppingCartItemsController < ApplicationController
       if @shopping_cart_item.update(shopping_cart_item_params)
         format.html do
           redirect_to shopping_cart_item_url(@shopping_cart_item),
-                      notice: 'Shopping cart item was successfully updated.'
+                      notice: "Shopping cart item was successfully updated."
         end
         format.json { render :show, status: :ok, location: @shopping_cart_item }
       else
@@ -99,7 +99,7 @@ class ShoppingCartItemsController < ApplicationController
     @shopping_cart_item.destroy!
 
     respond_to do |format|
-      format.html { redirect_to shopping_cart_items_url, notice: 'Shopping cart item was successfully destroyed.' }
+      format.html { redirect_to shopping_cart_items_url, notice: "Shopping cart item was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -119,10 +119,10 @@ class ShoppingCartItemsController < ApplicationController
   def capture_add_to_cart
     $posthog.capture({
                        distinct_id: current_user.email,
-                       event: 'product_added_to_cart',
+                       event: "product_added_to_cart",
                        properties: {
-                         'product_sku' => @shopping_cart_item.product.sku,
-                         'product_name' => @shopping_cart_item.product.name
+                         "product_sku" => @shopping_cart_item.product.sku,
+                         "product_name" => @shopping_cart_item.product.name
                        }
                      })
   end
@@ -130,10 +130,10 @@ class ShoppingCartItemsController < ApplicationController
   def capture_remove_from_cart
     $posthog.capture({
                        distinct_id: current_user.email,
-                       event: 'product_removed_from_cart',
+                       event: "product_removed_from_cart",
                        properties: {
-                         'product_sku' => @shopping_cart_item.product.sku,
-                         'product_name' => @shopping_cart_item.product.name
+                         "product_sku" => @shopping_cart_item.product.sku,
+                         "product_name" => @shopping_cart_item.product.name
                        }
                      })
   end

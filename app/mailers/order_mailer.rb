@@ -3,7 +3,7 @@
 class OrderMailer < ApplicationMailer
   include OrdersHelper
 
-  default bcc: 'orders@afida.com'
+  default bcc: "orders@afida.com"
 
   def new_order_email
     @order = params[:order]
@@ -13,7 +13,7 @@ class OrderMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: 'Your order has been placed!'
+      subject: "Your order has been placed!"
     )
   end
 end

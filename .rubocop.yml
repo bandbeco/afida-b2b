@@ -1,11 +1,7 @@
-# frozen_string_literal: true
-
-require:
-  - rubocop-rails
+inherit_gem:
+  rubocop-rails-omakase: rubocop.yml
 
 AllCops:
-  SuggestExtensions: false
-  NewCops: enable
   Exclude:
     - 'bin/*'
     - 'db/schema.rb'
@@ -13,51 +9,6 @@ AllCops:
     - 'config/**/*'
     - 'vendor/**/*'
     - 'node_modules/**/*'
-
-# Disable documentation requirements for most classes
-Style/Documentation:
-  Enabled: false
-
-# Allow longer methods for controllers and complex business logic
-Metrics/MethodLength:
-  Max: 20
-  Exclude:
-    - 'app/controllers/**/*'
-    - 'test/**/*'
-
-# Allow higher ABC size for controllers
-Metrics/AbcSize:
-  Max: 25
-  Exclude:
-    - 'app/controllers/**/*'
-    - 'test/**/*'
-
-# Allow longer lines
-Layout/LineLength:
-  Max: 140
-
-# Allow larger classes for tests
-Metrics/ClassLength:
-  Max: 150
-  Exclude:
-    - 'test/**/*'
-
-# Allow larger blocks for schema and tests
-Metrics/BlockLength:
-  Max: 50
-  Exclude:
-    - 'db/**/*'
-    - 'test/**/*'
-    - 'config/**/*'
-
-# Don't require magic comment in migrations
-Style/FrozenStringLiteralComment:
-  Exclude:
-    - 'db/migrate/*.rb'
-
-# Allow simple flash messages without moving to locale files
-Rails/I18nLocaleTexts:
-  Enabled: false
 
 # Allow PostHog global variable
 Style/GlobalVars:

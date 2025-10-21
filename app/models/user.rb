@@ -13,9 +13,9 @@ class User < ApplicationRecord
   has_many :orders, dependent: :destroy
   has_many :price_list_items, dependent: :destroy
   has_many :addresses, dependent: :destroy
-  belongs_to :default_shipping_address, class_name: 'Address',
+  belongs_to :default_shipping_address, class_name: "Address",
                                         optional: true
-  belongs_to :default_billing_address, class_name: 'Address', optional: true
+  belongs_to :default_billing_address, class_name: "Address", optional: true
 
   accepts_nested_attributes_for :price_list_items, allow_destroy: true
 
@@ -28,11 +28,11 @@ class User < ApplicationRecord
   end
 
   def admin?
-    role == 'admin'
+    role == "admin"
   end
 
   def customer?
-    role == 'customer'
+    role == "customer"
   end
 
   def invited?
@@ -49,13 +49,13 @@ class User < ApplicationRecord
     product_data = OrderItem
                    .joins(:order, :product)
                    .where(orders: { user_id: id })
-                   .group('products.id')
+                   .group("products.id")
                    .select(
-                     'products.id as product_id',
-                     'COUNT(DISTINCT orders.id) as frequency',
-                     'SUM(order_items.quantity) as total_quantity'
+                     "products.id as product_id",
+                     "COUNT(DISTINCT orders.id) as frequency",
+                     "SUM(order_items.quantity) as total_quantity"
                    )
-                   .order('frequency DESC')
+                   .order(frequency: :desc)
                    .limit(limit)
 
     product_data.map do |record|

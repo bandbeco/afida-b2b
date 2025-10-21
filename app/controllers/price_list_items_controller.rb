@@ -23,7 +23,7 @@ class PriceListItemsController < ApplicationController
     respond_to do |format|
       if @price_list_item.update(price_list_item_params)
         format.html do
-          redirect_to price_list_item_url(@price_list_item), notice: 'Price list item was successfully updated.'
+          redirect_to price_list_item_url(@price_list_item), notice: "Price list item was successfully updated."
         end
         format.json { render :show, status: :ok, location: @price_list_item }
       else
