@@ -39,3 +39,6 @@
 
 # Ignore SimpleCov coverage reports
 /coverage/
+
+# Ignore Claude settings
+/.claude
