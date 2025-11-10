@@ -9,6 +9,7 @@ module Admin
       @user = User.find(params[:user_id])
       @price_list_items = @user
                           .price_list_items
+                          .joins(:product)
                           .includes(:product)
     end
 

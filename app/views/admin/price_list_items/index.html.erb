@@ -41,6 +41,7 @@
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
         <% @price_list_items.each do |price_list_item| %>
+          <% next if price_list_item.product.blank? %>
           <%= form.fields_for :price_list_items, price_list_item do |f| %>
             <%= f.hidden_field :id %>
             <tr>
