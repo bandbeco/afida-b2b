@@ -88,11 +88,7 @@ module Admin
                  :company,
                  :email,
                  :role,
-                 { price_list_items_attributes: %i[
-                   id
-                   price
-                   hidden
-                 ] } ]
+                 { price_list_items_attributes: [[:id, :price, :hidden]] } ]
         )
     end
   end
