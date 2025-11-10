@@ -42,6 +42,7 @@
       <tbody class="bg-white divide-y divide-gray-200">
         <% @price_list_items.each do |price_list_item| %>
           <%= form.fields_for :price_list_items, price_list_item do |f| %>
+            <%= f.hidden_field :id %>
             <tr>
               <td class="px-6 py-4 text-sm font-medium text-gray-900 break-words w-64">
                 <%= link_to f.object.product.name, admin_product_path(f.object.product) %>
