@@ -1,10 +1,10 @@
 <% require "dotenv"; Dotenv.load(".env.production") %>
 
 # Name of your application. Used to uniquely configure containers.
-service: afida-app
+service: afida-b2b
 
 # Name of the container image.
-image: laurentqro/afida
+image: bandbeco/afida-b2b
 
 # Deploy to these servers.
 servers:
@@ -14,7 +14,7 @@ servers:
 registry:
   # Specify the registry server, if you're not using Docker Hub
   # server: registry.digitalocean.com / ghcr.io / ...
-  username: laurentqro
+  username: bandbeco
 
   # Always use an access token rather than real password when possible.
   password:
