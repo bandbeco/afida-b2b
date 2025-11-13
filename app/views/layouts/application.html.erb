@@ -14,6 +14,7 @@
     <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/chart.js" %>
     <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/date-fns@3.3.1/index.min.js" %>
     <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js" %>
+    <%= Sentry.get_trace_propagation_meta.html_safe %>
   </head>
 
   <body class="flex flex-col h-screen">
