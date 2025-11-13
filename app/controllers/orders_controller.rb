@@ -146,7 +146,7 @@ class OrdersController < ApplicationController
                 :save_shipping_address,
                 :save_billing_address,
                 # Keep order_items_attributes
-                { order_items_attributes: [[:id, :order_id, :product_id, :quantity, :unit_price, :_destroy]] } ]
+                { order_items_attributes: [ [ :id, :order_id, :product_id, :quantity, :unit_price, :_destroy ] ] } ]
       )
   end
 
