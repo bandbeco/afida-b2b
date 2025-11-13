@@ -29,13 +29,6 @@ pre-push:
         - merge
         - rebase
 
-    importmap-audit:
-      tags: security
-      run: bin/importmap audit || true
-      skip:
-        - merge
-        - rebase
-
 # Commit message validation - enforce conventional commits
 commit-msg:
   commands:
