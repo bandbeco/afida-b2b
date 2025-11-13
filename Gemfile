@@ -103,7 +103,7 @@ gem "lograge", "~> 0.14.0"
 
 gem "tailwindcss-ruby", "~> 4.1"
 
-gem "tailwindcss-rails", "~> 4.3"
+gem "tailwindcss-rails", "~> 4.4"
 
 gem "groupdate", "~> 6.7"
 
