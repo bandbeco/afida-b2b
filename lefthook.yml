@@ -1,0 +1,59 @@
+# Lefthook configuration
+# https://github.com/evilmartians/lefthook
+
+# Pre-commit hooks - fast feedback on code style
+pre-commit:
+  parallel: true
+  commands:
+    rubocop:
+      tags: linting
+      glob: "*.{rb,rake}"
+      run: bundle exec rubocop {staged_files}
+      stage_fixed: true
+
+# Pre-push hooks - comprehensive checks before pushing
+pre-push:
+  parallel: false
+  commands:
+    brakeman:
+      tags: security
+      run: bundle exec brakeman --no-pager -q -z --no-summary
+      skip:
+        - merge
+        - rebase
+
+    tests:
+      tags: testing
+      run: bundle exec rails test
+      skip:
+        - merge
+        - rebase
+
+    importmap-audit:
+      tags: security
+      run: bin/importmap audit
+      skip:
+        - merge
+        - rebase
+
+# Commit message validation - enforce conventional commits
+commit-msg:
+  commands:
+    conventional-commits:
+      skip:
+        - merge
+      run: |
+        if ! grep -qE '^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .{1,}$' {1}; then
+          echo "❌ Commit message must follow conventional commits format"
+          echo ""
+          echo "Format: <type>(<scope>): <description>"
+          echo ""
+          echo "Types: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert"
+          echo ""
+          echo "Examples:"
+          echo "  feat: add dark mode toggle"
+          echo "  fix: correct validation error on checkout"
+          echo "  docs: update README with deployment instructions"
+          echo "  feat(auth): implement OAuth login"
+          exit 1
+        fi

@@ -137,6 +137,44 @@ bundle exec rubocop
 bundle exec brakeman
 ```
 
+### Git Hooks
+
+The project uses [Lefthook](https://github.com/evilmartians/lefthook) for automated code quality checks:
+
+**Pre-commit:**
+- RuboCop linting on staged files (auto-fixes applied)
+
+**Pre-push:**
+- Brakeman security scan
+- Full test suite
+- Importmap audit for JavaScript vulnerabilities
+
+**Commit message:**
+- Enforces conventional commits format
+
+**Skip hooks when needed:**
+```bash
+# Skip all hooks
+LEFTHOOK=0 git commit
+LEFTHOOK=0 git push
+
+# Run hooks manually
+bundle exec lefthook run pre-commit
+```
+
+**Conventional commit format:**
+```
+<type>(<scope>): <description>
+
+Types: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert
+
+Examples:
+  feat: add dark mode toggle
+  fix: correct validation error on checkout
+  docs: update README with deployment instructions
+  feat(auth): implement OAuth login
+```
+
 ## Deployment
 
 The application is containerized with Docker and deployed using Kamal:
