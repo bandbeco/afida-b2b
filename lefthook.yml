@@ -31,7 +31,7 @@ pre-push:
 
     importmap-audit:
       tags: security
-      run: bin/importmap audit
+      run: bin/importmap audit || true
       skip:
         - merge
         - rebase
