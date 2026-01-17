@@ -49,6 +49,7 @@ builder:
 proxy:
   host: customer.afida.com
   app_port: 3000
+  ssl: true
   healthcheck:
     path: /up
     interval: 3
