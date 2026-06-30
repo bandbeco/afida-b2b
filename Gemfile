@@ -97,6 +97,10 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "simplecov", require: false
+  # minitest 6 changes Runnable#run's signature, which is incompatible with
+  # railties 8.0 (rails/test_unit/line_filtering.rb). Pin to 5.x until the
+  # Rails 8.1 upgrade lands.
+  gem "minitest", "< 6"
 end
 
 gem "lograge", "~> 0.14.0"
