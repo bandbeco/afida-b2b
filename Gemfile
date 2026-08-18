@@ -111,6 +111,6 @@ gem "tailwindcss-rails", "~> 4.6"
 
 gem "groupdate", "~> 6.7"
 
-gem "sentry-ruby", "~> 6.1"
+gem "sentry-ruby", "~> 6.7"
 
 gem "sentry-rails", "~> 6.1"
