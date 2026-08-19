@@ -103,7 +103,7 @@ group :test do
   gem "minitest", "< 6"
 end
 
-gem "lograge", "~> 0.14.0"
+gem "lograge", "~> 0.15.0"
 
 gem "tailwindcss-ruby", "~> 4.3"
 
