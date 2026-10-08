@@ -166,8 +166,8 @@ GEM
     ffi (1.17.4-x86_64-linux-musl)
     globalid (1.4.0)
       activesupport (>= 6.1)
-    groupdate (6.7.0)
-      activesupport (>= 7.1)
+    groupdate (6.8.0)
+      activesupport (>= 7.2)
     httparty (0.24.2)
       csv
       mini_mime (>= 1.0.0)
@@ -448,7 +448,7 @@ GEM
     unicode-display_width (3.1.5)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
-    uri (1.1.1)
+    uri (1.1.2)
     useragent (0.16.11)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -491,7 +491,7 @@ DEPENDENCIES
   debug
   devise (~> 5.0)
   devise_invitable (~> 2.0)
-  groupdate (~> 6.7)
+  groupdate (~> 6.8)
   httparty
   image_processing (~> 2.0)
   importmap-rails
