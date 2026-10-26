@@ -33,7 +33,7 @@ gem "jbuilder"
 gem "devise", "~> 5.0"
 gem "devise_invitable", "~> 2.0"
 
-gem "cancancan", "~> 3.6"
+gem "cancancan", "~> 3.7"
 
 gem "httparty"
 
